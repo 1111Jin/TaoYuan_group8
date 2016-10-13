@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context="com.example.administrator.taoyuan.MainActivity">
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+    </android.support.v7.widget.Toolbar>
+    <View
+        android:id="@+id/struct"
+        android:background="#f00"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="80dp"
+
+        />
+
+
+    <FrameLayout
+        android:id="@+id/fl_content"
+        android:background="#ccc"
+        android:layout_toRightOf="@id/struct"
+        android:layout_alignBottom="@id/struct"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!--<ImageView-->
+            <!--android:id="@+id/iv_ss1"-->
+            <!--android:src="@drawable/lay_protype_listen"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content" />-->
+        <!--<ListView-->
+            <!--android:id="@+id/lv_test"-->
+            <!--android:layout_below="@id/iv_ss1"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"/>-->
+
+    </FrameLayout>
+    <RadioGroup
+        android:id="@+id/rg_tab"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <RadioButton
+            android:id="@+id/rb_rb1"
+            android:text="首页"
+            android:drawableTop="@drawable/radiotab_home_selector"
+            style="@style/radiotab"
+            />
+        <RadioButton
+            android:id="@+id/rb_rb2"
+            android:text="邻里"
+            android:drawableTop="@drawable/radiotab_fire_selector"
+            style="@style/radiotab"
+            />
+        <RadioButton
+            android:id="@+id/rb_rb3"
+            android:text="生活圈"
+            android:drawableTop="@drawable/radiotab_gouwu_selector"
+            style="@style/radiotab"
+            />
+        <RadioButton
+            android:id="@+id/rb_rb4"
+            android:text="我的"
+            android:drawableTop="@drawable/radiotab_my_selector"
+            style="@style/radiotab"
+            />
+
+
+    </RadioGroup>
+
+
+</RelativeLayout>
