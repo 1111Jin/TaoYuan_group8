@@ -2,14 +2,125 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.administrator.taoyuan.fragment.my">
+    android:background="#fff"
+    android:orientation="vertical">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
+        android:id="@+id/rl_modify_My"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="我的"
-        android:textSize="60sp"
-        android:gravity="center"/>
+        android:layout_height="220dp"
+        android:background="@drawable/background">
+
+
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:id="@+id/iv_mymsg"
+            android:src="@drawable/mine_gray"
+            android:layout_marginLeft="160dp"
+            android:layout_marginTop="40dp"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_myname"
+            android:text="用户名"
+            android:textSize="34sp"
+            android:textColor="@color/black"
+            android:layout_below="@+id/iv_mymsg"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_myintegral"
+            android:text="积分："
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:layout_below="@id/tv_myname"
+            android:layout_marginLeft="120dp"
+            android:layout_marginTop="10dp"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_myname"
+            android:id="@+id/tv_myprofiles"
+            android:layout_toRightOf="@id/tv_myintegral"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            />
+
+    </RelativeLayout>
+    <Button
+        android:id="@+id/btn_myfriend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="我的好友"
+        android:textColor="@color/black"
+
+        android:background="#fff"
+        android:textSize="24sp"/>
+    <View android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="3px"
+        android:background="#C0C5C7"/>
+    <Button
+        android:id="@+id/btn_myrepair"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="我的报修"
+        android:textColor="@color/black"
+        android:onClick="opennew"
+        android:background="#fff"
+        android:textSize="24sp"/>
+    <View android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="3px"
+        android:background="#C0C5C7"/>
+
+    <Button
+        android:id="@+id/btn_myactivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:text="我的活动"
+        android:background="#fff"
+        android:textSize="24sp"/>
+    <View android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="3px"
+        android:background="#C0C5C7"/>
+
+    <Button
+        android:id="@+id/btn_myshoucang"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:text="我的收藏"
+        android:background="#fff"
+        android:textSize="24sp"/>
+    <View android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="3px"
+        android:background="#C0C5C7"/>
+
+    <Button
+        android:id="@+id/btn_myinstill"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="设置"
+        android:textColor="@color/black"
+        android:background="#fff"
+        android:textSize="24sp"/>
+
 
 </LinearLayout>
