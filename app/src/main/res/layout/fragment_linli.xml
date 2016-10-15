@@ -1,15 +1,67 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.administrator.taoyuan.fragment.linli">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="邻里"
-        android:textSize="60sp"
-        android:gravity="center"/>
+        android:layout_height="50dp"
+        android:background="#ff5619"
+        android:gravity="right"
+        android:layout_alignParentTop="true">
+        <Button
+            android:id="@+id/bt_publish"
+            android:layout_width="70dp"
+            android:layout_height="48dp"
+            android:background="#ff2600"
+            android:textColor="#fff"
+            android:textSize="20sp"
+            android:text="发布"/>
+    </LinearLayout>
+    <RadioGroup
+        android:id="@+id/rg_two"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:gravity="center|bottom"
+        android:layout_marginTop="50dp"
+        >
+        <RadioButton
+            android:id="@+id/rb_help"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:button="@null"
+            android:text=" 互 帮 "
+            android:textSize="26sp"
+            android:background="#f58051"
+            android:gravity="center"
+            />
+        <RadioButton
+            android:id="@+id/rb_activity"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:button="@null"
+            android:text=" 活 动 "
+            android:gravity="center"
+            android:background="#f58051"
+            android:textSize="26sp" />
+    </RadioGroup>
+    <FrameLayout
+        android:id="@+id/fl_item"
+        android:layout_below="@id/rg_two"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ccc">
 
-</LinearLayout>
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/tv_activity">
+        </ListView>
+    </FrameLayout>
+
+</RelativeLayout>
