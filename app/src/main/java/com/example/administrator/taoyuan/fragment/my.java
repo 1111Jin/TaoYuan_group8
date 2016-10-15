@@ -143,7 +143,7 @@ public class my extends Fragment {
                 break;
             case R.id.btn_myfriend:
                 Intent intent1 = new Intent(getActivity(), GetAllUserActivity.class);
-                startActivityForResult(intent1,REQUSETCODE);
+                startActivity(intent1);
                 break;
             case R.id.btn_myactivity:
                 Intent intent2=new Intent(getActivity(), GetMyActivity.class);

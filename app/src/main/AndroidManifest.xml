@@ -22,7 +22,8 @@
         <activity android:name=".activity_my.GetAllUserActivity" />
         <activity android:name=".activity_my.RepairActivity" />
         <activity android:name=".activity_my.GetMyActivity" />
-        <activity android:name=".activity_my.ModifyMyActivity"></activity>
+        <activity android:name=".activity_my.ModifyMyActivity" />
+        <activity android:name=".activity_my.Modify_myName_activity"></activity>
     </application>
 
 </manifest>

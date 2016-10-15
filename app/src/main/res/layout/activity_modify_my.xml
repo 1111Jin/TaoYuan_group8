@@ -41,6 +41,25 @@
             android:text="个人信息"
             android:textSize="20sp"
             android:textColor="@android:color/black"/>
+        <RelativeLayout
+            android:id="@+id/rl_save"
+            android:layout_width="100dp"
+            android:layout_height="48dp"
+            android:layout_alignParentRight="true"
+
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="保存"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+
+                android:layout_marginRight="20dp"
+                />
+        </RelativeLayout>
     </RelativeLayout>
 
     <View android:layout_width="match_parent"
@@ -319,6 +338,54 @@
             android:maxEms="10"
             android:textSize="15sp"
             android:layout_toLeftOf="@id/iv_to_myprofiles"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:textColor="@color/text_clo"
+            />
+
+        <View android:layout_width="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_height="1px"
+            android:background="#C0C5C7"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_myBirthday"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#ffffff"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="生日"
+            android:textSize="15sp"
+            android:layout_marginLeft="20dp"
+            android:textColor="@color/text_clo"/>
+
+        <ImageView
+            android:id="@+id/iv_to_myBirthday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:padding="6dp"
+            android:src="@drawable/iv_editinfo"/>
+
+        <TextView
+            android:id="@+id/tv_modify_myBirthday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="无"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:maxEms="10"
+            android:textSize="15sp"
+            android:layout_toLeftOf="@id/iv_to_myBirthday"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:textColor="@color/text_clo"
