@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA"/>
 
     <application
         android:name=".application.MyApplication"
@@ -12,7 +13,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,6 +28,9 @@
         <activity android:name=".activity_my.Modify_myName_activity"/>
         <activity android:name=".activity_linli.ActivityInfo"/>
         <activity android:name=".activity_linli.PublishActivity"/>
+        <activity android:name=".activity_life.LifeXiangqing"/>
+        <activity android:name=".activity_life.ActivityLife"/>
+        <activity android:name=".activity_life.fabu"/>
     </application>
 
 </manifest>
