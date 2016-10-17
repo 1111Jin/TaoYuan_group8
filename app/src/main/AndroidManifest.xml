@@ -31,6 +31,7 @@
         <activity android:name=".activity_life.LifeXiangqing"/>
         <activity android:name=".activity_life.ActivityLife"/>
         <activity android:name=".activity_life.fabu"/>
+        <activity android:name=".activity_linli.PublishHelp"/>
     </application>
 
 </manifest>

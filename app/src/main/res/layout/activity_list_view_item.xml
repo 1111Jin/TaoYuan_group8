@@ -16,6 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/iv_people"
         android:textSize="24sp"
+        android:textColor="#000"
         android:text="title"/>
     <TextView
         android:id="@+id/tv_time"
@@ -25,6 +26,7 @@
         android:layout_below="@id/tv_title"
         android:layout_alignLeft="@id/tv_title"
         android:layout_marginTop="10dp"
+        android:textColor="#000"
         android:text="2016-09-09"/>
     <TextView
         android:id="@+id/tv_address"
@@ -34,6 +36,7 @@
         android:layout_toRightOf="@id/iv_people"
         android:drawableLeft="@drawable/address"
         android:layout_marginTop="10dp"
+        android:textColor="#000"
         android:textSize="18sp"
         android:text="address"/>
     <TextView
@@ -44,6 +47,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"
+        android:textColor="#000"
         android:layout_marginTop="10dp"
         android:text="time"/>
     <TextView
@@ -53,6 +57,7 @@
         android:layout_alignBottom="@id/time3"
         android:layout_alignParentRight="true"
         android:drawableLeft="@drawable/person"
+        android:textColor="#000"
         android:text="join"/>
 
 </RelativeLayout>
