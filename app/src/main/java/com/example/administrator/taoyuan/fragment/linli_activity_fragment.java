@@ -1,12 +1,14 @@
 package com.example.administrator.taoyuan.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.administrator.taoyuan.R;
+import com.example.administrator.taoyuan.activity_linli.ActivityInfo;
 import com.example.administrator.taoyuan.pojo.ActivityBean;
 import com.example.administrator.taoyuan.utils.xUtilsImageUtils;
 import com.google.gson.Gson;
@@ -42,22 +45,38 @@ public class linli_activity_fragment extends linli {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
          view = inflater.inflate(R.layout.fragment_linli,null);
         initView();
-
+        initData();
+        initEvent();
         return view;
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        initData();
+
     }
 
-    private void initView() {
-        lv_list = ((ListView) view.findViewById(R.id.tv_activity));
+    public void initView() {
+        lv_list = ((ListView) view.findViewById(R.id.lv_activity));
     }
 
+    public void initEvent(){
+        lv_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //从Fragment跳转到非嵌套的Activity页面
+                Intent intent = new Intent(getActivity(), ActivityInfo.class);
+                //带参传值；
+                intent.putExtra("ActivityInfo",activityList.get(position));
+                Log.i("222","商品信息：======="+activityList.get(position));
+                //获取响应码，开启一个Activity；
+//                startActivityForResult(intent,REQUESTCODE);
+                startActivity(intent);
+            }
+        });
+    }
 
-    private void initData() {
+    public void initData() {
         adapter = new BaseAdapter() {
             private TextView address;
 
@@ -88,7 +107,7 @@ public class linli_activity_fragment extends linli {
 
 
 
-                xUtilsImageUtils.display(iv_people,"http://10.40.5.23:8080/cmty/upload/"+activity.activity_photo+"",true);
+                xUtilsImageUtils.display(iv_people,"http://10.40.5.23:8080/cmty/upload/"+activity.activity_photo+"",false);
                 tv_title.setText(activity.activity_title);
                 address.setText(activity.activity_adress);
 
@@ -115,8 +134,7 @@ public class linli_activity_fragment extends linli {
             @Override
             public void onSuccess(String result) {
                 Log.i("linli_activity_fragment", "onSuccess: =====>"+result);
-                //土司，打印
-                Toast.makeText(getActivity().getApplicationContext(),result, Toast.LENGTH_LONG).show();
+
                 Gson gson = new Gson();
 
                 ActivityBean bean = gson.fromJson(result,ActivityBean.class);

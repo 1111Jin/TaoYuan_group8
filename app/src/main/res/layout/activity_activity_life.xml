@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context="com.example.administrator.taoyuan.activity_life.ActivityLife">
+
+    <Button
+        android:id="@+id/tv_fabu"
+        android:text="发布"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:gravity="center"
+        android:layout_marginTop="-7dp"
+        android:layout_marginRight="-5dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+    <TextView
+        android:id="@+id/tv_life"
+        android:text="生活圈"
+        android:background="#0066ff"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:textSize="24sp"
+        android:gravity="center"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+
+
+    <!--<ImageView-->
+        <!--android:id="@+id/iv_background"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="200dp"-->
+        <!--android:layout_below="@id/tv_life"-->
+        <!--android:src="@drawable/background"-->
+        <!--android:background="#0000ff"-->
+        <!--/>-->
+    <RadioGroup
+        android:id="@+id/rg_tab"
+        android:layout_below="@id/tv_life"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <RadioButton
+            android:id="@+id/rb_peng"
+            android:text="朋友"
+            android:background="#000000"
+            android:drawableTop="@drawable/radiotab_peng_selector"
+            style="@style/radiotab"
+            />
+        <RadioButton
+            android:id="@+id/rb_suoyou"
+            android:text="所有人"
+            android:background="#000000"
+            android:drawableTop="@drawable/radiotab_suoyou_selector"
+            style="@style/radiotab"
+            />
+        <RadioButton
+            android:id="@+id/rb_huati"
+            android:text="话题"
+            android:background="#000000"
+            android:drawableTop="@drawable/radiotab_huati_selector"
+            style="@style/radiotab"
+            />
+
+    </RadioGroup>
+    <ListView
+        android:id="@+id/lv_dongtai1"
+        android:layout_below="@id/rg_tab"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </ListView>
+</RelativeLayout>

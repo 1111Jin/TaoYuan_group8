@@ -39,4 +39,9 @@
         <item name="android:background">@color/border_clo</item>
     </style>
 
+    <style name="md_line">
+        <item name="android:layout_width">1px</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/red</item>
+    </style>
 </resources>

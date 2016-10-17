@@ -6,68 +6,61 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <!--<TextView-->
-        <!--android:id="@+id/tv_life"-->
-        <!--android:text="生活圈"-->
-        <!--android:background="#ccc"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="50dp"-->
-        <!--android:textSize="24sp"-->
-        <!--android:gravity="center_vertical"-->
-        <!--android:layout_marginLeft="100dp"-->
-        <!--android:layout_marginRight="100dp"-->
-
-        <!--/>-->
-    <!--<TextView-->
-        <!--android:id="@+id/tv_fabu"-->
-        <!--android:text="发布"-->
-        <!--android:background="#ccc"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="50dp"-->
-        <!--android:textSize="24sp"-->
-        <!--android:gravity="center_vertical"-->
-        <!--android:layout_marginLeft="300dp"-->
-        <!--/>-->
-    <!--<ImageView-->
-    <!--android:id="@+id/iv_background"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="200dp"-->
-    <!--android:layout_below="@id/tv_life"-->
-    <!--android:src="@drawable/background"-->
-    <!--android:background="#0000ff"-->
-    <!--/>-->
-    <!--<RadioGroup-->
-        <!--android:id="@+id/rg_tab"-->
-        <!--android:layout_below="@id/iv_background"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:orientation="horizontal">-->
-        <!--<RadioButton-->
-            <!--android:id="@+id/rb_rb1"-->
-            <!--android:text="朋友"-->
-            <!--android:drawableTop="@drawable/radiotab_peng_selector"-->
-            <!--style="@style/radiotab"-->
-            <!--/>-->
-        <!--<RadioButton-->
-            <!--android:id="@+id/rb_rb2"-->
-            <!--android:text="所有人"-->
-            <!--android:drawableTop="@drawable/radiotab_suoyou_selector"-->
-            <!--style="@style/radiotab"-->
-            <!--/>-->
-        <!--<RadioButton-->
-            <!--android:id="@+id/rb_rb3"-->
-            <!--android:text="话题"-->
-            <!--android:drawableTop="@drawable/radiotab_huati_selector"-->
-            <!--style="@style/radiotab"-->
-            <!--/>-->
-
-    <!--</RadioGroup>-->
-
-
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/tv_life"
         android:text="生活圈"
-        android:textSize="60sp"
-        android:gravity="center"/>
+        android:background="#ccc"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textSize="24sp"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="100dp"
+        android:layout_marginRight="100dp"
+
+        />
+    <TextView
+        android:id="@+id/tv_fabu"
+        android:text="发布"
+        android:background="#ccc"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textSize="24sp"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="300dp"
+        />
+    <ImageView
+    android:id="@+id/iv_background"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:layout_below="@id/tv_life"
+    android:src="@drawable/background"
+    android:background="#0000ff"
+    />
+    <RadioGroup
+        android:id="@+id/rg_tab"
+        android:layout_below="@id/iv_background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <RadioButton
+            android:id="@+id/rb_rb1"
+            android:text="朋友"
+            android:drawableTop="@drawable/radiotab_peng_selector"
+            style="@style/radiotab"
+            />
+        <RadioButton
+            android:id="@+id/rb_rb2"
+            android:text="所有人"
+            android:drawableTop="@drawable/radiotab_suoyou_selector"
+            style="@style/radiotab"
+            />
+        <RadioButton
+            android:id="@+id/rb_rb3"
+            android:text="话题"
+            android:drawableTop="@drawable/radiotab_huati_selector"
+            style="@style/radiotab"
+            android:checked="false" />
+
+    </RadioGroup>
+
 </RelativeLayout>
