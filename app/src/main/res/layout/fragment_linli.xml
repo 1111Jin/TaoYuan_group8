@@ -38,6 +38,10 @@
             android:background="#f58051"
             android:gravity="center"
             />
+        <View
+            style="@style/md_line"
+            android:layout_gravity="center_vertical"
+            />
         <RadioButton
             android:id="@+id/rb_activity"
             android:layout_width="0dp"
@@ -56,12 +60,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#ccc">
-
         <ListView
+            android:id="@+id/lv_activity"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/tv_activity">
-        </ListView>
+            android:layout_height="match_parent"/>
     </FrameLayout>
 
 </RelativeLayout>
