@@ -94,6 +94,7 @@
         android:textSize="28dp"
         />
     <TextView
+        android:id="@+id/neirong_c"
         android:layout_below="@id/neirong"
         android:layout_width="match_parent"
         android:layout_height="120dp"
@@ -102,6 +103,36 @@
         android:background="#ccc"
 
         />
+    <EditText
+        android:id="@+id/tupian"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="图片"
+        android:layout_below="@id/neirong_c"
+        android:textSize="28dp"
+        />
+
+
+    <ImageView
+        android:id="@+id/tupian_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="图片"
+        android:src="@drawable/add_life_picture"
+        android:textSize="28dp"
+        android:layout_below="@+id/tupian"
+        android:layout_alignRight="@+id/leixing"
+        android:layout_alignEnd="@+id/leixing" />
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="请添加图片"
+        android:textSize="20dp"
+        android:layout_alignTop="@+id/tupian_1"
+        android:layout_toRightOf="@+id/tupian_1"
+        android:layout_toEndOf="@+id/tupian_1" />
 
 
 </RelativeLayout>

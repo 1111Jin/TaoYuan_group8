@@ -18,7 +18,6 @@
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
-
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:textSize="20sp"
@@ -26,8 +25,8 @@
         android:layout_toRightOf="@id/iv_photo"
         android:layout_alignTop="@id/iv_photo"
         android:text="动态标题"
-
         />
+
     <TextView
         android:id="@+id/tv_name"
         android:layout_width="wrap_content"
@@ -40,15 +39,29 @@
         android:text="张三"
         />
 
+
     <ImageView
         android:id="@+id/iv_zan"
         android:src="@drawable/fm_run_loved_prs"
         android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_below="@+id/tv_name"
+        android:layout_toRightOf="@+id/tv_title"
+        android:layout_toEndOf="@+id/tv_title"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="95dp"
+        android:layout_marginTop="68dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/iv_photo"
-        android:layout_alignTop="@id/iv_photo"
-        android:layout_marginLeft="200dp"
-        />
-
-
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="评论"
+        android:textSize="24sp"
+        android:textColor="#000"
+        android:background="#ccc"
+        android:id="@+id/textView3"
+        android:layout_alignTop="@+id/iv_zan"
+        android:layout_toRightOf="@+id/iv_zan"
+        android:layout_toEndOf="@+id/iv_zan" />
 </RelativeLayout>
