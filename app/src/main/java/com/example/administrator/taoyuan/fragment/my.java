@@ -112,7 +112,7 @@ public class my extends Fragment {
                 tvMyintegral.setText(list.get(0).userTel);
 
                 tvMyprofiles.setText(list.get(0).userProfiles);
-                bm =((BitmapDrawable) (ivMymsg).getDrawable()).getBitmap();
+
                 Log.i(TAG, "onSuccess: "+list.get(0).userProfiles);
             }
 
@@ -147,11 +147,11 @@ public class my extends Fragment {
                 Toast.makeText(getActivity(),"modify_my",Toast.LENGTH_SHORT).show();
                 Intent intent=new Intent(getActivity(),ModifyMyActivity.class);
 
-                if(bm!=null&&list.size()!=0) {
+                bm =((BitmapDrawable) (ivMymsg).getDrawable()).getBitmap();
                     intent.putExtra("user", list.get(0));
                     intent.putExtra("head", bm);
                     startActivityForResult(intent, REQUSETCODE);
-                }
+
                 break;
             case R.id.btn_myfriend:
                 Intent intent1 = new Intent(getActivity(), GetAllUserActivity.class);

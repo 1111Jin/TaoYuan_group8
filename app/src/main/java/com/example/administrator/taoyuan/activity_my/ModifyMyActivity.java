@@ -152,7 +152,7 @@ public class ModifyMyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(),"save",Toast.LENGTH_SHORT).show();
-//                sendImg();
+                sendImg();
 //                ListActivityBean.User user_modify=new ListActivityBean.User();
 //
 //                RequestParams requestParams=new RequestParams(HttpUtils.localhost);
@@ -160,12 +160,12 @@ public class ModifyMyActivity extends AppCompatActivity {
             }
         });
 
-        tv_save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"save++",Toast.LENGTH_SHORT).show();
-            }
-        });
+//        tv_save.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(getApplicationContext(),"save++",Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 
     @OnClick({R.id.rl_mytx, R.id.rl_myName, R.id.rl_mySex,R.id.rl_myTel,R.id.rl_modify_myAddress,R.id.rl_myProfiles,R.id.rl_myBirthday})
@@ -324,10 +324,12 @@ public class ModifyMyActivity extends AppCompatActivity {
         params.addBodyParameter("file",file);
 //        params.addBodyParameter("file",file1);
 
+        System.out.println(params);
         x.http().post(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
 
+                System.out.println(result);
             }
 
             @Override
