@@ -1,6 +1,7 @@
 package com.example.administrator.taoyuan.activity_linli;
 
 import android.app.ActionBar;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -64,8 +65,7 @@ public class PublishActivity extends AppCompatActivity {
 
         // 如果不设置PopupWindow的背景，无论是点击外部区域还是Back键都无法dismiss弹框
         // 我觉得这里是API的一个bug
-        popupwindow.setBackgroundDrawable(getResources().getDrawable(
-                R.drawable.home_gray));
+        popupwindow.setBackgroundDrawable(new BitmapDrawable());
 
         // 设置好参数之后再show
         //popupWindow.showAsDropDown(view,100,50);
