@@ -3,6 +3,8 @@ package com.example.administrator.taoyuan.fragment;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
@@ -14,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.administrator.taoyuan.R;
 import com.example.administrator.taoyuan.activity_my.GetAllUserActivity;
@@ -44,6 +47,7 @@ public class my extends Fragment {
 
     private static final int REQUSETCODE =1;
     private static final String TAG = "Log";
+    Bitmap bm;
     @InjectView(R.id.iv_mymsg)
     ImageView ivMymsg;
     @InjectView(R.id.tv_myname)
@@ -97,14 +101,18 @@ public class my extends Fragment {
                 Gson gson=new Gson();
 
                 ListActivityBean bean=gson.fromJson(result, ListActivityBean.class);
+
                 list=bean.userList;
                 String url=list.get(0).userHead;
                 xUtilsImageUtils.display(ivMymsg,HttpUtils.localhost+url,true);
 
+
                 tvMyname.setText(list.get(0).userName);
+                System.out.println(list.get(0).userName);
                 tvMyintegral.setText(list.get(0).userTel);
 
                 tvMyprofiles.setText(list.get(0).userProfiles);
+                bm =((BitmapDrawable) (ivMymsg).getDrawable()).getBitmap();
                 Log.i(TAG, "onSuccess: "+list.get(0).userProfiles);
             }
 
@@ -136,10 +144,14 @@ public class my extends Fragment {
      public void onClick(View view){
         switch (view.getId()){
             case R.id.rl_modify_My:
+                Toast.makeText(getActivity(),"modify_my",Toast.LENGTH_SHORT).show();
                 Intent intent=new Intent(getActivity(),ModifyMyActivity.class);
 
-                intent.putExtra("user",  list.get(0));
-                startActivityForResult(intent,REQUSETCODE);
+                if(bm!=null&&list.size()!=0) {
+                    intent.putExtra("user", list.get(0));
+                    intent.putExtra("head", bm);
+                    startActivityForResult(intent, REQUSETCODE);
+                }
                 break;
             case R.id.btn_myfriend:
                 Intent intent1 = new Intent(getActivity(), GetAllUserActivity.class);

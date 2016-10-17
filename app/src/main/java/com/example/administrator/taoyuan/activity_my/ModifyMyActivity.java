@@ -3,6 +3,7 @@ package com.example.administrator.taoyuan.activity_my;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -10,7 +11,6 @@ import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -19,16 +19,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.administrator.taoyuan.R;
-import com.example.administrator.taoyuan.fragment.Modify_myName_fragment;
 import com.example.administrator.taoyuan.pojo.ListActivityBean;
 import com.example.administrator.taoyuan.utils.HttpUtils;
 
+import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -36,12 +39,10 @@ import butterknife.OnClick;
 
 public class ModifyMyActivity extends AppCompatActivity {
 
+    private static final int PHOTO_REQUEST = 33;
+    private static final int PHOTO_CLIP = 44;
     @InjectView(R.id.all_order_goback)
     ImageView allOrderGoback;
-    @InjectView(R.id.rl_back)
-    RelativeLayout rlBack;
-    @InjectView(R.id.rl_save)
-    RelativeLayout rlSave;
     @InjectView(R.id.iv_to_myHead)
     ImageView ivToMyHead;
     @InjectView(R.id.iv_modify_myHead)
@@ -86,15 +87,18 @@ public class ModifyMyActivity extends AppCompatActivity {
     RelativeLayout rlMyBirthday;
 
     ListActivityBean.User user;
+    Bitmap bm;
     private RelativeLayout rl_back;
     String items[] = {"相册选择", "拍照"};
     String sex[] = {"男", "女"};
-    public static final int SELECT_PIC = 11;
+
     public static final int TAKE_PHOTO = 12;
     //相机拍摄照片和视频的标准目录
-    private File file;
+    private File file ;
     private Uri imageUri;
-    Modify_myName_fragment modify_myName_fragment;
+    private ImageView mImageView;
+    private RelativeLayout rl_save;
+    private TextView tv_save;
 
 
     @Override
@@ -118,12 +122,16 @@ public class ModifyMyActivity extends AppCompatActivity {
 
     public void initView() {
         rl_back = ((RelativeLayout) findViewById(R.id.rl_back));
+        rl_save = ((RelativeLayout) findViewById(R.id.rl_save));
+        tv_save = ((TextView) findViewById(R.id.tv_save));
     }
 
     public void initData() {
 
         Intent intent = getIntent();
         user = intent.getParcelableExtra("user");
+        bm=  intent.getParcelableExtra("head");
+        ivModifyMyHead.setImageBitmap(bm);
         if (user != null) {
             tvModifyMyName.setText(user.userName);
             tvModifyMyAddress.setText(user.userProfiles);
@@ -140,14 +148,22 @@ public class ModifyMyActivity extends AppCompatActivity {
                 finish();
             }
         });
-        rlSave.setOnClickListener(new View.OnClickListener() {
+        rl_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                ListActivityBean.User user_modify=new ListActivityBean.User();
-
-                RequestParams requestParams=new RequestParams(HttpUtils.localhost);
+                Toast.makeText(getApplicationContext(),"save",Toast.LENGTH_SHORT).show();
+//                sendImg();
+//                ListActivityBean.User user_modify=new ListActivityBean.User();
+//
+//                RequestParams requestParams=new RequestParams(HttpUtils.localhost);
 //                requestParams.addQueryStringParameter("user", );
+            }
+        });
+
+        tv_save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"save++",Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -162,10 +178,8 @@ public class ModifyMyActivity extends AppCompatActivity {
                         switch (which) {
                             case 0:
                                 //相册选择
-                                Intent intent = new Intent(Intent.ACTION_PICK, null);
-                                intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                                        "image/*");
-                                startActivityForResult(intent, SELECT_PIC);
+                                getPicFromPhoto();
+
                                 break;
                             case 1:
                                 //拍照:
@@ -184,15 +198,15 @@ public class ModifyMyActivity extends AppCompatActivity {
                 new AlertDialog.Builder(this).setView(modify_myName)
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
 
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                               EditText et_name=((EditText) modify_myName.findViewById(R.id.et_edit_name));
-                                String name=et_name.getText().toString();
-                                tvModifyMyName.setText(name);
-                            }
-                        })
-                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                            @Override
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    EditText et_name=((EditText) modify_myName.findViewById(R.id.et_edit_name));
+                                    String name=et_name.getText().toString();
+                                    tvModifyMyName.setText(name);
+                                }
+                            })
+                            .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                @Override
                             public void onClick(DialogInterface dialog, int which) {
                              }
                         })
@@ -303,11 +317,66 @@ public class ModifyMyActivity extends AppCompatActivity {
         }
     }
 
+    private void sendImg() {
+        RequestParams params = new RequestParams(HttpUtils.localhost+"upload");//upload 是你要访问的servlet
+
+        params.addBodyParameter("fileName","fileName");
+        params.addBodyParameter("file",file);
+//        params.addBodyParameter("file",file1);
+
+        x.http().post(params, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+    }
+
+    private void photoClip(Uri uri) {
+        // 调用系统中自带的图片剪裁
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.setDataAndType(uri, "image/*");
+        // 下面这个crop=true是设置在开启的Intent中设置显示的VIEW可裁剪
+        intent.putExtra("crop", "true");
+        // aspectX aspectY 是宽高的比例
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+        // outputX outputY 是裁剪图片宽高
+        intent.putExtra("outputX", 150);
+        intent.putExtra("outputY", 150);
+        intent.putExtra("return-data", true);
+        startActivityForResult(intent, PHOTO_CLIP);
+    }
+
     private String getPhotoFileName() {
         Date date = new Date(System.currentTimeMillis());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
         return sdf.format(date) + ".png";
     }
+
+    private void getPicFromPhoto() {
+        Intent intent = new Intent(Intent.ACTION_PICK, null);
+        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                "image/*");
+        startActivityForResult(intent, PHOTO_REQUEST);
+    }
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -318,6 +387,26 @@ public class ModifyMyActivity extends AppCompatActivity {
                 String name = data.getStringExtra("name");
                 Log.i("Result name", "onActivityResult: " + name);
                 tvModifyMyName.setText(name);
+                break;
+            case PHOTO_REQUEST:
+                if (data != null) {
+                    photoClip(data.getData());
+
+                 }
+                 break;
+            case PHOTO_CLIP:
+                if (data != null) {
+                    Bundle extras = data.getExtras();
+                    if (extras != null) {
+                        Log.w("test", "data");
+                        Bitmap photo = extras.getParcelable("data");
+//                        saveImageToGallery(getApplication(),photo);//保存bitmap到本地
+                        ivModifyMyHead.setImageBitmap(photo);
+                          break;
+
+
+                    }
+                }
                 break;
             default:
                 break;
