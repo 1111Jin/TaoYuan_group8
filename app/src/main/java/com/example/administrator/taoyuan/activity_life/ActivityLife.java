@@ -13,6 +13,7 @@ import com.example.administrator.taoyuan.R;
 
 import com.example.administrator.taoyuan.pojo.ListInfo;
 import com.example.administrator.taoyuan.pojo.ListLifeInfo;
+import com.example.administrator.taoyuan.utils.HttpUtils;
 import com.google.gson.Gson;
 
 import org.xutils.common.Callback;
@@ -76,7 +77,7 @@ public class ActivityLife extends AppCompatActivity {
 
     private List<ListInfo> getLifeInfoList() {
 
-        RequestParams params = new RequestParams("http://10.50.62.57:8080/Life/getdongraibypage");
+        RequestParams params = new RequestParams(HttpUtils.localhost_jt+"getdongraibypage");
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {

@@ -173,7 +173,7 @@ public class Life extends Fragment {
                 System.out.println(result);
                 Gson gson=new Gson();
                 ListLifeInfo bean= gson.fromJson(result, ListLifeInfo.class);
-//                 System.out.println(bean.status+"----");
+//                System.out.println(bean.status+"----");
 //                System.out.println(bean.lifeinfolist.size()+"===");
                 lifelist.addAll( bean.lifeinfolist);
 
