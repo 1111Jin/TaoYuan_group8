@@ -21,6 +21,7 @@ public class ListLifeInfo implements Parcelable {
         public String content;
         public String style;
         public String headphoto;
+        public String content_photo;
 
 
         @Override
@@ -32,7 +33,11 @@ public class ListLifeInfo implements Parcelable {
                     ", time=" + time +
                     ", style='" + style + '\'' +
                     ", headphoto='" + headphoto + '\'' +
+                    ", content_photo='" + content_photo + '\'' +
                     '}';
+        }
+
+        public LifeInfo() {
         }
 
         @Override
@@ -48,9 +53,7 @@ public class ListLifeInfo implements Parcelable {
             dest.writeString(this.content);
             dest.writeString(this.style);
             dest.writeString(this.headphoto);
-        }
-
-        public LifeInfo() {
+            dest.writeString(this.content_photo);
         }
 
         protected LifeInfo(Parcel in) {
@@ -61,6 +64,7 @@ public class ListLifeInfo implements Parcelable {
             this.content = in.readString();
             this.style = in.readString();
             this.headphoto = in.readString();
+            this.content_photo = in.readString();
         }
 
         public static final Creator<LifeInfo> CREATOR = new Creator<LifeInfo>() {
@@ -85,6 +89,9 @@ public class ListLifeInfo implements Parcelable {
                 '}';
     }
 
+    public ListLifeInfo() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -93,16 +100,12 @@ public class ListLifeInfo implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.status);
-        dest.writeList(this.lifeinfolist);
-    }
-
-    public ListLifeInfo() {
+        dest.writeTypedList(this.lifeinfolist);
     }
 
     protected ListLifeInfo(Parcel in) {
         this.status = in.readInt();
-        this.lifeinfolist = new ArrayList<LifeInfo>();
-        in.readList(this.lifeinfolist, LifeInfo.class.getClassLoader());
+        this.lifeinfolist = in.createTypedArrayList(LifeInfo.CREATOR);
     }
 
     public static final Creator<ListLifeInfo> CREATOR = new Creator<ListLifeInfo>() {

@@ -24,6 +24,7 @@ import com.example.administrator.taoyuan.activity_life.fabu;
 
 import com.example.administrator.taoyuan.pojo.ListInfo;
 import com.example.administrator.taoyuan.pojo.ListLifeInfo;
+import com.example.administrator.taoyuan.utils.HttpUtils;
 import com.example.administrator.taoyuan.utils.xUtilsImageUtils;
 import com.google.gson.Gson;
 
@@ -34,6 +35,8 @@ import org.xutils.x;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
+
+import butterknife.OnClick;
 
 public class Life extends Fragment {
 
@@ -82,6 +85,7 @@ public class Life extends Fragment {
 
                 View view1=  View.inflate(getActivity(), R.layout.activity_list_lv_dongtai_item,null);
                 ImageView iv_photo = ((ImageView) view1.findViewById(R.id.iv_photo));
+                ImageView iv_contphoto = ((ImageView) view1.findViewById(R.id.iv_contphoto));
                 TextView  tv_title= ((TextView) view1.findViewById(R.id.tv_title));
                 TextView tv_name= ((TextView) view1.findViewById(R.id.tv_name));
 
@@ -95,8 +99,8 @@ public class Life extends Fragment {
                     e.printStackTrace();
                 }
                 // x.image().bind(iv_photo,"http://10.40.5.12:8080/Life/imags/"+dongtai.headphoto+"");
-                xUtilsImageUtils.display(iv_photo,"http://10.40.5.45:8080/Life/imags/"+dongtai.headphoto+"",true);
-
+                xUtilsImageUtils.display(iv_photo, HttpUtils.localhost_jt+"imags/"+dongtai.headphoto+"",true);
+                xUtilsImageUtils.display(iv_contphoto, HttpUtils.localhost_jt+"imags/"+dongtai.content_photo+"",false);
                 return view1;
             }
         };
@@ -162,7 +166,7 @@ public class Life extends Fragment {
 
 
     private void getLifeInfoList() {
-        RequestParams params = new RequestParams("http://10.40.5.45:8080/Life/getdongraibypage");
+        RequestParams params = new RequestParams(HttpUtils.localhost_jt+"getdongraibypage");
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
@@ -195,6 +199,21 @@ public class Life extends Fragment {
         });
 
     }
+//    @OnClick({R.id.rb_peng, R.id.rb_suoyou, R.id.rb_huati})
+//    public void onClick(View view) {
+//        Fragment fragment = null;
+//        switch (view.getId()) {
+//            case R.id.rb_peng:
+//                fragment = new linli_help_fragment();
+//                break;
+//            case R.id.rb_suoyou:
+//                break;
+//            case R.id.rb_huati:
+//
+//                break;
+//
+//        }
+//    }
 }
 
 

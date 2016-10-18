@@ -28,7 +28,7 @@
             android:gravity="center"
             android:layout_alignParentRight="true"/>
     </RelativeLayout>
-    <EditText
+    <TextView
         android:id="@+id/leixing"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
 
 
     </LinearLayout>
-    <EditText
+    <TextView
         android:id="@+id/biaoti"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -76,7 +76,7 @@
         android:layout_below="@id/ll_leixing"
         android:textSize="28dp"
         />
-    <TextView
+    <EditText
         android:id="@+id/tv_biaoti"
         android:layout_below="@id/biaoti"
         android:layout_width="match_parent"
@@ -85,7 +85,7 @@
         android:textSize="18sp"
         android:background="#ccc"/>
 
-    <EditText
+    <TextView
         android:id="@+id/neirong"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -93,7 +93,7 @@
         android:layout_below="@id/tv_biaoti"
         android:textSize="28dp"
         />
-    <TextView
+    <EditText
         android:id="@+id/neirong_c"
         android:layout_below="@id/neirong"
         android:layout_width="match_parent"
@@ -103,7 +103,7 @@
         android:background="#ccc"
 
         />
-    <EditText
+    <TextView
         android:id="@+id/tupian"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -124,7 +124,7 @@
         android:layout_alignRight="@+id/leixing"
         android:layout_alignEnd="@+id/leixing" />
 
-    <EditText
+    <TextView
         android:id="@+id/editText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
