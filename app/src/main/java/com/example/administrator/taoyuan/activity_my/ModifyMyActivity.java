@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.example.administrator.taoyuan.R;
 import com.example.administrator.taoyuan.pojo.ListActivityBean;
 import com.example.administrator.taoyuan.utils.HttpUtils;
+import com.google.gson.Gson;
 
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
@@ -41,6 +42,7 @@ import butterknife.OnClick;
 public class ModifyMyActivity extends AppCompatActivity {
 
 
+    private static final String TAG = "ModifyMyActivity";
     @InjectView(R.id.all_order_goback)
     ImageView allOrderGoback;
     @InjectView(R.id.iv_to_myHead)
@@ -147,6 +149,21 @@ public class ModifyMyActivity extends AppCompatActivity {
         rl_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Integer id=user.userId;
+                String name=tvModifyMyName.getText().toString();
+                String tel=tvModifyMyTel.getText().toString();
+                String address=tvModifyMyAddress.getText().toString();
+                String profiles=tvModifyMyProfiles.getText().toString();
+                String flag=tvModifyMySex.getText().toString();
+                Boolean sex=false;
+                if(flag.equals("男")){
+                    sex=true;
+                }
+
+                user=new ListActivityBean.User(name,tel,profiles,address,sex,id);
+                Intent intent=new Intent();
+                intent.putExtra("user",user);
+                setResult(RESULT_OK,intent);
                 finish();
             }
         });
@@ -156,19 +173,47 @@ public class ModifyMyActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"save",Toast.LENGTH_SHORT).show();
 
 //                sendImg();
-//                ListActivityBean.User user_modify=new ListActivityBean.User();
-//
-//                RequestParams requestParams=new RequestParams(HttpUtils.localhost);
-//                requestParams.addQueryStringParameter("user", );
+                Integer id=user.userId;
+                String name=tvModifyMyName.getText().toString();
+                String tel=tvModifyMyTel.getText().toString();
+                String address=tvModifyMyAddress.getText().toString();
+                String profiles=tvModifyMyProfiles.getText().toString();
+                String flag=tvModifyMySex.getText().toString();
+                Boolean sex=false;
+                if(flag.equals("男")){
+                    sex=true;
+                }
+
+                ListActivityBean.User user_modify=new ListActivityBean.User(name,tel,profiles,address,sex,id);
+                Gson gson=new Gson();
+                String userJson=gson.toJson(user_modify);
+                RequestParams requestParams=new RequestParams(HttpUtils.localhost+"modifyuser");
+                requestParams.addQueryStringParameter("user",userJson);
+                Log.i(TAG, "onClick: "+requestParams);
+                x.http().post(requestParams, new Callback.CommonCallback<String>() {
+                    @Override
+                    public void onSuccess(String result) {
+                        Log.i(TAG, "onSuccess: "+result);
+                    }
+
+                    @Override
+                    public void onError(Throwable ex, boolean isOnCallback) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(CancelledException cex) {
+
+                    }
+
+                    @Override
+                    public void onFinished() {
+
+                    }
+                });
             }
         });
 
-//        tv_save.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(getApplicationContext(),"save++",Toast.LENGTH_SHORT).show();
-//            }
-//        });
     }
 
     @OnClick({R.id.rl_mytx, R.id.rl_myName, R.id.rl_mySex,R.id.rl_myTel,R.id.rl_modify_myAddress,R.id.rl_myProfiles,R.id.rl_myBirthday})

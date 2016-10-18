@@ -10,7 +10,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="220dp"
-        android:background="@drawable/background">
+        android:background="@drawable/bc">
 
 
 
@@ -66,7 +66,7 @@
         android:textColor="@color/black"
 
         android:background="#fff"
-        android:textSize="24sp"/>
+        android:textSize="20sp"/>
     <View android:layout_width="match_parent"
         android:layout_alignParentBottom="true"
         android:layout_height="3px"
@@ -80,7 +80,7 @@
         android:textColor="@color/black"
         android:onClick="opennew"
         android:background="#fff"
-        android:textSize="24sp"/>
+        android:textSize="20sp"/>
     <View android:layout_width="match_parent"
         android:layout_alignParentBottom="true"
         android:layout_height="3px"
@@ -93,7 +93,7 @@
         android:textColor="@color/black"
         android:text="我的活动"
         android:background="#fff"
-        android:textSize="24sp"/>
+        android:textSize="20sp"/>
     <View android:layout_width="match_parent"
         android:layout_alignParentBottom="true"
         android:layout_height="3px"
@@ -106,7 +106,7 @@
         android:textColor="@color/black"
         android:text="我的收藏"
         android:background="#fff"
-        android:textSize="24sp"/>
+        android:textSize="20sp"/>
     <View android:layout_width="match_parent"
         android:layout_alignParentBottom="true"
         android:layout_height="3px"
@@ -120,7 +120,7 @@
         android:text="设置"
         android:textColor="@color/black"
         android:background="#fff"
-        android:textSize="24sp"/>
+        android:textSize="20sp"/>
 
 
 </LinearLayout>
