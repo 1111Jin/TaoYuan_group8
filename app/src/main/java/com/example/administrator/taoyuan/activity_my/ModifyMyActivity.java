@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.example.administrator.taoyuan.R;
 import com.example.administrator.taoyuan.pojo.ListActivityBean;
 import com.example.administrator.taoyuan.utils.HttpUtils;
+import com.google.gson.Gson;
 
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
@@ -32,6 +33,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -39,8 +41,8 @@ import butterknife.OnClick;
 
 public class ModifyMyActivity extends AppCompatActivity {
 
-    private static final int PHOTO_REQUEST = 33;
-    private static final int PHOTO_CLIP = 44;
+
+    private static final String TAG = "ModifyMyActivity";
     @InjectView(R.id.all_order_goback)
     ImageView allOrderGoback;
     @InjectView(R.id.iv_to_myHead)
@@ -92,7 +94,9 @@ public class ModifyMyActivity extends AppCompatActivity {
     String items[] = {"相册选择", "拍照"};
     String sex[] = {"男", "女"};
 
-    public static final int TAKE_PHOTO = 12;
+    private static final int PHOTO_REQUEST = 1;
+    private static final int CAMERA_REQUEST = 2;
+    private static final int PHOTO_CLIP = 3;
     //相机拍摄照片和视频的标准目录
     private File file ;
     private Uri imageUri;
@@ -145,6 +149,21 @@ public class ModifyMyActivity extends AppCompatActivity {
         rl_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Integer id=user.userId;
+                String name=tvModifyMyName.getText().toString();
+                String tel=tvModifyMyTel.getText().toString();
+                String address=tvModifyMyAddress.getText().toString();
+                String profiles=tvModifyMyProfiles.getText().toString();
+                String flag=tvModifyMySex.getText().toString();
+                Boolean sex=false;
+                if(flag.equals("男")){
+                    sex=true;
+                }
+
+                user=new ListActivityBean.User(name,tel,profiles,address,sex,id);
+                Intent intent=new Intent();
+                intent.putExtra("user",user);
+                setResult(RESULT_OK,intent);
                 finish();
             }
         });
@@ -152,20 +171,49 @@ public class ModifyMyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(),"save",Toast.LENGTH_SHORT).show();
-                sendImg();
-//                ListActivityBean.User user_modify=new ListActivityBean.User();
-//
-//                RequestParams requestParams=new RequestParams(HttpUtils.localhost);
-//                requestParams.addQueryStringParameter("user", );
+
+//                sendImg();
+                Integer id=user.userId;
+                String name=tvModifyMyName.getText().toString();
+                String tel=tvModifyMyTel.getText().toString();
+                String address=tvModifyMyAddress.getText().toString();
+                String profiles=tvModifyMyProfiles.getText().toString();
+                String flag=tvModifyMySex.getText().toString();
+                Boolean sex=false;
+                if(flag.equals("男")){
+                    sex=true;
+                }
+
+                ListActivityBean.User user_modify=new ListActivityBean.User(name,tel,profiles,address,sex,id);
+                Gson gson=new Gson();
+                String userJson=gson.toJson(user_modify);
+                RequestParams requestParams=new RequestParams(HttpUtils.localhost+"modifyuser");
+                requestParams.addQueryStringParameter("user",userJson);
+                Log.i(TAG, "onClick: "+requestParams);
+                x.http().post(requestParams, new Callback.CommonCallback<String>() {
+                    @Override
+                    public void onSuccess(String result) {
+                        Log.i(TAG, "onSuccess: "+result);
+                    }
+
+                    @Override
+                    public void onError(Throwable ex, boolean isOnCallback) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(CancelledException cex) {
+
+                    }
+
+                    @Override
+                    public void onFinished() {
+
+                    }
+                });
             }
         });
 
-//        tv_save.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(getApplicationContext(),"save++",Toast.LENGTH_SHORT).show();
-//            }
-//        });
     }
 
     @OnClick({R.id.rl_mytx, R.id.rl_myName, R.id.rl_mySex,R.id.rl_myTel,R.id.rl_modify_myAddress,R.id.rl_myProfiles,R.id.rl_myBirthday})
@@ -183,9 +231,7 @@ public class ModifyMyActivity extends AppCompatActivity {
                                 break;
                             case 1:
                                 //拍照:
-                                Intent intent2 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                                intent2.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
-                                startActivityForResult(intent2, TAKE_PHOTO);
+                                getPicFromCamera();
 
                                 break;
                         }
@@ -320,7 +366,8 @@ public class ModifyMyActivity extends AppCompatActivity {
     private void sendImg() {
         RequestParams params = new RequestParams(HttpUtils.localhost+"upload");//upload 是你要访问的servlet
 
-        params.addBodyParameter("fileName","fileName");
+//        params.addBodyParameter("fileName","fileName");
+        Log.i("FILE+++++++", "sendImg: "+file);
         params.addBodyParameter("file",file);
 //        params.addBodyParameter("file",file1);
 
@@ -334,6 +381,7 @@ public class ModifyMyActivity extends AppCompatActivity {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
+                Log.i("EEEEEEE", "onError: "+ex);
 
             }
 
@@ -368,7 +416,9 @@ public class ModifyMyActivity extends AppCompatActivity {
     private String getPhotoFileName() {
         Date date = new Date(System.currentTimeMillis());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
-        return sdf.format(date) + ".png";
+
+        System.out.println("============"+ UUID.randomUUID());
+        return sdf.format(date)+"_"+UUID.randomUUID() + ".png";
     }
 
     private void getPicFromPhoto() {
@@ -378,6 +428,44 @@ public class ModifyMyActivity extends AppCompatActivity {
         startActivityForResult(intent, PHOTO_REQUEST);
     }
 
+    private void getPicFromCamera() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // 下面这句指定调用相机拍照后的照片存储的路径
+        System.out.println("getPicFromCamera==========="+file.getAbsolutePath());
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
+        startActivityForResult(intent, CAMERA_REQUEST);
+    }
+
+    public void saveImageToGallery(Context context, Bitmap bmp) {
+        // 首先保存图片
+//        File appDir = new File(Environment.getExternalStorageDirectory(), "Boohee");
+//        if (!appDir.exists()) {
+//            appDir.mkdir();
+//        }
+//        String fileName = System.currentTimeMillis() + ".jpg";
+//        File file = new File(appDir, fileName);
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            bmp.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            fos.flush();
+            fos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // 其次把文件插入到系统图库
+        try {
+            MediaStore.Images.Media.insertImage(context.getContentResolver(),
+                    file.getAbsolutePath(), file.getName(), null);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        // 最后通知图库更新
+        context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + file.getAbsolutePath())));
+    }
+
 
 
     @Override
@@ -385,24 +473,32 @@ public class ModifyMyActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         switch (requestCode) {
-            case 1:
-                String name = data.getStringExtra("name");
-                Log.i("Result name", "onActivityResult: " + name);
-                tvModifyMyName.setText(name);
+
+            case CAMERA_REQUEST:
+                switch (resultCode) {
+                    case -1://-1表示拍照成功  固定
+                        System.out.println("CAMERA_REQUEST"+file.getAbsolutePath());
+                        if (file.exists()) {
+                            photoClip(Uri.fromFile(file));
+                        }
+                        break;
+                    default:
+                        break;
+                }
                 break;
             case PHOTO_REQUEST:
                 if (data != null) {
                     photoClip(data.getData());
 
-                 }
-                 break;
+                }
+                break;
             case PHOTO_CLIP:
                 if (data != null) {
                     Bundle extras = data.getExtras();
                     if (extras != null) {
                         Log.w("test", "data");
                         Bitmap photo = extras.getParcelable("data");
-//                        saveImageToGallery(getApplication(),photo);//保存bitmap到本地
+                        saveImageToGallery(getApplication(),photo);//保存bitmap到本地
                         ivModifyMyHead.setImageBitmap(photo);
                           break;
 

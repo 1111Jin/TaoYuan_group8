@@ -6,8 +6,10 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -32,6 +34,7 @@ import java.util.List;
 
 public class GetAllUserActivity extends AppCompatActivity {
     private static final int RESULTCODE = 1;
+    private static final String TAG = "getAllUserActivity";
     private ListView lv_userList;
     private BaseAdapter adapter;
     final List<ListActivityBean.User> userList=new ArrayList<ListActivityBean.User>();
@@ -107,12 +110,23 @@ public class GetAllUserActivity extends AppCompatActivity {
 
             }
         });
+
+        lv_userList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.i(TAG, "onItemClick: "+position);
+                ListActivityBean.User friend=userList.get(position);
+                Intent intent = new Intent(getApplicationContext(),MyFriend.class);
+                intent.putExtra("friend",friend);
+                startActivityForResult(intent,1);
+            }
+        });
     }
 
     public void getUserList() {
         progressBar.setVisibility(View.VISIBLE);
 
-        RequestParams params=new RequestParams(HttpUtils.localhost+"/user?userId=1&pageNo=1");
+        RequestParams params=new RequestParams(HttpUtils.localhost+"/getmyfriend?userId="+HttpUtils.userId);
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {

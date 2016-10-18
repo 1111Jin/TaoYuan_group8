@@ -20,6 +20,16 @@ public class ListActivityBean implements Parcelable {
         public String userHead;
         public String userProfiles;
         public Boolean userSex;
+        public String userAddress;
+
+        public User(String userName, String userTel, String userProfiles,String userAddress, Boolean userSex, Integer userId) {
+            this.userName = userName;
+            this.userTel = userTel;
+            this.userProfiles = userProfiles;
+            this.userAddress=userAddress;
+            this.userSex = userSex;
+            this.userId = userId;
+        }
 
         @Override
         public int describeContents() {
@@ -33,6 +43,7 @@ public class ListActivityBean implements Parcelable {
             dest.writeString(this.userTel);
             dest.writeString(this.userHead);
             dest.writeString(this.userProfiles);
+            dest.writeString(this.userAddress);
             dest.writeValue(this.userSex);
         }
 
@@ -45,6 +56,7 @@ public class ListActivityBean implements Parcelable {
             this.userTel = in.readString();
             this.userHead = in.readString();
             this.userProfiles = in.readString();
+            this.userAddress=in.readString();
             this.userSex = (Boolean) in.readValue(Boolean.class.getClassLoader());
         }
 

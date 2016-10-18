@@ -92,7 +92,7 @@ public class my extends Fragment {
 
     public void initData() {
 
-        RequestParams requestParams=new RequestParams(HttpUtils.localhost+"/my?userName="+HttpUtils.userName);
+        RequestParams requestParams=new RequestParams(HttpUtils.localhost+"/my?userId="+HttpUtils.userId);
 
         x.http().get(requestParams, new Callback.CommonCallback<String>() {
             @Override
@@ -113,7 +113,7 @@ public class my extends Fragment {
 
                 tvMyprofiles.setText(list.get(0).userProfiles);
 
-                Log.i(TAG, "onSuccess: "+list.get(0).userProfiles);
+                Log.i(TAG, "onSuccess: "+list.get(0).userAddress);
             }
 
             @Override
@@ -171,5 +171,19 @@ public class my extends Fragment {
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case REQUSETCODE:
+                ListActivityBean.User u=data.getParcelableExtra("user");
+                tvMyname.setText(u.userName);
+                System.out.println(u.userName);
+                tvMyintegral.setText(u.userTel);
 
+                tvMyprofiles.setText(u.userProfiles);
+                break;
+
+        }
+    }
 }
