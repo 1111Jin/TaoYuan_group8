@@ -13,7 +13,7 @@ public class ListInfo implements Serializable {
     public Date time;
     public String style;
     public String headphoto;
-
+    public String content_photo;
 
     @Override
     public String toString() {
@@ -24,6 +24,7 @@ public class ListInfo implements Serializable {
                 ", time=" + time +
                 ", style='" + style + '\'' +
                 ", headphoto='" + headphoto + '\'' +
+                ", content_photo='" + content_photo + '\'' +
                 '}';
     }
 }

@@ -47,16 +47,48 @@
         android:layout_height="wrap_content"
         android:textColor="#aa000000"
         android:textSize="24sp"
-
         android:layout_below="@id/iv_photo"
-
         android:text="内容"
         />
+    <ImageView
+        android:id="@+id/iv_contphoto"
+        android:src="@drawable/suoyou_l"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginRight="40dp"
+        android:layout_below="@id/tv_name"
+
+        />
+
+    <ImageView
+        android:id="@+id/iv_zan"
+        android:src="@drawable/fm_run_loved_prs"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_below="@+id/tv_name"
+        android:layout_toRightOf="@+id/tv_title"
+        android:layout_toEndOf="@+id/tv_title"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="95dp"
+        android:layout_marginTop="68dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="评论"
+        android:textSize="24sp"
+        android:textColor="#000"
+        android:background="#ccc"
+        android:id="@+id/textView3"
+        android:layout_alignTop="@+id/iv_zan"
+        android:layout_toRightOf="@+id/iv_zan"
+        android:layout_toEndOf="@+id/iv_zan" />
     <RelativeLayout
         android:id="@+id/diping"
         android:layout_width="match_parent"
        android:layout_height="40dp"
-        android:layout_below="@id/tv_name"
+        android:layout_below="@id/textView3"
         android:layout_alignParentBottom="true">
     <TextView
         android:layout_width="320dp"
