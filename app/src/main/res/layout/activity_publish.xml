@@ -18,6 +18,13 @@
             android:textColor="#fff"
             android:text="发布详情"/>
     </LinearLayout>
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
 
     <EditText
         android:id="@+id/tv_bt"
@@ -94,6 +101,8 @@
         android:background="#fff"
         android:paddingTop="8dp"
         android:hint="活动人数"/>
+    </RelativeLayout>
+</ScrollView>
 
     <Button
         android:background="#ff5619"

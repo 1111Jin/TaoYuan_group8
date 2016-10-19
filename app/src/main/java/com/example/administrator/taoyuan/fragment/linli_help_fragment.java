@@ -78,7 +78,7 @@ public class linli_help_fragment extends linli{
                 iv_tou = ((ImageView) view.findViewById(R.id.iv_tou));
                 tv_username = ((TextView) view.findViewById(R.id.tv_username));
                 tv_time2 = ((TextView) view.findViewById(R.id.tv_time2));
-                help_content = ((TextView) view.findViewById(R.id.tv_help_content));
+//                help_content = ((TextView) view.findViewById(R.id.tv_help_content));
                 help_title = ((TextView) view.findViewById(R.id.tv_help_title));
 
 
@@ -86,7 +86,7 @@ public class linli_help_fragment extends linli{
                 tv_username.setText(URLDecoder.decode(helpBean.userName));
                 tv_time2.setText(helpBean.time);
                 help_title.setText(URLDecoder.decode(helpBean.help_title));
-                help_content.setText(URLDecoder.decode(helpBean.help_content));
+//                help_content.setText(URLDecoder.decode(helpBean.help_content));
                 xUtilsImageUtils.display(iv_tou,"http://10.40.5.23:8080/cmty/upload/"+helpBean.help_photo+"",true);
                 return view;
             }

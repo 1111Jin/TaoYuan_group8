@@ -19,6 +19,7 @@ import android.widget.RadioGroup;
 
 import com.example.administrator.taoyuan.R;
 import com.example.administrator.taoyuan.activity_linli.PublishActivity;
+import com.example.administrator.taoyuan.activity_linli.PublishHelp;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +44,7 @@ public class linli extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
        view = inflater.inflate(R.layout.fragment_linli,null);
+        switchFragment(new linli_activity_fragment());
         return view;
 
     }
@@ -103,7 +105,8 @@ public class linli extends Fragment {
                     Intent intent = new Intent(getActivity().getApplicationContext(),PublishActivity.class);
                     startActivity(intent);
                 }else if (position==1){
-
+                    Intent intent = new Intent(getActivity(), PublishHelp.class);
+                    startActivity(intent);
                 }
             }
         });
