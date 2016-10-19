@@ -36,8 +36,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 
-import butterknife.OnClick;
-
 public class Life extends Fragment {
 
     private ListView lv_lifeinfo;
@@ -138,7 +136,7 @@ public class Life extends Fragment {
                 //点击item的信息
                 intent.putExtra("lifeinfo", lifelist.get(position-1));
 
-                startActivity(intent);
+                startActivityForResult(intent,1);
 
             }
         });
@@ -176,6 +174,7 @@ public class Life extends Fragment {
 //                System.out.println(bean.status+"----");
 //                System.out.println(bean.lifeinfolist.size()+"===");
                 lifelist.addAll( bean.lifeinfolist);
+
 
                 adapter.notifyDataSetChanged();
 

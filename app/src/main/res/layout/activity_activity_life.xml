@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:textSize="24sp"
         android:gravity="center"
+        android:background="#ff5619"
         android:layout_marginTop="-7dp"
         android:layout_marginRight="-5dp"
         android:layout_alignParentRight="true"
@@ -20,7 +21,7 @@
     <TextView
         android:id="@+id/tv_life"
         android:text="生活圈"
-        android:background="#0066ff"
+        android:background="#ff5619"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:textSize="24sp"
@@ -43,27 +44,30 @@
         android:layout_below="@id/tv_life"
 
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:orientation="horizontal">
         <RadioButton
             android:id="@+id/rb_peng"
             android:text="朋友"
+            android:layout_height="40dp"
             android:background="#000000"
-            android:drawableTop="@drawable/radiotab_peng_selector"
+            android:textSize="24sp"
             style="@style/radiotab"
             />
         <RadioButton
             android:id="@+id/rb_suoyou"
             android:text="所有人"
+            android:layout_height="40dp"
             android:background="#000000"
-            android:drawableTop="@drawable/radiotab_suoyou_selector"
+            android:textSize="24sp"
             style="@style/radiotab"
             />
         <RadioButton
             android:id="@+id/rb_huati"
             android:text="话题"
+            android:layout_height="40dp"
             android:background="#000000"
-            android:drawableTop="@drawable/radiotab_huati_selector"
+            android:textSize="24sp"
             style="@style/radiotab"
             />
 
