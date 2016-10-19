@@ -109,7 +109,7 @@ public class my extends Fragment {
 
                 tvMyname.setText(list.get(0).userName);
                 System.out.println(list.get(0).userName);
-                tvMyintegral.setText(list.get(0).userTel);
+                tvMyintegral.setText("积分："+list.get(0).userTel);
 
                 tvMyprofiles.setText(list.get(0).userProfiles);
 
