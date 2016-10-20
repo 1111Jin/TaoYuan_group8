@@ -148,7 +148,8 @@ public class Life extends Fragment {
             public void onClick(View v) {
                 Intent intent=new Intent(getActivity(),fabu.class);
                 intent.putExtra("orderDeatils",tv_fabu.getClass());
-                startActivity(intent);
+                startActivityForResult(intent,1);
+//                startActivity(intent);
             }
         });
 
@@ -211,6 +212,16 @@ public class Life extends Fragment {
 //
 //                break;
 //
+//        }
+//    }
+
+
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        switch (requestCode){
+//            case 1:
+//                break;
 //        }
 //    }
 }

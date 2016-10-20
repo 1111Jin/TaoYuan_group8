@@ -51,12 +51,12 @@ public class LifeXiangqing extends AppCompatActivity {
 
 
     private void initEvent() {
-        x_fanhui.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+            x_fanhui.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
 
     }
 
