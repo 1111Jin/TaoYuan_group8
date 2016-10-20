@@ -21,6 +21,7 @@ public class ListActivityBean implements Parcelable {
         public String userProfiles;
         public Boolean userSex;
         public String userAddress;
+        public Integer friendId;
 
         public User(String userName, String userTel, String userProfiles,String userAddress, Boolean userSex, Integer userId) {
             this.userName = userName;
@@ -30,6 +31,32 @@ public class ListActivityBean implements Parcelable {
             this.userSex = userSex;
             this.userId = userId;
         }
+
+        public User(Integer userId, String userName, Integer friendId, String userAddress, Boolean userSex, String userProfiles, String userHead, String userTel) {
+            this.userId = userId;
+            this.userName = userName;
+            this.friendId = friendId;
+            this.userAddress = userAddress;
+            this.userSex = userSex;
+            this.userProfiles = userProfiles;
+            this.userHead = userHead;
+            this.userTel = userTel;
+        }
+
+        @Override
+        public String toString() {
+            return "User{" +
+                    "userId=" + userId +
+                    ", userName='" + userName + '\'' +
+                    ", userTel='" + userTel + '\'' +
+                    ", userHead='" + userHead + '\'' +
+                    ", userProfiles='" + userProfiles + '\'' +
+                    ", userSex=" + userSex +
+                    ", userAddress='" + userAddress + '\'' +
+                    ", friendId='" + friendId + '\'' +
+                    '}';
+        }
+
 
         @Override
         public int describeContents() {
@@ -43,11 +70,9 @@ public class ListActivityBean implements Parcelable {
             dest.writeString(this.userTel);
             dest.writeString(this.userHead);
             dest.writeString(this.userProfiles);
-            dest.writeString(this.userAddress);
             dest.writeValue(this.userSex);
-        }
-
-        public User() {
+            dest.writeString(this.userAddress);
+            dest.writeValue(this.friendId);
         }
 
         protected User(Parcel in) {
@@ -56,8 +81,9 @@ public class ListActivityBean implements Parcelable {
             this.userTel = in.readString();
             this.userHead = in.readString();
             this.userProfiles = in.readString();
-            this.userAddress=in.readString();
             this.userSex = (Boolean) in.readValue(Boolean.class.getClassLoader());
+            this.userAddress = in.readString();
+            this.friendId = (Integer) in.readValue(Integer.class.getClassLoader());
         }
 
         public static final Creator<User> CREATOR = new Creator<User>() {

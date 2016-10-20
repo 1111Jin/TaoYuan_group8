@@ -136,6 +136,7 @@ public class GetAllUserActivity extends AppCompatActivity {
                 userList.addAll(bean.userList);
                 System.out.println(bean.status);
                 System.out.println(bean.userList.size());
+                Log.i(TAG, "onSuccess: "+bean.userList.get(0).friendId);
                 adapter.notifyDataSetChanged();
                 progressBar.setVisibility(View.GONE);
             }
@@ -157,6 +158,17 @@ public class GetAllUserActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case 1:
+                userList.clear();
+                getUserList();
+                break;
+        }
     }
 
     public static class ViewHolder{

@@ -140,7 +140,7 @@ public class my extends Fragment {
         ButterKnife.reset(this);
     }
 
-    @OnClick({R.id.rl_modify_My,R.id.btn_myfriend,R.id.btn_myactivity,R.id.btn_myrepair,R.id.btn_myshoucang})
+    @OnClick({R.id.rl_modify_My,R.id.btn_myfriend,R.id.btn_myactivity,R.id.btn_myrepair,R.id.btn_myshoucang,R.id.btn_myinstill})
      public void onClick(View view){
         switch (view.getId()){
             case R.id.rl_modify_My:
@@ -167,6 +167,9 @@ public class my extends Fragment {
             case R.id.btn_myrepair:
                 Intent intent4 = new Intent(getActivity(), RepairActivity.class);
                 startActivity(intent4);
+                break;
+            case R.id.btn_myinstill:
+
                 break;
         }
     }
