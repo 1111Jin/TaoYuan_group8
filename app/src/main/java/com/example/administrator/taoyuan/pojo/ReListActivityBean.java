@@ -22,5 +22,25 @@ public class ReListActivityBean {
         public String repairState;
         public Integer servicemanId;
         public String servicemanName;
+        public Integer userId;
+        public String userName;
+
+        @Override
+        public String toString() {
+            return "Repair{" +
+                    "repairId=" + repairId +
+                    ", repairTitle='" + repairTitle + '\'' +
+                    ", repairType='" + repairType + '\'' +
+                    ", repairContent='" + repairContent + '\'' +
+                    ", repairImg=" + repairImg +
+                    ", repairAddress='" + repairAddress + '\'' +
+                    ", repairData=" + repairData +
+                    ", repairState='" + repairState + '\'' +
+                    ", servicemanId=" + servicemanId +
+                    ", servicemanName='" + servicemanName + '\'' +
+                    ", userId=" + userId +
+                    ", userName='" + userName + '\'' +
+                    '}';
+        }
     }
 }

@@ -5,12 +5,13 @@
     android:background="#EEEEEE" >
 
     <ListView
-        android:id="@+id/frag_allrepair_listview"
+        android:id="@+id/lv_repair_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:cacheColorHint="#ffffffff"
         android:divider="@null"
         android:clickable="true"
         />
+
 
 </FrameLayout>
