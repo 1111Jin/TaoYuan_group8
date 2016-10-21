@@ -104,6 +104,7 @@ public class my extends Fragment {
 
                 list=bean.userList;
                 String url=list.get(0).userHead;
+                System.out.println(url);
                 xUtilsImageUtils.display(ivMymsg,HttpUtils.localhost+url,true);
 
 

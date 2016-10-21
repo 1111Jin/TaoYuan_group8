@@ -61,7 +61,7 @@ public class UnPersonnalFragment extends BaseFragment {
 
     public void getUserList() {
         RequestParams params = new RequestParams(HttpUtils.localhost + "/getallrepair?userId=" + HttpUtils.userId);
-        params.addBodyParameter("repairState","未受理");
+        params.addBodyParameter("repairState","未派员");
         System.out.println(params);
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override

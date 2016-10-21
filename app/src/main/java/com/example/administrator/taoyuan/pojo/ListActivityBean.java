@@ -23,9 +23,10 @@ public class ListActivityBean implements Parcelable {
         public String userAddress;
         public Integer friendId;
 
-        public User(String userName, String userTel, String userProfiles,String userAddress, Boolean userSex, Integer userId) {
+        public User(String userName, String userTel,String userHead, String userProfiles,String userAddress, Boolean userSex, Integer userId) {
             this.userName = userName;
             this.userTel = userTel;
+            this.userHead = userHead;
             this.userProfiles = userProfiles;
             this.userAddress=userAddress;
             this.userSex = userSex;

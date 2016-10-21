@@ -18,16 +18,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.administrator.taoyuan.R;
 
 import com.example.administrator.taoyuan.fragment.AllRepairFragment;
+import com.example.administrator.taoyuan.fragment.AlreadyRepairFragment;
 import com.example.administrator.taoyuan.fragment.BaseFragment;
+import com.example.administrator.taoyuan.fragment.PersonnnalFragment;
 import com.example.administrator.taoyuan.fragment.UnPersonnalFragment;
 
 
+import com.example.administrator.taoyuan.fragment.UnProcessedFragment;
+import com.example.administrator.taoyuan.fragment.UnRemarkFragment;
 import com.example.administrator.taoyuan.utils.DisplayUtil;
 import com.shizhefei.view.indicator.IndicatorViewPager;
 import com.shizhefei.view.indicator.ScrollIndicatorView;
@@ -35,9 +40,6 @@ import com.shizhefei.view.indicator.slidebar.ColorBar;
 import com.shizhefei.view.indicator.transition.OnTransitionTextListener;
 
 
-import org.xutils.common.Callback;
-import org.xutils.http.RequestParams;
-import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +50,7 @@ public class RepairActivity extends AppCompatActivity {
     private static final String TAG = "RepairActivity";
     private IndicatorViewPager indicatorViewPager;
     List<BaseFragment> lists=new ArrayList<BaseFragment>();
-
+    private RelativeLayout rl_back;
 
 
     @Override
@@ -59,6 +61,7 @@ public class RepairActivity extends AppCompatActivity {
         initData();
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.moretab_viewPager);
+        rl_back = ((RelativeLayout) findViewById(R.id.rl_back));
         ScrollIndicatorView scrollIndicatorView = (ScrollIndicatorView) findViewById(R.id.moretab_indicator);
 
         float unSelectSize = 12;
@@ -67,22 +70,29 @@ public class RepairActivity extends AppCompatActivity {
 
         scrollIndicatorView.setScrollBar(new ColorBar(this, 0xFF2196F3, 4));
 
-        viewPager.setOffscreenPageLimit(1);
+        viewPager.setOffscreenPageLimit(6);
         indicatorViewPager = new IndicatorViewPager(scrollIndicatorView, viewPager);
         indicatorViewPager.setAdapter(new MyAdapter(getSupportFragmentManager()));
+
+        rl_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     public void initData(){
         lists.add(new AllRepairFragment());
+        lists.add(new UnProcessedFragment());
         lists.add(new UnPersonnalFragment());
-        lists.add(new AllRepairFragment());
-        lists.add(new AllRepairFragment());
-        lists.add(new AllRepairFragment());
-        lists.add(new AllRepairFragment());
+        lists.add(new PersonnnalFragment());
+        lists.add(new AlreadyRepairFragment());
+        lists.add(new UnRemarkFragment());
     }
 
     public  class MyAdapter extends IndicatorViewPager.IndicatorFragmentPagerAdapter {
-        private String[] versions = {"全部","未查看", "未派员", "已派员", "已维修", "待评价"};
+        private String[] versions = {"全部","未受理", "未派员", "已派员", "已维修", "待评价"};
 
         public MyAdapter(FragmentManager fragmentManager) {
             super(fragmentManager);
@@ -96,7 +106,7 @@ public class RepairActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return 6;
+            return versions.length;
         }
 
         @Override
