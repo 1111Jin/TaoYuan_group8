@@ -55,18 +55,21 @@
         android:layout_alignParentBottom="true"
         android:layout_height="5px"
         android:background="#C0C5C7"/>
-    <include layout="@layout/tab_fragment"
-        />
+
     <View style="@style/bg_line"/>
     <ImageView
         android:id="@+id/order_line_tab"
         android:layout_width="wrap_content"
         android:layout_height="2dp"
         android:background="#EE113D"/>
-    <android.support.v4.view.ViewPager
-        android:id="@+id/order_fragment_viewpager"
+    <com.shizhefei.view.indicator.ScrollIndicatorView
+        android:id="@+id/moretab_indicator"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
-    </android.support.v4.view.ViewPager>
+        android:layout_height="45dp" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/moretab_viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
 </LinearLayout>

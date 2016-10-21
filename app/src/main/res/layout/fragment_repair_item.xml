@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical" >
+<RelativeLayout
+    android:id="@+id/frag_allorders_item_rl"
+    android:layout_width="match_parent"
+    android:layout_height="38dp"
+    android:background="#ffffff">
+    <TextView
+        android:id="@+id/item_repair_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_margin="10dp"
+        android:text="报修事件："
+        android:textSize="14sp"
+        android:textColor="#777777"/>
+    <TextView
+        android:id="@+id/tv_repair_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_margin="10dp"
+        android:text="报修状态"
+        android:textSize="14sp"
+        android:layout_alignParentRight="true"
+        android:textColor="@color/red"/>
+    <View
+        style="@style/bg_line"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_alignParentBottom="true"/>
+</RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_repair_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="报修标题"
+            android:textSize="15sp"
+            android:layout_margin="10dp"
+
+            />
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@mipmap/ic_launcher"
+            android:layout_below="@id/tv_repair_title"
+            android:layout_margin="10dp"
+            android:id="@+id/iv_repair_img"
+            />
+        <TextView
+            android:id="@+id/tv_repair_content"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="报修详细信息"
+            android:singleLine="false"
+
+            android:layout_marginLeft="60dp"
+            android:layout_alignTop="@+id/iv_repair_img"
+            android:layout_toRightOf="@+id/iv_repair_img"
+            android:layout_toEndOf="@+id/iv_repair_img" />
+    </RelativeLayout>
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="38dp"
+    android:background="#ffffff">
+    <View
+        style="@style/bg_line"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_alignParentTop="true"/>
+    <TextView
+        android:id="@+id/tv_repair_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_margin="10dp"
+        android:layout_alignParentRight="true"
+        android:text="地址"
+        android:textSize="14sp"
+        android:textColor="#777777"/>
+    <TextView
+        android:id="@+id/tv_repair_userName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/tv_repair_address"
+        android:text="报修人："
+        android:textSize="14sp"
+        android:paddingRight="6dp"
+        android:textColor="#777777"/>
+    <View
+        style="@style/bg_line"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_alignParentBottom="true"/>
+</RelativeLayout>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="38dp">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_item_left"
+        android:layout_toLeftOf="@+id/tv_repair_servicemanName"
+        android:text="派遣师傅:"
+        android:textSize="14sp"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="20dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_repair_servicemanName"
+        android:layout_alignParentRight="true"
+        android:text="无"
+        android:textSize="14sp"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+       />
+
+</RelativeLayout>
+
+<View
+    style="@style/bg_line"
+    />
+<View
+
+    android:layout_width="match_parent"
+    android:layout_height="10dp"
+    android:background="#EEEEEE"/>
+</LinearLayout>
