@@ -113,16 +113,7 @@
         />
 
 
-    <ImageView
-        android:id="@+id/tupian_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="图片"
-        android:src="@drawable/add_life_picture"
-        android:textSize="28dp"
-        android:layout_below="@+id/tupian"
-        android:layout_alignRight="@+id/leixing"
-        android:layout_alignEnd="@+id/leixing" />
+
 
     <TextView
         android:id="@+id/editText"
@@ -130,9 +121,16 @@
         android:layout_height="wrap_content"
         android:text="请添加图片"
         android:textSize="20dp"
-        android:layout_alignTop="@+id/tupian_1"
-        android:layout_toRightOf="@+id/tupian_1"
-        android:layout_toEndOf="@+id/tupian_1" />
+       android:layout_below="@id/tupian" />
 
-
+    <ImageView
+        android:id="@+id/tupian_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="图片"
+        android:background="#ff00ff"
+        android:src="@drawable/add_life_picture"
+        android:textSize="28dp"
+       android:layout_below="@id/editText"
+         />
 </RelativeLayout>

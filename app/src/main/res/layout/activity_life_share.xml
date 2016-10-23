@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.administrator.taoyuan.activity_life.LifeShare">
+
+
+
+    <Button
+        android:id="@+id/tv_fabu"
+        android:text="发布"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:gravity="center"
+        android:background="#ff5619"
+        android:layout_marginTop="-7dp"
+        android:layout_marginRight="-5dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+    <TextView
+        android:id="@+id/tv_life"
+        android:text="生活圈"
+        android:background="#ff5619"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:textSize="24sp"
+        android:gravity="center"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+
+    <View android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="5px"
+        android:layout_below="@id/tv_life"
+        android:background="#C0C5C7"/>
+
+    <com.shizhefei.view.indicator.ScrollIndicatorView
+        android:id="@+id/moretab_indicator"
+        android:layout_width="match_parent"
+        android:layout_below="@id/tv_life"
+        android:layout_height="45dp" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/moretab_viewPager"
+        android:layout_below="@id/moretab_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</RelativeLayout>

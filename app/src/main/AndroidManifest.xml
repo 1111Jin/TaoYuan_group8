@@ -35,8 +35,7 @@
         <activity android:name=".activity_life.fabu" />
         <activity android:name=".activity_linli.PublishHelp" />
         <activity android:name=".activity_my.MyFriend" />
-        <activity android:name=".activity_home.TellphoneActivity" />
-        <activity android:name=".activity_my.GetItemRepair"></activity>
+        <activity android:name=".activity_home.TellphoneActivity"></activity>
     </application>
 
 </manifest>
