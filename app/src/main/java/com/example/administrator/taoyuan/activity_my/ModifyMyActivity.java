@@ -177,6 +177,7 @@ public class ModifyMyActivity extends AppCompatActivity {
 //                sendImg();
                 Integer id=user.userId;
                 String head="/upload/"+fileName;
+//                System.out.println(fileName);
                 String name=tvModifyMyName.getText().toString();
                 String tel=tvModifyMyTel.getText().toString();
                 String address=tvModifyMyAddress.getText().toString();
@@ -214,6 +215,7 @@ public class ModifyMyActivity extends AppCompatActivity {
 
                     }
                 });
+                finish();
             }
         });
 
@@ -450,7 +452,7 @@ public class ModifyMyActivity extends AppCompatActivity {
         RequestParams requestParams=new RequestParams(HttpUtils.localhost+"upload");
         requestParams.setMultipart(true);
         requestParams.addBodyParameter("file",file);
-
+        requestParams.addBodyParameter("fileName",fileName);
         x.http().post(requestParams, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
