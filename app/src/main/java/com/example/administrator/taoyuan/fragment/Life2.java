@@ -1,6 +1,5 @@
 package com.example.administrator.taoyuan.fragment;
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,12 +15,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.example.administrator.taoyuan.R;
-//import com.example.administrator.taoyuan.pojo.ListLifeInfo;
 import com.example.administrator.taoyuan.activity_life.LifeXiangqing;
 import com.example.administrator.taoyuan.activity_life.fabu;
-
 import com.example.administrator.taoyuan.pojo.ListInfo;
 import com.example.administrator.taoyuan.pojo.ListLifeInfo;
 import com.example.administrator.taoyuan.utils.HttpUtils;
@@ -36,7 +32,9 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 
-public class Life extends Fragment {
+//import com.example.administrator.taoyuan.pojo.ListLifeInfo;
+
+public class Life2 extends BaseFragment {
 
     private ListView lv_lifeinfo;
     BaseAdapter adapter;
@@ -99,7 +97,6 @@ public class Life extends Fragment {
                 // x.image().bind(iv_photo,"http://10.40.5.12:8080/Life/imags/"+dongtai.headphoto+"");
                 xUtilsImageUtils.display(iv_photo, HttpUtils.localhost_jt+"imags/"+dongtai.headphoto+"",true);
                 xUtilsImageUtils.display(iv_contphoto, HttpUtils.localhost_jt+"imags/"+dongtai.content_photo+"",false);
-                System.out.println(dongtai.content_photo+"666666666666666666666666666");
                 return view1;
             }
         };
@@ -184,7 +181,7 @@ public class Life extends Fragment {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Toast.makeText(Life.this.getActivity(),ex.toString(),Toast.LENGTH_LONG).show();
+                Toast.makeText(Life2.this.getActivity(),ex.toString(),Toast.LENGTH_LONG).show();
                 System.out.println(ex.toString());
             }
 
