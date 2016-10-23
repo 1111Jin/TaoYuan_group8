@@ -94,15 +94,16 @@ public class ModifyMyActivity extends AppCompatActivity {
     String items[] = {"相册选择", "拍照"};
     String sex[] = {"男", "女"};
 
-    private static final int PHOTO_REQUEST = 1;
-    private static final int CAMERA_REQUEST = 2;
-    private static final int PHOTO_CLIP = 3;
+    public static final int SELECT_PIC=11;
+    public static final int TAKE_PHOTO=12;
+    public static final int CROP=13;
     //相机拍摄照片和视频的标准目录
     private File file ;
     private Uri imageUri;
     private ImageView mImageView;
     private RelativeLayout rl_save;
     private TextView tv_save;
+    private String fileName;
 
 
     @Override
@@ -160,7 +161,7 @@ public class ModifyMyActivity extends AppCompatActivity {
                     sex=true;
                 }
 
-                user=new ListActivityBean.User(name,tel,profiles,address,sex,id);
+                user=new ListActivityBean.User(name,tel,fileName,profiles,address,sex,id);
                 Intent intent=new Intent();
                 intent.putExtra("user",user);
                 setResult(RESULT_OK,intent);
@@ -172,10 +173,10 @@ public class ModifyMyActivity extends AppCompatActivity {
         rl_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"save",Toast.LENGTH_SHORT).show();
-
+//                Toast.makeText(getApplicationContext(),"save",Toast.LENGTH_SHORT).show();
 //                sendImg();
                 Integer id=user.userId;
+                String head="/upload/"+fileName;
                 String name=tvModifyMyName.getText().toString();
                 String tel=tvModifyMyTel.getText().toString();
                 String address=tvModifyMyAddress.getText().toString();
@@ -186,7 +187,7 @@ public class ModifyMyActivity extends AppCompatActivity {
                     sex=true;
                 }
 
-                ListActivityBean.User user_modify=new ListActivityBean.User(name,tel,profiles,address,sex,id);
+                ListActivityBean.User user_modify=new ListActivityBean.User(name,tel,head,profiles,address,sex,id);
                 Gson gson=new Gson();
                 String userJson=gson.toJson(user_modify);
                 RequestParams requestParams=new RequestParams(HttpUtils.localhost+"modifyuser");
@@ -228,12 +229,18 @@ public class ModifyMyActivity extends AppCompatActivity {
                         switch (which) {
                             case 0:
                                 //相册选择
-                                getPicFromPhoto();
+                                Intent intent = new Intent(Intent.ACTION_PICK, null);
+                                intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                                        "image/*");
+                                startActivityForResult(intent, SELECT_PIC);
 
                                 break;
                             case 1:
                                 //拍照:
-                                getPicFromCamera();
+                                Intent intent2 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+                                intent2.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
+                                startActivityForResult(intent2,TAKE_PHOTO);
 
                                 break;
                         }
@@ -365,25 +372,93 @@ public class ModifyMyActivity extends AppCompatActivity {
         }
     }
 
-    private void sendImg() {
-        RequestParams params = new RequestParams(HttpUtils.localhost+"upload");//upload 是你要访问的servlet
+    private String getPhotoFileName() {
+        Date date = new Date(System.currentTimeMillis());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
 
-//        params.addBodyParameter("fileName","fileName");
-        Log.i("FILE+++++++", "sendImg: "+file);
-        params.addBodyParameter("file",file);
-//        params.addBodyParameter("file",file1);
+        System.out.println("============"+ UUID.randomUUID());
+        fileName=sdf.format(date)+"_"+UUID.randomUUID() + ".png";
+        return sdf.format(date)+"_"+UUID.randomUUID() + ".png";
+    }
 
-        System.out.println(params);
-        x.http().post(params, new Callback.CommonCallback<String>() {
+    public void crop(Uri uri){
+        //  intent.setType("image/*");
+        //裁剪
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.setDataAndType(uri, "image/*");
+
+        intent.putExtra("crop", "true");
+
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+
+        intent.putExtra("outputX", 200);
+        intent.putExtra("outputY", 200);
+        intent.putExtra("return-data", true);
+        startActivityForResult(intent, CROP);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        //
+        switch (requestCode){
+            case SELECT_PIC:
+                //相册选择
+                if (data != null) {
+                    crop(data.getData());
+
+                }
+
+                break;
+            case TAKE_PHOTO:
+                crop(Uri.fromFile(file));
+                break;
+
+
+            case CROP:
+                if (data != null) {
+                    Bundle extras = data.getExtras();
+                    if (extras != null) {
+
+                        Bitmap bitmap = extras.getParcelable("data");
+                        showImage(bitmap);
+                    }
+                }
+
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public void showImage(Bitmap bitmap){
+        ivModifyMyHead.setImageBitmap(bitmap);//iv显示图片
+        saveImage(bitmap);//保存文件
+        uploadImage();//上传服务器
+
+    }
+    public void saveImage(Bitmap bitmap){
+        FileOutputStream fos=null;
+        try {
+            fos=new FileOutputStream(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        bitmap.compress(Bitmap.CompressFormat.JPEG,50,fos);
+    }
+    public void uploadImage(){
+
+        RequestParams requestParams=new RequestParams(HttpUtils.localhost+"upload");
+        requestParams.setMultipart(true);
+        requestParams.addBodyParameter("file",file);
+
+        x.http().post(requestParams, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-
-                System.out.println(result);
+                Log.i("Mod.ifyPersonInfo", "onSuccess: ");
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Log.i("EEEEEEE", "onError: "+ex);
 
             }
 
@@ -397,120 +472,8 @@ public class ModifyMyActivity extends AppCompatActivity {
 
             }
         });
-    }
 
-    private void photoClip(Uri uri) {
-        // 调用系统中自带的图片剪裁
-        Intent intent = new Intent("com.android.camera.action.CROP");
-        intent.setDataAndType(uri, "image/*");
-        // 下面这个crop=true是设置在开启的Intent中设置显示的VIEW可裁剪
-        intent.putExtra("crop", "true");
-        // aspectX aspectY 是宽高的比例
-        intent.putExtra("aspectX", 1);
-        intent.putExtra("aspectY", 1);
-        // outputX outputY 是裁剪图片宽高
-        intent.putExtra("outputX", 150);
-        intent.putExtra("outputY", 150);
-        intent.putExtra("return-data", true);
-        startActivityForResult(intent, PHOTO_CLIP);
-    }
-
-    private String getPhotoFileName() {
-        Date date = new Date(System.currentTimeMillis());
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
-
-        System.out.println("============"+ UUID.randomUUID());
-        return sdf.format(date)+"_"+UUID.randomUUID() + ".png";
-    }
-
-    private void getPicFromPhoto() {
-        Intent intent = new Intent(Intent.ACTION_PICK, null);
-        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                "image/*");
-        startActivityForResult(intent, PHOTO_REQUEST);
-    }
-
-    private void getPicFromCamera() {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // 下面这句指定调用相机拍照后的照片存储的路径
-        System.out.println("getPicFromCamera==========="+file.getAbsolutePath());
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
-        startActivityForResult(intent, CAMERA_REQUEST);
-    }
-
-    public void saveImageToGallery(Context context, Bitmap bmp) {
-        // 首先保存图片
-//        File appDir = new File(Environment.getExternalStorageDirectory(), "Boohee");
-//        if (!appDir.exists()) {
-//            appDir.mkdir();
-//        }
-//        String fileName = System.currentTimeMillis() + ".jpg";
-//        File file = new File(appDir, fileName);
-        try {
-            FileOutputStream fos = new FileOutputStream(file);
-            bmp.compress(Bitmap.CompressFormat.PNG, 100, fos);
-            fos.flush();
-            fos.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // 其次把文件插入到系统图库
-        try {
-            MediaStore.Images.Media.insertImage(context.getContentResolver(),
-                    file.getAbsolutePath(), file.getName(), null);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        // 最后通知图库更新
-        context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + file.getAbsolutePath())));
     }
 
 
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        switch (requestCode) {
-
-            case CAMERA_REQUEST:
-                switch (resultCode) {
-                    case -1://-1表示拍照成功  固定
-                        System.out.println("CAMERA_REQUEST"+file.getAbsolutePath());
-                        if (file.exists()) {
-                            photoClip(Uri.fromFile(file));
-                        }
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            case PHOTO_REQUEST:
-                if (data != null) {
-                    photoClip(data.getData());
-
-                }
-                break;
-            case PHOTO_CLIP:
-                if (data != null) {
-                    Bundle extras = data.getExtras();
-                    if (extras != null) {
-                        Log.w("test", "data");
-                        Bitmap photo = extras.getParcelable("data");
-                        saveImageToGallery(getApplication(),photo);//保存bitmap到本地
-                        ivModifyMyHead.setImageBitmap(photo);
-                          break;
-
-
-                    }
-                }
-                break;
-            default:
-                break;
-
-        }
-    }
 }

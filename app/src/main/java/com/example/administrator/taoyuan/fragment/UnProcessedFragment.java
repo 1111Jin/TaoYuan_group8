@@ -1,19 +1,16 @@
 package com.example.administrator.taoyuan.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.administrator.taoyuan.R;
-import com.example.administrator.taoyuan.activity_my.GetItemRepair;
 import com.example.administrator.taoyuan.pojo.ReListActivityBean;
 import com.example.administrator.taoyuan.utils.CommonAdapter;
 import com.example.administrator.taoyuan.utils.HttpUtils;
@@ -28,37 +25,45 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
-import butterknife.OnClick;
 
 /**
- * Created by mawuyang on 2016-10-20.
+ * Created by mawuyang on 2016-10-21.
  */
-public class AllRepairFragment extends BaseFragment {
+public class UnProcessedFragment extends BaseFragment {
 
+    private ListView lv_repair_listview;
     List<ReListActivityBean.Repair> repairlist = new ArrayList<ReListActivityBean.Repair>();
     CommonAdapter<ReListActivityBean.Repair> adapter;
-
-    private static final String TAG = "********";
-    private ListView lv_repair;
-
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_all_repair, null);
-
-        Log.i(TAG, "onCreateView: ssssssss");
+        View v=inflater.inflate(R.layout.fragment_all_repair,null);
+        lv_repair_listview = ((ListView) v.findViewById(R.id.lv_repair_listview));
         getUserList();
-        lv_repair = ((ListView) view.findViewById(R.id.lv_repair_listview));
+        return v;
+    }
 
+    @Override
+    public void initView() {
 
-        return view;
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void initEvent() {
+
     }
 
     public void getUserList() {
         RequestParams params = new RequestParams(HttpUtils.localhost + "/getallrepair?userId=" + HttpUtils.userId);
+        params.addBodyParameter("repairState","未受理");
+        System.out.println(params);
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
@@ -74,11 +79,11 @@ public class AllRepairFragment extends BaseFragment {
                         @Override
                         public void convert(ViewHolder viewHolder, ReListActivityBean.Repair repair, int position) {
                             //设置item中控件的取值
-                            Log.i(TAG, "convert: " + position);
+                            Log.i("123123", "convert: " + position);
                             initItemView(viewHolder, repair, position);
                         }
                     };
-                    lv_repair.setAdapter(adapter);
+                    lv_repair_listview.setAdapter(adapter);
                 }else{
                     adapter.notifyDataSetChanged();
                 }
@@ -87,7 +92,7 @@ public class AllRepairFragment extends BaseFragment {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Log.i(TAG, "onError: " + ex.getMessage());
+                Log.i("UnpersonnalFragment", "onError: " + ex.getMessage());
             }
 
             @Override
@@ -115,7 +120,7 @@ public class AllRepairFragment extends BaseFragment {
         ImageView iv_repair_img = ((ImageView) viewHolder.getViewById(R.id.iv_repair_img));
         TextView tv_repair_content = ((TextView) viewHolder.getViewById(R.id.tv_repair_content));
 
-        Log.i(TAG, "initItemView: " + repair.repairType);
+        Log.i("UnpersonnalFragment", "initItemView: " + repair.repairType);
         tv_repair_type.setText(repair.repairType);
         tv_repair_state.setText(repair.repairState);
         tv_repair_address.setText(repair.repairAddress);
@@ -128,33 +133,8 @@ public class AllRepairFragment extends BaseFragment {
 
 
     @Override
-    public void initView() {
-
-    }
-
-    @Override
-    public void initData() {
-
-        lv_repair.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), GetItemRepair.class);
-                intent.putExtra("item",repairlist.get(position));
-                startActivityForResult(intent,1);
-            }
-        });
-    }
-
-    @Override
-    public void initEvent() {
-
-    }
-
-    @Override
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.reset(this);
     }
-
-
 }
