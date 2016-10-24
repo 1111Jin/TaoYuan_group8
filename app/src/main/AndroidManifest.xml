@@ -35,7 +35,8 @@
         <activity android:name=".activity_life.fabu" />
         <activity android:name=".activity_linli.PublishHelp" />
         <activity android:name=".activity_my.MyFriend" />
-        <activity android:name=".activity_home.TellphoneActivity"></activity>
+        <activity android:name=".activity_home.TellphoneActivity" />
+        <activity android:name=".activity_my.GetMyHelp"></activity>
     </application>
 
 </manifest>
