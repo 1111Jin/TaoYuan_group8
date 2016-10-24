@@ -91,13 +91,13 @@ public class BaoxiuActivity2 extends Activity {
     private int mMinute;
     private final static int DIALOG = 0;
     private Dialog dialog = null;
-
+    Leixing leixin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_baoxiu2);
         ButterKnife.inject(this);
-        Leixing leixin = (Leixing) getIntent().getSerializableExtra("e");
+       leixin = (Leixing) getIntent().getSerializableExtra("e");
         tv2.setText(leixin.getLeixing());
         tv4.setText(leixin.getXiangmu());
 
@@ -160,7 +160,7 @@ public class BaoxiuActivity2 extends Activity {
                     public void onClick(DialogInterface dialog, int which) {
 
                         StringBuffer sb = new StringBuffer();
-                        sb.append(String.format("yyyy-MM-dd",
+                        sb.append(String.format("%d-%02d-%02d",
                                 datePicker.getYear(),
                                 datePicker.getMonth() + 1,
                                 datePicker.getDayOfMonth()));
@@ -190,8 +190,8 @@ public class BaoxiuActivity2 extends Activity {
         RequestParams params = new RequestParams(url);
         String repairTitle = tv4.getText().toString();
         String repairType = tv2.getText().toString();
-        String repairContent = "sfdgfdg";
-        String repairImg = "1232434";
+        String repairContent =leixin.getContent() ;
+        String repairImg = leixin.getPictureName();
         String repairAddress = et3.getText().toString();
         String repairDate = et2.getText().toString();
         String repairName = et.getText().toString();
@@ -226,8 +226,7 @@ public class BaoxiuActivity2 extends Activity {
     @OnClick(R.id.bt7)
     public void onClick() {
         baoXiu();
-        Toast toast=Toast.makeText(this,"你点击了bt7",Toast.LENGTH_LONG);
-        toast.show();
+
     }
 
 }

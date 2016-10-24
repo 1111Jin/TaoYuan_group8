@@ -8,7 +8,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.util.Base64;
+import android.os.Environment;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -24,15 +24,18 @@ import android.widget.Toast;
 import com.example.administrator.taoyuan.R;
 import com.example.administrator.taoyuan.activity_home.BaoxiuActivity2;
 import com.example.administrator.taoyuan.activity_home.BitmapUtils;
+import com.example.administrator.taoyuan.activity_home.Netutil;
 import com.example.administrator.taoyuan.pojo.Leixing;
 
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -72,7 +75,10 @@ public class Baoxiuleixing_gerenzhuzha_Fragment extends Fragment {
     String pictureName = null;
     Bitmap bitmap = null;
     String[] temp = new String[6];
-
+    String content=null;
+    List<File> fileList;
+    Leixing leixin;
+    File file;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -88,7 +94,8 @@ public class Baoxiuleixing_gerenzhuzha_Fragment extends Fragment {
                 return false;
             }
         });
-        return view;
+
+            return view;
     }
 
     @OnClick({R.id.bt1, R.id.bt2, R.id.bt3, R.id.bt4, R.id.bt5, R.id.bt6, R.id.btn})
@@ -141,53 +148,28 @@ public class Baoxiuleixing_gerenzhuzha_Fragment extends Fragment {
                 startActivityForResult(intent, REQUEST_CODE);
                 break;
             case R.id.bt6:
-                Leixing leixin = new Leixing(str, str1);
-                if (leixin.getLeixing().equals("") || leixin.getXiangmu() == null) {
+                content=et.getText().toString();
+                if (str.equals("") || str1==null) {
                     Toast toast = Toast.makeText(getActivity(), "报修类型或报修项目不能为空", Toast.LENGTH_LONG);
                     toast.show();
-                } else if(et.getText().toString().equals("")&&imageView.getDrawable()==null) {
+                } else if(content.equals("")&&imageView.getDrawable()==null) {
                     Toast toast = Toast.makeText(getActivity(), "报修内容和图片不能同时为空", Toast.LENGTH_LONG);
                     toast.show();
                 }else{
-                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    //将bitmap一字节流输出 Bitmap.CompressFormat.PNG 压缩格式，100：压缩率，baos：字节流
-                    bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
-                    byte[] buffer = baos.toByteArray();
-                    try {
-                        baos.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    if (imageView.getDrawable()!=null&&!content.equals("")) {
+                         leixin =new Leixing(str,str1,pictureName,content);
+                        showImage(bitmap);
+                        upLoad(file);
+                    }else if (imageView.getDrawable()!=null&&content.equals("")){
+                         leixin=new Leixing(str,str1,pictureName,null);
+                    }else if (imageView.getDrawable()==null&&!content.equals("")){
+                        leixin=new Leixing(str,str1,null,content);
                     }
-                    String photo = Base64.encodeToString(buffer, 0, buffer.length, Base64.DEFAULT);
-                    RequestParams params = new RequestParams("http://10.40.5.24:8080/webpro4/upLoadPhotoServlet");
-                    params.addBodyParameter("name",pictureName.toString());
-                    params.addBodyParameter("img",photo.toString());
-                    System.out.println(photo.toString()+"//////////"+pictureName.toString()+"?????????????");
-                    x.http().post(params, new Callback.CommonCallback<String>() {
-                        @Override
-                        public void onSuccess(String result) {
-                            System.out.println("上传成功"+result.toString());
-                        }
+                        Intent intent2 = new Intent(getActivity(), BaoxiuActivity2.class);
+                        bundle.putSerializable("e", leixin);
+                        intent2.putExtras(bundle);
+                        startActivity(intent2);
 
-                        @Override
-                        public void onError(Throwable ex, boolean isOnCallback) {
-                            System.out.println(ex.toString()+"????????????????");
-                        }
-
-                        @Override
-                        public void onCancelled(CancelledException cex) {
-
-                        }
-
-                        @Override
-                        public void onFinished() {
-
-                        }
-                    });
-                    Intent intent2 = new Intent(getActivity(), BaoxiuActivity2.class);
-                    bundle.putSerializable("e", leixin);
-                    intent2.putExtras(bundle);
-                    startActivity(intent2);
                 }
                 break;
         }
@@ -213,8 +195,6 @@ public class Baoxiuleixing_gerenzhuzha_Fragment extends Fragment {
                     pictureName=temp[j];
                 }
             }
-//            Toast toast1=Toast.makeText(getActivity(),pictureName,Toast.LENGTH_LONG);
-//            toast1.show();
                 imageView.setImageBitmap(bitmap);
             btn.setVisibility(View.GONE);
             }
@@ -228,6 +208,7 @@ public class Baoxiuleixing_gerenzhuzha_Fragment extends Fragment {
              @Override
              public void onClick(View v) {
                  imageView.setImageBitmap(null);
+                  pictureName="";
                  btn.setVisibility(View.VISIBLE);
              }
          });
@@ -246,5 +227,48 @@ public class Baoxiuleixing_gerenzhuzha_Fragment extends Fragment {
         popupwindow.setBackgroundDrawable(new BitmapDrawable());
         popupwindow.showAtLocation(view, Gravity.BOTTOM,0,0);
     }
+    public void showImage(Bitmap bitmap){
+        saveImage(bitmap);//保存文件
+    }
 
+    //将bitmap保存在文件中
+    public void saveImage(Bitmap bitmap){
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            //目录，文件名Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM
+            file = new File(Environment.getExternalStorageDirectory(), pictureName);
+        }
+        FileOutputStream fos=null;
+        try {
+            fos=new FileOutputStream(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        bitmap.compress(Bitmap.CompressFormat.JPEG,50,fos);
+    }
+public  void upLoad(File file){
+    RequestParams params = new RequestParams(Netutil.url + "upLoadPhotoServlet");
+    params.setMultipart(true);
+    params.addBodyParameter("img", file);
+    x.http().post(params, new Callback.CommonCallback<String>() {
+        @Override
+        public void onSuccess(String result) {
+            System.out.println("上传成功" + result.toString());
+        }
+
+        @Override
+        public void onError(Throwable ex, boolean isOnCallback) {
+            System.out.println(ex.toString() + "????????????????");
+        }
+
+        @Override
+        public void onCancelled(CancelledException cex) {
+
+        }
+
+        @Override
+        public void onFinished() {
+
+        }
+    });
+}
 }
