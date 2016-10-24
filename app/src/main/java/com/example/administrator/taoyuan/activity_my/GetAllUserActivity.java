@@ -1,9 +1,6 @@
 package com.example.administrator.taoyuan.activity_my;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,10 +14,8 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.administrator.taoyuan.MainActivity;
 import com.example.administrator.taoyuan.R;
-import com.example.administrator.taoyuan.fragment.my;
-import com.example.administrator.taoyuan.pojo.ListActivityBean;
+import com.example.administrator.taoyuan.pojo.ListUserBean;
 import com.example.administrator.taoyuan.utils.HttpUtils;
 import com.example.administrator.taoyuan.utils.xUtilsImageUtils;
 import com.google.gson.Gson;
@@ -37,7 +32,7 @@ public class GetAllUserActivity extends AppCompatActivity {
     private static final String TAG = "getAllUserActivity";
     private ListView lv_userList;
     private BaseAdapter adapter;
-    final List<ListActivityBean.User> userList=new ArrayList<ListActivityBean.User>();
+    final List<ListUserBean.User> userList=new ArrayList<ListUserBean.User>();
     private ProgressBar progressBar;
     private RelativeLayout rl_back_my;
 
@@ -91,7 +86,7 @@ public class GetAllUserActivity extends AppCompatActivity {
                 }else{
                     viewholder=(ViewHolder) convertView.getTag();
                 }
-                ListActivityBean.User user=userList.get(position);
+                ListUserBean.User user=userList.get(position);
 
                 xUtilsImageUtils.display(viewholder.iv_head,HttpUtils.localhost+user.userHead,10);
                 viewholder.tv_name.setText(user.userName);
@@ -115,7 +110,7 @@ public class GetAllUserActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.i(TAG, "onItemClick: "+position);
-                ListActivityBean.User friend=userList.get(position);
+                ListUserBean.User friend=userList.get(position);
                 Intent intent = new Intent(getApplicationContext(),MyFriend.class);
                 intent.putExtra("friend",friend);
                 startActivityForResult(intent,1);
@@ -132,10 +127,9 @@ public class GetAllUserActivity extends AppCompatActivity {
             public void onSuccess(String result) {
 
                 Gson gson=new Gson();
-                ListActivityBean bean=gson.fromJson(result,ListActivityBean.class);
+                ListUserBean bean=gson.fromJson(result,ListUserBean.class);
                 userList.addAll(bean.userList);
-                System.out.println(bean.status);
-                System.out.println(bean.userList.size());
+                Log.i(TAG, "onSuccess: "+result);
                 adapter.notifyDataSetChanged();
                 progressBar.setVisibility(View.GONE);
             }
@@ -157,6 +151,17 @@ public class GetAllUserActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case 1:
+                userList.clear();
+                getUserList();
+                break;
+        }
     }
 
     public static class ViewHolder{

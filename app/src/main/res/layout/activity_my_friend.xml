@@ -8,6 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:background="@color/common_bg"
         >
         <RelativeLayout
             android:id="@+id/rl_back_fri"
@@ -40,6 +41,10 @@
             android:textColor="@android:color/black"/>
     </RelativeLayout>
 
+    <View android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="5px"
+        android:background="#C0C5C7"/>
 
 
 
@@ -69,7 +74,7 @@
                     android:layout_height="80dp"
                     android:id="@+id/iv_fri_head"
                     android:src="@drawable/mine_gray"
-                    android:layout_marginLeft="160dp"
+                    android:layout_centerHorizontal="true"
                     android:layout_marginTop="40dp"
                     />
 
@@ -87,6 +92,8 @@
 
 
             </RelativeLayout>
+
+
 
             <RelativeLayout
                 android:id="@+id/rl_fri_sex"
@@ -307,6 +314,26 @@
 
                 />
             </RelativeLayout>
+
+            <Button
+                android:id="@+id/btn_fri_delete"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/shape_red"
+                android:layout_margin="20dp"
+                android:text="删除好友"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:textColor="@color/black"
+
+
+
+                >
+
+
+            </Button>
+
 
         </LinearLayout>
 

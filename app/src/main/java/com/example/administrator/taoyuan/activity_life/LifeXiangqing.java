@@ -4,8 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,6 +27,7 @@ public class LifeXiangqing extends AppCompatActivity {
     private ImageView iv_photo;
     private ImageView iv_contphoto;
     final ArrayList<ListLifeInfo.LifeInfo> lifelist= new ArrayList<ListLifeInfo.LifeInfo>();
+    private  Button x_fanhui;
 
 
     @Override
@@ -37,12 +38,29 @@ public class LifeXiangqing extends AppCompatActivity {
         tv_name = ((TextView) findViewById(R.id.tv_name));
         iv_photo = ((ImageView) findViewById(R.id.iv_photo));
         iv_contphoto = ((ImageView) findViewById(R.id.iv_contphoto));
-        initData1();
+        x_fanhui = ((Button) findViewById(R.id.x_fanhui));
 
+        initView();
+        initData();
+        initEvent();
 
     }
 
-    private void initData1() {
+    private void initView() {
+    }
+
+
+    private void initEvent() {
+            x_fanhui.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+
+    }
+
+    private void initData() {
 
         //获取传过来的ProductInfo
         Intent intent= getIntent();

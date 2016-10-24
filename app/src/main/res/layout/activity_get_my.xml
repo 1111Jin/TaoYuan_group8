@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:bar="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:orientation="vertical"
     tools:context="com.example.administrator.taoyuan.activity_my.GetMyActivity">
 
     <com.example.administrator.taoyuan.utils.TitleBar
@@ -12,6 +12,16 @@
         android:layout_height="wrap_content"
         bar:titleStr="我的活动"
         bar:showRight="true" />
+    <com.shizhefei.view.indicator.ScrollIndicatorView
+        android:id="@+id/moretab_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:fillViewport="false" />
+    <android.support.v4.view.ViewPager
+        android:id="@+id/moretab_viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></android.support.v4.view.ViewPager>
 
 
-</RelativeLayout>
+
+</LinearLayout>

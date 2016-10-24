@@ -33,11 +33,8 @@ public class ListLifeInfo implements Parcelable {
                     ", time=" + time +
                     ", style='" + style + '\'' +
                     ", headphoto='" + headphoto + '\'' +
-                    ", content_photo='" + content_photo + '\'' +
+                    ", headphoto='" + content_photo + '\'' +
                     '}';
-        }
-
-        public LifeInfo() {
         }
 
         @Override
@@ -54,6 +51,9 @@ public class ListLifeInfo implements Parcelable {
             dest.writeString(this.style);
             dest.writeString(this.headphoto);
             dest.writeString(this.content_photo);
+        }
+
+        public LifeInfo() {
         }
 
         protected LifeInfo(Parcel in) {
@@ -89,9 +89,6 @@ public class ListLifeInfo implements Parcelable {
                 '}';
     }
 
-    public ListLifeInfo() {
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -100,12 +97,16 @@ public class ListLifeInfo implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.status);
-        dest.writeTypedList(this.lifeinfolist);
+        dest.writeList(this.lifeinfolist);
+    }
+
+    public ListLifeInfo() {
     }
 
     protected ListLifeInfo(Parcel in) {
         this.status = in.readInt();
-        this.lifeinfolist = in.createTypedArrayList(LifeInfo.CREATOR);
+        this.lifeinfolist = new ArrayList<LifeInfo>();
+        in.readList(this.lifeinfolist, LifeInfo.class.getClassLoader());
     }
 
     public static final Creator<ListLifeInfo> CREATOR = new Creator<ListLifeInfo>() {

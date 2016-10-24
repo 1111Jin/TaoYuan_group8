@@ -36,8 +36,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 
-import butterknife.OnClick;
-
 public class Life extends Fragment {
 
     private ListView lv_lifeinfo;
@@ -101,6 +99,7 @@ public class Life extends Fragment {
                 // x.image().bind(iv_photo,"http://10.40.5.12:8080/Life/imags/"+dongtai.headphoto+"");
                 xUtilsImageUtils.display(iv_photo, HttpUtils.localhost_jt+"imags/"+dongtai.headphoto+"",true);
                 xUtilsImageUtils.display(iv_contphoto, HttpUtils.localhost_jt+"imags/"+dongtai.content_photo+"",false);
+                System.out.println(dongtai.content_photo+"666666666666666666666666666");
                 return view1;
             }
         };
@@ -138,7 +137,7 @@ public class Life extends Fragment {
                 //点击item的信息
                 intent.putExtra("lifeinfo", lifelist.get(position-1));
 
-                startActivity(intent);
+                startActivityForResult(intent,1);
 
             }
         });
@@ -150,7 +149,8 @@ public class Life extends Fragment {
             public void onClick(View v) {
                 Intent intent=new Intent(getActivity(),fabu.class);
                 intent.putExtra("orderDeatils",tv_fabu.getClass());
-                startActivity(intent);
+                startActivityForResult(intent,1);
+//                startActivity(intent);
             }
         });
 
@@ -177,6 +177,7 @@ public class Life extends Fragment {
 //                System.out.println(bean.lifeinfolist.size()+"===");
                 lifelist.addAll( bean.lifeinfolist);
 
+
                 adapter.notifyDataSetChanged();
 
             }
@@ -199,21 +200,7 @@ public class Life extends Fragment {
         });
 
     }
-//    @OnClick({R.id.rb_peng, R.id.rb_suoyou, R.id.rb_huati})
-//    public void onClick(View view) {
-//        Fragment fragment = null;
-//        switch (view.getId()) {
-//            case R.id.rb_peng:
-//                fragment = new linli_help_fragment();
-//                break;
-//            case R.id.rb_suoyou:
-//                break;
-//            case R.id.rb_huati:
-//
-//                break;
-//
-//        }
-//    }
+
 }
 
 

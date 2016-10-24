@@ -22,7 +22,7 @@ import com.example.administrator.taoyuan.activity_my.GetAllUserActivity;
 import com.example.administrator.taoyuan.activity_my.GetMyActivity;
 import com.example.administrator.taoyuan.activity_my.ModifyMyActivity;
 import com.example.administrator.taoyuan.activity_my.RepairActivity;
-import com.example.administrator.taoyuan.pojo.ListActivityBean;
+import com.example.administrator.taoyuan.pojo.ListUserBean;
 import com.example.administrator.taoyuan.utils.HttpUtils;
 import com.example.administrator.taoyuan.utils.xUtilsImageUtils;
 import com.google.gson.Gson;
@@ -68,7 +68,7 @@ public class my extends Fragment {
     @InjectView(R.id.btn_myinstill)
     Button btnMyinstill;
 
-    private List<ListActivityBean.User> list=new ArrayList<ListActivityBean.User>();
+    private List<ListUserBean.User> list=new ArrayList<ListUserBean.User>();
 
     @Nullable
     @Override
@@ -99,10 +99,11 @@ public class my extends Fragment {
                 Log.i(TAG, "onSuccess: "+result);
                 Gson gson=new Gson();
 
-                ListActivityBean bean=gson.fromJson(result, ListActivityBean.class);
+                ListUserBean bean=gson.fromJson(result, ListUserBean.class);
 
                 list=bean.userList;
                 String url=list.get(0).userHead;
+                System.out.println(url);
                 xUtilsImageUtils.display(ivMymsg,HttpUtils.localhost+url,true);
 
 
@@ -139,7 +140,7 @@ public class my extends Fragment {
         ButterKnife.reset(this);
     }
 
-    @OnClick({R.id.rl_modify_My,R.id.btn_myfriend,R.id.btn_myactivity,R.id.btn_myrepair,R.id.btn_myshoucang})
+    @OnClick({R.id.rl_modify_My,R.id.btn_myfriend,R.id.btn_myactivity,R.id.btn_myrepair,R.id.btn_myshoucang,R.id.btn_myinstill})
      public void onClick(View view){
         switch (view.getId()){
             case R.id.rl_modify_My:
@@ -167,6 +168,9 @@ public class my extends Fragment {
                 Intent intent4 = new Intent(getActivity(), RepairActivity.class);
                 startActivity(intent4);
                 break;
+            case R.id.btn_myinstill:
+
+                break;
         }
     }
 
@@ -175,7 +179,7 @@ public class my extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode){
             case REQUSETCODE:
-                ListActivityBean.User u=data.getParcelableExtra("user");
+                ListUserBean.User u=data.getParcelableExtra("user");
                 tvMyname.setText(u.userName);
                 System.out.println(u.userName);
                 tvMyintegral.setText(u.userTel);

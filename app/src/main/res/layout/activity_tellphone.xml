@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.administrator.taoyuan.activity_home.TellphoneActivity">
+    <RelativeLayout
+        android:id="@+id/rl_back_home"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        >
+        <RelativeLayout
+            android:id="@+id/rl_back_home1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/all_order_goback"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:padding="12dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/nav_back"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="返回"
+                android:textSize="20sp"
+                android:textColor="@android:color/black"
+                android:layout_toRightOf="@id/all_order_goback"
+                android:layout_centerInParent="true"/>
+        </RelativeLayout>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_centerInParent="true"
+        android:layout_below="@+id/rl_back_home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_wydh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="物业电话:12345678901"
+            />
+        <ImageView
+            android:id="@+id/iv_wydhphone"
+            android:src="@mipmap/ic_launcher"
+            android:layout_below="@+id/tv_wydh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_below="@+id/iv_wydhphone"
+            android:id="@+id/tv_kfdh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="客服电话:12345678901"/>
+        <ImageView
+            android:id="@+id/iv_kfdhphone"
+            android:layout_below="@+id/tv_kfdh"
+            android:src="@mipmap/ic_launcher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+    </RelativeLayout>
+
+</RelativeLayout>
