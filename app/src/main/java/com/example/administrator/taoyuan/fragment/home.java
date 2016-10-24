@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.administrator.taoyuan.R;
+import com.example.administrator.taoyuan.activity_home.BaoxiuActivity1;
 import com.example.administrator.taoyuan.activity_home.TellphoneActivity;
 
 import butterknife.ButterKnife;
@@ -89,6 +90,8 @@ public class home extends Fragment {
             case R.id.rl_gg:
                 break;
             case R.id.tv_wybx:
+                Intent intent1=new Intent(getActivity(), BaoxiuActivity1.class);
+                startActivity(intent1);
                 break;
             case R.id.tv_wygg:
                 break;
