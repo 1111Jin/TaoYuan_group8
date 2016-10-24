@@ -1,6 +1,5 @@
 package com.example.administrator.taoyuan.activity_my;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -16,10 +15,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.administrator.taoyuan.R;
-import com.example.administrator.taoyuan.pojo.ListActivityBean;
+import com.example.administrator.taoyuan.pojo.ListUserBean;
 import com.example.administrator.taoyuan.utils.HttpUtils;
 import com.google.gson.Gson;
 
@@ -30,7 +28,6 @@ import org.xutils.x;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
@@ -88,7 +85,7 @@ public class ModifyMyActivity extends AppCompatActivity {
     @InjectView(R.id.rl_myBirthday)
     RelativeLayout rlMyBirthday;
 
-    ListActivityBean.User user;
+    ListUserBean.User user;
     Bitmap bm;
     private RelativeLayout rl_back;
     String items[] = {"相册选择", "拍照"};
@@ -161,7 +158,7 @@ public class ModifyMyActivity extends AppCompatActivity {
                     sex=true;
                 }
 
-                user=new ListActivityBean.User(name,tel,fileName,profiles,address,sex,id);
+                user=new ListUserBean.User(name,tel,fileName,profiles,address,sex,id);
                 Intent intent=new Intent();
                 intent.putExtra("user",user);
                 setResult(RESULT_OK,intent);
@@ -188,7 +185,7 @@ public class ModifyMyActivity extends AppCompatActivity {
                     sex=true;
                 }
 
-                ListActivityBean.User user_modify=new ListActivityBean.User(name,tel,head,profiles,address,sex,id);
+                ListUserBean.User user_modify=new ListUserBean.User(name,tel,head,profiles,address,sex,id);
                 Gson gson=new Gson();
                 String userJson=gson.toJson(user_modify);
                 RequestParams requestParams=new RequestParams(HttpUtils.localhost+"modifyuser");
