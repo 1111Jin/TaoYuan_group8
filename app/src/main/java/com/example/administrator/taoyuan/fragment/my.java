@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.example.administrator.taoyuan.R;
 import com.example.administrator.taoyuan.activity_my.GetAllUserActivity;
 import com.example.administrator.taoyuan.activity_my.GetMyActivity;
+import com.example.administrator.taoyuan.activity_my.GetMyHelp;
 import com.example.administrator.taoyuan.activity_my.ModifyMyActivity;
 import com.example.administrator.taoyuan.activity_my.RepairActivity;
 import com.example.administrator.taoyuan.pojo.ListUserBean;
@@ -63,8 +64,8 @@ public class my extends Fragment {
     Button btnMyrepair;
     @InjectView(R.id.btn_myactivity)
     Button btnMyactivity;
-    @InjectView(R.id.btn_myshoucang)
-    Button btnMyshoucang;
+    @InjectView(R.id.btn_myHelp)
+    Button btnMyHelp;
     @InjectView(R.id.btn_myinstill)
     Button btnMyinstill;
 
@@ -140,7 +141,7 @@ public class my extends Fragment {
         ButterKnife.reset(this);
     }
 
-    @OnClick({R.id.rl_modify_My,R.id.btn_myfriend,R.id.btn_myactivity,R.id.btn_myrepair,R.id.btn_myshoucang,R.id.btn_myinstill})
+    @OnClick({R.id.rl_modify_My,R.id.btn_myfriend,R.id.btn_myactivity,R.id.btn_myrepair,R.id.btn_myHelp,R.id.btn_myinstill})
      public void onClick(View view){
         switch (view.getId()){
             case R.id.rl_modify_My:
@@ -161,8 +162,9 @@ public class my extends Fragment {
                 Intent intent2=new Intent(getActivity(), GetMyActivity.class);
                 startActivity(intent2);
                 break;
-            case R.id.btn_myshoucang:
-
+            case R.id.btn_myHelp:
+                Intent intent3 = new Intent(getActivity(), GetMyHelp.class);
+                startActivity(intent3);
                 break;
             case R.id.btn_myrepair:
                 Intent intent4 = new Intent(getActivity(), RepairActivity.class);
