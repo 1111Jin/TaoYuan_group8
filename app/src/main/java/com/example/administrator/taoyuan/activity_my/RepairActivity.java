@@ -4,33 +4,23 @@ package com.example.administrator.taoyuan.activity_my;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.administrator.taoyuan.R;
-
 import com.example.administrator.taoyuan.fragment.AllRepairFragment;
 import com.example.administrator.taoyuan.fragment.AlreadyRepairFragment;
 import com.example.administrator.taoyuan.fragment.BaseFragment;
 import com.example.administrator.taoyuan.fragment.PersonnnalFragment;
 import com.example.administrator.taoyuan.fragment.UnPersonnalFragment;
-
-
 import com.example.administrator.taoyuan.fragment.UnProcessedFragment;
 import com.example.administrator.taoyuan.fragment.UnRemarkFragment;
 import com.example.administrator.taoyuan.utils.DisplayUtil;
@@ -38,8 +28,6 @@ import com.shizhefei.view.indicator.IndicatorViewPager;
 import com.shizhefei.view.indicator.ScrollIndicatorView;
 import com.shizhefei.view.indicator.slidebar.ColorBar;
 import com.shizhefei.view.indicator.transition.OnTransitionTextListener;
-
-
 
 import java.util.ArrayList;
 import java.util.List;

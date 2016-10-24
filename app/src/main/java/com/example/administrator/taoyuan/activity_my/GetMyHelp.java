@@ -2,12 +2,12 @@ package com.example.administrator.taoyuan.activity_my;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,8 +15,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.administrator.taoyuan.R;
-import com.example.administrator.taoyuan.fragment.ActivityByAttendFragment;
-import com.example.administrator.taoyuan.fragment.ActivityByMeFragment;
 import com.example.administrator.taoyuan.fragment.HelpByJoinFragment;
 import com.example.administrator.taoyuan.fragment.HelpByMeFragment;
 import com.example.administrator.taoyuan.pojo.ListUserBean;

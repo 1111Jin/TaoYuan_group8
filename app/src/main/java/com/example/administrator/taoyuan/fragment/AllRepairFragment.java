@@ -27,13 +27,10 @@ import org.xutils.http.RequestParams;
 import org.xutils.x;
 
 import java.lang.reflect.Type;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
-import butterknife.OnClick;
 
 /**
  * Created by mawuyang on 2016-10-20.

@@ -1,6 +1,5 @@
 package com.example.administrator.taoyuan.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -12,9 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.administrator.taoyuan.R;
-import com.example.administrator.taoyuan.pojo.ActivityBean;
 import com.example.administrator.taoyuan.pojo.ActivityInfo;
-import com.example.administrator.taoyuan.pojo.ReListActivityBean;
 import com.example.administrator.taoyuan.utils.CommonAdapter;
 import com.example.administrator.taoyuan.utils.HttpUtils;
 import com.example.administrator.taoyuan.utils.ViewHolder;

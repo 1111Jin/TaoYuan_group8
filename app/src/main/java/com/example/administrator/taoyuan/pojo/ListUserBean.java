@@ -177,7 +177,7 @@ public class ListUserBean implements Parcelable {
         in.readList(this.userList, User.class.getClassLoader());
     }
 
-    public static final Parcelable.Creator<ListUserBean> CREATOR = new Parcelable.Creator<ListUserBean>() {
+    public static final Creator<ListUserBean> CREATOR = new Creator<ListUserBean>() {
         @Override
         public ListUserBean createFromParcel(Parcel source) {
             return new ListUserBean(source);

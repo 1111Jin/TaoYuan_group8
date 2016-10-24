@@ -1,12 +1,13 @@
 package com.example.administrator.taoyuan.fragment;
 
 
-import android.app.Fragment;
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -92,7 +93,7 @@ public class my extends Fragment {
 
     public void initData() {
 
-        RequestParams requestParams=new RequestParams(HttpUtils.localhost+"/my?userId="+HttpUtils.userId);
+        RequestParams requestParams=new RequestParams(HttpUtils.localhost+"/my?userId="+ HttpUtils.userId);
 
         x.http().get(requestParams, new Callback.CommonCallback<String>() {
             @Override
@@ -105,7 +106,7 @@ public class my extends Fragment {
                 list=bean.userList;
                 String url=list.get(0).userHead;
                 System.out.println(url);
-                xUtilsImageUtils.display(ivMymsg,HttpUtils.localhost+url,true);
+                xUtilsImageUtils.display(ivMymsg, HttpUtils.localhost+url,true);
 
 
                 tvMyname.setText(list.get(0).userName);
@@ -141,7 +142,7 @@ public class my extends Fragment {
         ButterKnife.reset(this);
     }
 
-    @OnClick({R.id.rl_modify_My,R.id.btn_myfriend,R.id.btn_myactivity,R.id.btn_myrepair,R.id.btn_myHelp,R.id.btn_myinstill})
+    @OnClick({R.id.rl_modify_My, R.id.btn_myfriend, R.id.btn_myactivity, R.id.btn_myrepair, R.id.btn_myHelp, R.id.btn_myinstill})
      public void onClick(View view){
         switch (view.getId()){
             case R.id.rl_modify_My:

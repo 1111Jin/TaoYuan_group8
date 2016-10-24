@@ -1,8 +1,8 @@
 package com.example.administrator.taoyuan.activity_my;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,7 +78,7 @@ public class GetAllUserActivity extends AppCompatActivity {
 
                 if(convertView==null){
                     viewholder=new ViewHolder();
-                    convertView=View.inflate(GetAllUserActivity.this,R.layout.activity_list_lv_userlist_item,null);
+                    convertView=View.inflate(GetAllUserActivity.this, R.layout.activity_list_lv_userlist_item,null);
                     viewholder.iv_head = ((ImageView) convertView.findViewById(R.id.iv_userHead));
                     viewholder.tv_name= ((TextView) convertView.findViewById(R.id.tv_userName));
                     viewholder.tv_profiles= ((TextView) convertView.findViewById(R.id.tv_userProfiles));
@@ -88,7 +88,7 @@ public class GetAllUserActivity extends AppCompatActivity {
                 }
                 ListUserBean.User user=userList.get(position);
 
-                xUtilsImageUtils.display(viewholder.iv_head,HttpUtils.localhost+user.userHead,10);
+                xUtilsImageUtils.display(viewholder.iv_head, HttpUtils.localhost+user.userHead,10);
                 viewholder.tv_name.setText(user.userName);
                 viewholder.tv_profiles.setText(user.userProfiles);
                 return convertView;
@@ -121,7 +121,7 @@ public class GetAllUserActivity extends AppCompatActivity {
     public void getUserList() {
         progressBar.setVisibility(View.VISIBLE);
 
-        RequestParams params=new RequestParams(HttpUtils.localhost+"/getmyfriend?userId="+HttpUtils.userId);
+        RequestParams params=new RequestParams(HttpUtils.localhost+"/getmyfriend?userId="+ HttpUtils.userId);
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {

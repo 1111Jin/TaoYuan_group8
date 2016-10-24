@@ -3,10 +3,8 @@ package com.example.administrator.taoyuan.pojo;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -123,7 +121,7 @@ public class ReListActivityBean implements Parcelable {
         in.readList(this.repairList, Repair.class.getClassLoader());
     }
 
-    public static final Parcelable.Creator<ReListActivityBean> CREATOR = new Parcelable.Creator<ReListActivityBean>() {
+    public static final Creator<ReListActivityBean> CREATOR = new Creator<ReListActivityBean>() {
         @Override
         public ReListActivityBean createFromParcel(Parcel source) {
             return new ReListActivityBean(source);
