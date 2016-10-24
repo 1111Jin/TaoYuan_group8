@@ -5,7 +5,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -15,9 +19,15 @@ import com.example.administrator.taoyuan.R;
 import com.example.administrator.taoyuan.pojo.ActivityBean;
 import com.example.administrator.taoyuan.utils.xUtilsImageUtils;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+
+import static com.example.administrator.taoyuan.utils.DateUtil.dateToString;
+import static com.example.administrator.taoyuan.utils.DateUtil.dateToString1;
 
 /**
  * Created by Administrator on 2016/10/17.
@@ -49,13 +59,46 @@ public class ActivityInfo extends AppCompatActivity {
     TextView tvAcName;
 
     ActivityBean.Activity activity ;
+    public GridView gridview;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_view_item_content);
+        gridview = ((GridView) findViewById(R.id.gridview));
+//        initEvent();
         ButterKnife.inject(this);
         initData();
     }
+
+//    private void initEvent() {
+//        gridview.setAdapter(new BaseAdapter() {
+//            public ImageView img;
+//
+//            @Override
+//            public int getCount() {
+//                return 0;
+//            }
+//
+//            @Override
+//            public Object getItem(int position) {
+//                return null;
+//            }
+//
+//            @Override
+//            public long getItemId(int position) {
+//                return 0;
+//            }
+//
+//            @Override
+//            public View getView(int position, View convertView, ViewGroup parent) {
+//                View view = View.inflate(ActivityInfo.this,R.layout.img_view,null);
+//                img = ((ImageView) view.findViewById(R.id.item_gridview));
+//                return view;
+//            }
+//        });
+//
+//    }
 
     public void initData(){
         Intent intent = getIntent();
@@ -66,9 +109,12 @@ public class ActivityInfo extends AppCompatActivity {
             tvAcName.setText(activity.activity_master);
             tvAcAcpro.setText(activity.activity_content);
             tvAcAddress.setText(activity.activity_adress);
-            xUtilsImageUtils.display(ivAcImage,"http://10.40.5.23:8080/cmty/upload/"+activity.activity_photo);
+            tvAcTime3.setText(dateToString1(activity.activity_begintime)+" -- "+dateToString1(activity.activity_endtime));
+            xUtilsImageUtils.display(ivAcImage,"http://10.40.5.23:8080/cmty/"+activity.activity_photo);
         }
     }
+
+
     @OnClick(R.id.bt_ac_join)
     public void onClick() {
     }
