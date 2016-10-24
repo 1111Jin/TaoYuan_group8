@@ -12,12 +12,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.administrator.taoyuan.R;
-import com.example.administrator.taoyuan.pojo.ListActivityBean;
+import com.example.administrator.taoyuan.pojo.ListUserBean;
 import com.example.administrator.taoyuan.utils.HttpUtils;
 import com.example.administrator.taoyuan.utils.xUtilsImageUtils;
 import com.google.gson.Gson;
 
-import org.w3c.dom.Text;
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
@@ -32,7 +31,7 @@ public class MyFriend extends AppCompatActivity {
     private TextView tv_fri_address;
     private TextView tv_fri_profiles;
 
-    ListActivityBean.User user;
+    ListUserBean.User user;
     private RelativeLayout rl_back_fri;
     private Button btn_delete;
 

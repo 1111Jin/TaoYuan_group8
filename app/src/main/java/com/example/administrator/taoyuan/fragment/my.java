@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,7 +22,7 @@ import com.example.administrator.taoyuan.activity_my.GetAllUserActivity;
 import com.example.administrator.taoyuan.activity_my.GetMyActivity;
 import com.example.administrator.taoyuan.activity_my.ModifyMyActivity;
 import com.example.administrator.taoyuan.activity_my.RepairActivity;
-import com.example.administrator.taoyuan.pojo.ListActivityBean;
+import com.example.administrator.taoyuan.pojo.ListUserBean;
 import com.example.administrator.taoyuan.utils.HttpUtils;
 import com.example.administrator.taoyuan.utils.xUtilsImageUtils;
 import com.google.gson.Gson;
@@ -69,7 +68,7 @@ public class my extends Fragment {
     @InjectView(R.id.btn_myinstill)
     Button btnMyinstill;
 
-    private List<ListActivityBean.User> list=new ArrayList<ListActivityBean.User>();
+    private List<ListUserBean.User> list=new ArrayList<ListUserBean.User>();
 
     @Nullable
     @Override
@@ -100,7 +99,7 @@ public class my extends Fragment {
                 Log.i(TAG, "onSuccess: "+result);
                 Gson gson=new Gson();
 
-                ListActivityBean bean=gson.fromJson(result, ListActivityBean.class);
+                ListUserBean bean=gson.fromJson(result, ListUserBean.class);
 
                 list=bean.userList;
                 String url=list.get(0).userHead;
@@ -180,7 +179,7 @@ public class my extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode){
             case REQUSETCODE:
-                ListActivityBean.User u=data.getParcelableExtra("user");
+                ListUserBean.User u=data.getParcelableExtra("user");
                 tvMyname.setText(u.userName);
                 System.out.println(u.userName);
                 tvMyintegral.setText(u.userTel);

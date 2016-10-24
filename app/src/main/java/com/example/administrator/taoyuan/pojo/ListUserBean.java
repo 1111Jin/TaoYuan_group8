@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by mawuyang on 2016-09-19.
  */
-public class ListActivityBean implements Parcelable {
+public class ListUserBean implements Parcelable {
     public Integer status;
     public List<User> userList;
 
@@ -21,9 +21,23 @@ public class ListActivityBean implements Parcelable {
         public String userProfiles;
         public Boolean userSex;
         public String userAddress;
+        public String userPsd;
+        public Integer integral;
         public Integer friendId;
 
-        public User(String userName, String userTel,String userHead, String userProfiles,String userAddress, Boolean userSex, Integer userId) {
+        public User(Integer userId, Integer integral, String userPsd, String userAddress, Boolean userSex, String userProfiles, String userHead, String userTel, String userName) {
+            this.userId = userId;
+            this.integral = integral;
+            this.userPsd = userPsd;
+            this.userAddress = userAddress;
+            this.userSex = userSex;
+            this.userProfiles = userProfiles;
+            this.userHead = userHead;
+            this.userTel = userTel;
+            this.userName = userName;
+        }
+
+        public User(String userName, String userTel, String userHead, String userProfiles, String userAddress, Boolean userSex, Integer userId) {
             this.userName = userName;
             this.userTel = userTel;
             this.userHead = userHead;
@@ -111,24 +125,24 @@ public class ListActivityBean implements Parcelable {
         dest.writeList(this.userList);
     }
 
-    public ListActivityBean() {
+    public ListUserBean() {
     }
 
-    protected ListActivityBean(Parcel in) {
+    protected ListUserBean(Parcel in) {
         this.status = (Integer) in.readValue(Integer.class.getClassLoader());
         this.userList = new ArrayList<User>();
         in.readList(this.userList, User.class.getClassLoader());
     }
 
-    public static final Parcelable.Creator<ListActivityBean> CREATOR = new Parcelable.Creator<ListActivityBean>() {
+    public static final Parcelable.Creator<ListUserBean> CREATOR = new Parcelable.Creator<ListUserBean>() {
         @Override
-        public ListActivityBean createFromParcel(Parcel source) {
-            return new ListActivityBean(source);
+        public ListUserBean createFromParcel(Parcel source) {
+            return new ListUserBean(source);
         }
 
         @Override
-        public ListActivityBean[] newArray(int size) {
-            return new ListActivityBean[size];
+        public ListUserBean[] newArray(int size) {
+            return new ListUserBean[size];
         }
     };
 }
