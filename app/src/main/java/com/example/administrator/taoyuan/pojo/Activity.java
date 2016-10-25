@@ -1,14 +1,18 @@
 package com.example.administrator.taoyuan.pojo;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.sql.Timestamp;
 
-public class Activity {
+public class Activity implements Parcelable {
 	
 	private Integer activityId;
 	private Integer userId;
 	private String activityTitle;
 	private String activityContent;
 	private String activityImg;
+	private String activityAddress;
 	private Timestamp beginTime;
 	private Timestamp endTime;
 	private Timestamp createTime;
@@ -17,21 +21,37 @@ public class Activity {
 	private User user;
 	
 	public Activity(){}
+
+	//userId,name,create,name,pro,Imgurl,beg,ed,addr,num
+	public Activity(Integer userId,String activityTitle,String activityContent,Timestamp beginTime, Timestamp endTime,
+					String activityImg,String activityAddress,Timestamp createTime,Integer joinNums) {
+		super();
+		this.userId=userId;
+		this.activityTitle = activityTitle;
+		this.activityContent = activityContent;
+		this.activityImg = activityImg;
+		this.activityAddress = activityAddress;
+		this.beginTime = beginTime;
+		this.endTime = endTime;
+		this.createTime = createTime;
+		this.joinNums = joinNums;
+	}
 	
 	public Activity(String activityTitle, String activityContent,
-			String activityImg, Timestamp beginTime, Timestamp endTime,
+			String activityImg,String activityAddress, Timestamp beginTime, Timestamp endTime,
 			Timestamp createTime,  String status) {
 		super();
 		this.activityTitle = activityTitle;
 		this.activityContent = activityContent;
 		this.activityImg = activityImg;
+		this.activityAddress = activityAddress;
 		this.beginTime = beginTime;
 		this.endTime = endTime;
 		this.createTime = createTime;
 		this.status = status;
 	}
 	public Activity(Integer userId, String activityTitle,
-			String activityContent, String activityImg, Timestamp beginTime,
+			String activityContent, String activityImg,String activityAddress, Timestamp beginTime,
 			Timestamp endTime, Timestamp createTime,
 			String status) {
 		super();
@@ -39,26 +59,13 @@ public class Activity {
 		this.activityTitle = activityTitle;
 		this.activityContent = activityContent;
 		this.activityImg = activityImg;
+		this.activityAddress = activityAddress;
 		this.beginTime = beginTime;
 		this.endTime = endTime;
 		this.createTime = createTime;
 		this.status = status;
 	}
-	public Activity(Integer userId, String activityTitle,
-			String activityContent, String activityImg, Timestamp beginTime,
-			Timestamp endTime, Timestamp createTime, Integer joinNums,
-			String status) {
-		super();
-		this.userId = userId;
-		this.activityTitle = activityTitle;
-		this.activityContent = activityContent;
-		this.activityImg = activityImg;
-		this.beginTime = beginTime;
-		this.endTime = endTime;
-		this.createTime = createTime;
-		this.joinNums = joinNums;
-		this.status = status;
-	}
+
 	public Activity(Integer activityId, Integer userId, String activityTitle,
 			String activityContent, String activityImg, Timestamp beginTime,
 			Timestamp endTime, Timestamp createTime, Integer joinNums,
@@ -135,21 +142,98 @@ public class Activity {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public Activity(User user, String activityTitle,
-			String activityContent, String activityImg, Timestamp beginTime,
+	
+	
+	public String getActivityAddress() {
+		return activityAddress;
+	}
+
+	public void setActivityAddress(String activityAddress) {
+		this.activityAddress = activityAddress;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Activity(User user,Integer activityId, String activityTitle,
+			String activityContent, String activityImg, String activityAddress,Timestamp beginTime,
 			Timestamp endTime, Timestamp createTime,
 			String status) {
 		super();
 		this.user = user;
+		this.activityId = activityId;
 		this.activityTitle = activityTitle;
 		this.activityContent = activityContent;
 		this.activityImg = activityImg;
+		this.activityAddress = activityAddress;
 		this.beginTime = beginTime;
 		this.endTime = endTime;
 		this.createTime = createTime;
 		
 		this.status = status;
 	}
-	
 
+	@Override
+	public String toString() {
+		return "Activity [activityId=" + activityId + ", userId=" + userId
+				+ ", activityTitle=" + activityTitle + ", activityContent="
+				+ activityContent + ", activityImg=" + activityImg
+				+ ", beginTime=" + beginTime + ", endTime=" + endTime
+				+ ", createTime=" + createTime + ", joinNums=" + joinNums
+				+ ", status=" + status + ", user=" + user + "]";
+	}
+
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeValue(this.activityId);
+		dest.writeValue(this.userId);
+		dest.writeString(this.activityTitle);
+		dest.writeString(this.activityContent);
+		dest.writeString(this.activityImg);
+		dest.writeString(this.activityAddress);
+		dest.writeSerializable(this.beginTime);
+		dest.writeSerializable(this.endTime);
+		dest.writeSerializable(this.createTime);
+		dest.writeValue(this.joinNums);
+		dest.writeString(this.status);
+		dest.writeParcelable(this.user, flags);
+	}
+
+	protected Activity(Parcel in) {
+		this.activityId = (Integer) in.readValue(Integer.class.getClassLoader());
+		this.userId = (Integer) in.readValue(Integer.class.getClassLoader());
+		this.activityTitle = in.readString();
+		this.activityContent = in.readString();
+		this.activityImg = in.readString();
+		this.activityAddress = in.readString();
+		this.beginTime = (Timestamp) in.readSerializable();
+		this.endTime = (Timestamp) in.readSerializable();
+		this.createTime = (Timestamp) in.readSerializable();
+		this.joinNums = (Integer) in.readValue(Integer.class.getClassLoader());
+		this.status = in.readString();
+		this.user = in.readParcelable(User.class.getClassLoader());
+	}
+
+	public static final Parcelable.Creator<Activity> CREATOR = new Parcelable.Creator<Activity>() {
+		@Override
+		public Activity createFromParcel(Parcel source) {
+			return new Activity(source);
+		}
+
+		@Override
+		public Activity[] newArray(int size) {
+			return new Activity[size];
+		}
+	};
 }

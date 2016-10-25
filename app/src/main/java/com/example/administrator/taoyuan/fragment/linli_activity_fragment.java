@@ -15,10 +15,10 @@ import android.widget.TextView;
 
 import com.example.administrator.taoyuan.R;
 import com.example.administrator.taoyuan.activity_linli.ActivityInfo;
-import com.example.administrator.taoyuan.pojo.ActivityBean;
+import com.example.administrator.taoyuan.pojo.Activity;
+import com.example.administrator.taoyuan.utils.HttpUtils;
 import com.example.administrator.taoyuan.utils.xUtilsImageUtils;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import org.xutils.common.Callback;
@@ -26,13 +26,11 @@ import org.xutils.http.RequestParams;
 import org.xutils.x;
 
 import java.lang.reflect.Type;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import static com.example.administrator.taoyuan.utils.DateUtil.dateToString;
+import static com.example.administrator.taoyuan.utils.DateUtil.dateToString1;
 
 /**
  * Created by Administrator on 2016/9/22.
@@ -42,7 +40,7 @@ public class linli_activity_fragment extends linli {
     private TextView tv_time;
     private TextView tv_title;
     private BaseAdapter adapter;
-    final List<ActivityBean.Activity> activityList = new ArrayList<ActivityBean.Activity>();
+    final List<Activity> activityList = new ArrayList<Activity>();
     private ListView lv_list;
 
     @Nullable
@@ -106,20 +104,20 @@ public class linli_activity_fragment extends linli {
             public View getView(int position, View convertView, ViewGroup parent) {
 
                 View view = View.inflate(getActivity(),R.layout.activity_list_view_item,null);
-                ActivityBean.Activity activity = activityList.get(position);
+                Activity activity = activityList.get(position);
                 iv_people = ((ImageView) view.findViewById(R.id.iv_people));
                 tv_time = ((TextView) view.findViewById(R.id.tv_time));
                 tv_title = ((TextView) view.findViewById(R.id.tv_title));
                 address = ((TextView) view.findViewById(R.id.tv_address));
-                time = ((TextView) view.findViewById(R.id.tv_ac_time3));
                 line = ((View) view.findViewById(R.id.vv_line));
 
+                time = ((TextView) view.findViewById(R.id.time3));
 
-                xUtilsImageUtils.display(iv_people,"http://10.40.5.23:8080/cmty/"+activity.activity_photo+"",false);
-                tv_title.setText(activity.activity_title);
-                address.setText(activity.activity_adress);
-                tv_time.setText(dateToString(activity.activity_time));
-//                time.setText(activity.activity_begintime+"-"+activity.activity_endtime);
+                xUtilsImageUtils.display(iv_people,HttpUtils.localhost_su+activity.getActivityImg()+"",false);
+                tv_title.setText(activity.getActivityTitle());
+                address.setText(activity.getActivityAddress());
+                tv_time.setText(dateToString(activity.getCreateTime()));
+                time.setText(dateToString1(activity.getBeginTime())+" -- "+dateToString1(activity.getEndTime()));
 //                time.setText(dateToString(activity.activity_begintime));
 
                 return view;
@@ -137,7 +135,7 @@ public class linli_activity_fragment extends linli {
 
     private void getActivityList(){
 
-        RequestParams params = new RequestParams("http://10.40.5.23:8080/cmty/tomain");
+        RequestParams params = new RequestParams("http://10.40.5.23:8080/ty/queryactivity");
 
 
         x.http().get(params, new Callback.CommonCallback<String>() {
@@ -146,10 +144,10 @@ public class linli_activity_fragment extends linli {
             public void onSuccess(String result) {
                 Log.i("linli_activity_fragment", "onSuccess:activity数据传递进来了： =====>"+result);
 
-                Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm").create();
-                Type type=new TypeToken<List<ActivityBean.Activity>>(){}.getType();
-//                Gson gson = new Gson();
-                List<ActivityBean.Activity> aclist = gson.fromJson(result,type);
+//                Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm").create();
+                Gson gson = new Gson();
+                Type type=new TypeToken<List<Activity>>(){}.getType();
+                List<Activity> aclist = gson.fromJson(result,type);
 
                 Log.i("linli_activity_fragment", "onSuccess:activityBean对象:-------> "+aclist.get(0));
 

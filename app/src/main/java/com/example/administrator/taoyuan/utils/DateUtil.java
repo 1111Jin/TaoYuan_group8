@@ -27,12 +27,12 @@ public class DateUtil {
 		return sdf.format(date);
 	}
 	
-	public static Date stringToDate(String dateStr){
-		Date date = null;
+	public static Timestamp stringToDate(String dateStr){
+		Timestamp date = null;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		try {
-			date = sdf.parse(dateStr);
-		} catch (ParseException e) {
+			date = Timestamp.valueOf(sdf.format(dateStr));
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

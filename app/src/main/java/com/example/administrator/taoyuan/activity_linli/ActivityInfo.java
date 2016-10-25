@@ -5,9 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -16,11 +13,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.administrator.taoyuan.R;
-import com.example.administrator.taoyuan.pojo.ActivityBean;
+import com.example.administrator.taoyuan.pojo.Activity;
+import com.example.administrator.taoyuan.utils.HttpUtils;
 import com.example.administrator.taoyuan.utils.xUtilsImageUtils;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -58,7 +53,7 @@ public class ActivityInfo extends AppCompatActivity {
     @InjectView(R.id.tv_ac_name)
     TextView tvAcName;
 
-    ActivityBean.Activity activity ;
+    Activity activity ;
     public GridView gridview;
 
     @Override
@@ -105,12 +100,12 @@ public class ActivityInfo extends AppCompatActivity {
         activity = intent.getParcelableExtra("ActivityInfo");
         Log.i("ActivityInfo", "initData: ------>"+activity);
         if (activity!=null){
-            tvAcTitle.setText(activity.activity_title);
-            tvAcName.setText(activity.activity_master);
-            tvAcAcpro.setText(activity.activity_content);
-            tvAcAddress.setText(activity.activity_adress);
-            tvAcTime3.setText(dateToString1(activity.activity_begintime)+" -- "+dateToString1(activity.activity_endtime));
-            xUtilsImageUtils.display(ivAcImage,"http://10.40.5.23:8080/cmty/"+activity.activity_photo);
+            tvAcTitle.setText(activity.getActivityTitle());
+            tvAcName.setText(activity.getUser().getUserName());
+            tvAcAcpro.setText(activity.getActivityContent());
+            tvAcAddress.setText(activity.getActivityAddress());
+            tvAcTime3.setText(dateToString1(activity.getBeginTime())+" -- "+dateToString1(activity.getEndTime()));
+            xUtilsImageUtils.display(ivAcImage, HttpUtils.localhost_su+activity.getActivityImg());
         }
     }
 

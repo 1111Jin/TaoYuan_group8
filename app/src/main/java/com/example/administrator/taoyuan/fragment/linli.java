@@ -1,11 +1,14 @@
 package com.example.administrator.taoyuan.fragment;
 
 import android.animation.ObjectAnimator;
+
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+
+
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
