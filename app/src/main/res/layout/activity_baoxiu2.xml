@@ -11,6 +11,7 @@
         android:layout_alignParentTop="true"
         >
         <ImageView
+            android:id="@+id/iv"
             android:layout_width="50dp"
             android:layout_height="45dp"
             android:background="@drawable/baoxiu_fanhui"
@@ -24,6 +25,7 @@
             android:textSize="25sp"
             android:textColor="#a9b7a7"/>
         <TextView
+            android:id="@+id/tv11"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:text="报修记录"
@@ -228,12 +230,12 @@
         <Button
             android:id="@+id/bt7"
             android:layout_width="350dp"
-            android:layout_height="30dp"
+            android:layout_height="50dp"
             android:background="@drawable/button"
             android:textColor="#FAFAFA"
             android:text="立即报修"
             android:gravity="center"
-            android:textSize="18sp"
+            android:textSize="24sp"
             />
     </LinearLayout>
 </RelativeLayout>

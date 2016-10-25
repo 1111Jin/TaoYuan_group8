@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.example.administrator.taoyuan.R;
 import com.example.administrator.taoyuan.activity_home.BaoxiuActivity1;
+import com.example.administrator.taoyuan.activity_home.QiandaoActivity;
 import com.example.administrator.taoyuan.activity_home.TellphoneActivity;
 
 import butterknife.ButterKnife;
@@ -42,8 +43,6 @@ public class home extends Fragment {
     TextView textView2;
     @InjectView(R.id.iv_gg)
     ImageView ivGg;
-    @InjectView(R.id.rl_gg)
-    RelativeLayout rlGg;
     @InjectView(R.id.tv_wybx)
     TextView tvWybx;
     @InjectView(R.id.tv_wygg)
@@ -81,7 +80,7 @@ public class home extends Fragment {
         ButterKnife.reset(this);
     }
 
-    @OnClick({R.id.iv_lianxidianhua, R.id.textView2, R.id.rl_gg, R.id.tv_wybx, R.id.tv_wygg, R.id.tv_xxtz, R.id.tv_jjxq, R.id.rl_hd1, R.id.rl_hd2, R.id.rl_hd3})
+    @OnClick({R.id.iv_lianxidianhua, R.id.textView2, R.id.tv_wybx, R.id.tv_wygg, R.id.tv_xxtz, R.id.tv_jjxq, R.id.rl_hd1, R.id.rl_hd2, R.id.rl_hd3})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_lianxidianhua:
@@ -89,8 +88,8 @@ public class home extends Fragment {
                 startActivity(intent);
                 break;
             case R.id.textView2:
-                break;
-            case R.id.rl_gg:
+                Intent intent2=new Intent(getActivity(), QiandaoActivity.class);
+                startActivity(intent2);
                 break;
             case R.id.tv_wybx:
                 Intent intent1=new Intent(getActivity(), BaoxiuActivity1.class);
