@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.administrator.taoyuan.R;
 import com.example.administrator.taoyuan.pojo.ListUserBean;
@@ -136,7 +137,7 @@ public class ModifyMyActivity extends AppCompatActivity {
         ivModifyMyHead.setImageBitmap(bm);
         if (user != null) {
             tvModifyMyName.setText(user.userName);
-            tvModifyMyAddress.setText(user.userProfiles);
+            tvModifyMyAddress.setText(user.userAddress);
             tvModifyMyProfiles.setText(user.userProfiles);
             tvModifyMySex.setText(user.userSex ? "男" : "女");
             tvModifyMyTel.setText(user.userTel);
@@ -195,6 +196,11 @@ public class ModifyMyActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(String result) {
                         Log.i(TAG, "onSuccess: "+result);
+                        if (result.equals("success")){
+                            finish();
+                        }else{
+                            Toast.makeText(ModifyMyActivity.this, "修改失败！", Toast.LENGTH_SHORT).show();
+                        }
                     }
 
                     @Override
@@ -212,7 +218,7 @@ public class ModifyMyActivity extends AppCompatActivity {
 
                     }
                 });
-                finish();
+
             }
         });
 
