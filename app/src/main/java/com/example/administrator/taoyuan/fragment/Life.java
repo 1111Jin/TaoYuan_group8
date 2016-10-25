@@ -59,15 +59,15 @@ public class Life extends Fragment implements ViewPager.OnPageChangeListener,Vie
         view=inflater.inflate(R.layout.activity_activity_life,null);
 
         initView();
-        Fragment fragment2 = new lifeFriends();
-        Fragment fragment1 = new lifeHot();
-        Fragment fragment3 = new Life2();
+        Fragment fragment1 = new lifeFriends();
+        Fragment fragment3 = new lifeHot();
+        Fragment fragment2 = new Life2();
         fragmentList.add(fragment1);
         fragmentList.add(fragment2);
         fragmentList.add(fragment3);
         initEvent();
 
-//        initLineImage();
+        initLineImage();
         return view;
 
 
@@ -86,21 +86,21 @@ public class Life extends Fragment implements ViewPager.OnPageChangeListener,Vie
         line_tab = ((ImageView)view.findViewById(R.id.line_tab_life));
         tv_fabu = ((Button)view.findViewById(R.id.tv_fabu));
     }
-//    private void initLineImage() {
-//        //获取屏幕的宽度；
-//        DisplayMetrics dm = new DisplayMetrics();
-//        getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
-//        int screen = dm.widthPixels;
-//        //重新设置下划线的宽度；
-//        ViewGroup.LayoutParams lp = line_tab.getLayoutParams();
-//        lp.width = screen / 2;
-//        line_tab.setLayoutParams(lp);
-//        //滑动一个页面的距离；
-//        moveOne = lp.width;
-//    }
+    private void initLineImage() {
+        //获取屏幕的宽度；
+        DisplayMetrics dm = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
+        int screen = dm.widthPixels;
+        //重新设置下划线的宽度；
+        ViewGroup.LayoutParams lp = line_tab.getLayoutParams();
+        lp.width = screen / 3;
+        line_tab.setLayoutParams(lp);
+        //滑动一个页面的距离；
+        moveOne = lp.width;
+    }
     public void initEvent(){
         viewPager.setAdapter(new MyFragmentPagerAdapter(getChildFragmentManager(),fragmentList));
-//        viewPager.setCurrentItem(0);
+        viewPager.setCurrentItem(0);
         tab1.setOnClickListener(this);
         tab2.setOnClickListener(this);
         tab3.setOnClickListener(this);
@@ -174,10 +174,17 @@ public class Life extends Fragment implements ViewPager.OnPageChangeListener,Vie
             case 0:
                 tab1.setTextColor(Color.BLACK);
                 tab2.setTextColor(Color.GRAY);
+                tab3.setTextColor(Color.GRAY);
                 break;
             case 1:
                 tab1.setTextColor(Color.GRAY);
                 tab2.setTextColor(Color.BLACK);
+                tab3.setTextColor(Color.GRAY);
+                break;
+            case 2:
+                tab1.setTextColor(Color.GRAY);
+                tab2.setTextColor(Color.GRAY);
+                tab3.setTextColor(Color.BLACK);
                 break;
 
         }

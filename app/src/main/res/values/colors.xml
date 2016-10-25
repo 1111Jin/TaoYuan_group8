@@ -17,4 +17,6 @@
     <color name="black">#000</color>
     <color name="veryblack">#aa161718</color>
     <color name="white">#fff</color>
+
+    <color name="title">#ff5619</color>
 </resources>

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:background="@color/common_bg"
     tools:context="com.example.administrator.taoyuan.MainActivity">
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
         android:layout_height="0dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="60dp"
 
         />
     <FrameLayout
@@ -27,33 +27,43 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </FrameLayout>
+    <View
+        android:layout_below="@id/fl_content"
+        style="@style/bg_line"
+        android:layout_width="match_parent"
+        android:background="#ccc"
+        android:layout_height="1dp"/>
     <RadioGroup
         android:id="@+id/rg_tab"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:orientation="horizontal">
         <RadioButton
             android:id="@+id/rb_rb1"
             android:text="首页"
+            android:textColor="@color/textselector"
             android:drawableTop="@drawable/radiotab_home_selector"
             style="@style/radiotab"
             />
         <RadioButton
             android:id="@+id/rb_rb2"
             android:text="邻里"
+            android:textColor="@color/textselector"
             android:drawableTop="@drawable/radiotab_fire_selector"
             style="@style/radiotab"
             />
         <RadioButton
             android:id="@+id/rb_rb3"
             android:text="生活圈"
+            android:textColor="@color/textselector"
             android:drawableTop="@drawable/radiotab_gouwu_selector"
             style="@style/radiotab"
             />
         <RadioButton
             android:id="@+id/rb_rb4"
             android:text="我的"
+            android:textColor="@color/textselector"
             android:drawableTop="@drawable/radiotab_my_selector"
             style="@style/radiotab"
             />

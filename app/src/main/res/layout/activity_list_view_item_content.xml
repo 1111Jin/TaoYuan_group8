@@ -15,8 +15,16 @@
             android:text="活动详情"
             android:layout_centerInParent="true"/>
     </com.example.administrator.taoyuan.utils.TitleBar>
-    <RelativeLayout
+    <ScrollView
         android:layout_below="@id/ac_con_title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+    <RelativeLayout
         android:id="@+id/rl_ac_content"
         android:layout_width="match_parent"
         android:layout_height="200dp"
@@ -177,6 +185,8 @@
         </RelativeLayout>
 
     </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
     <Button
         android:id="@+id/bt_ac_join"
         android:layout_alignParentBottom="true"

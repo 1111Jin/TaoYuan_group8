@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="60dp"
     android:orientation="horizontal"
-    android:background="#ccc">
+    android:background="#fff">
+
 
     <TextView
         android:id="@+id/tv_tab1"
@@ -12,6 +13,7 @@
         android:layout_weight="1"
         android:layout_height="match_parent"
         android:text="互帮"
+        android:textColor="#000"
         android:textSize="22sp"/>
     <View
         android:layout_width="1dp"
@@ -24,6 +26,7 @@
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="match_parent"
+        android:textColor="#000"
         android:text="活动"
         android:textSize="22sp"/>
 </LinearLayout>

@@ -8,14 +8,11 @@
 
     <Button
         android:id="@+id/tv_fabu"
-        android:text="发布"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="24sp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:gravity="center"
-        android:background="#ff5619"
-        android:layout_marginTop="-7dp"
-        android:layout_marginRight="-5dp"
+        android:background="@drawable/fabu_1"
+        android:layout_marginRight="2dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
     <TextView
@@ -42,31 +39,33 @@
     <RadioGroup
         android:id="@+id/rg_tab"
         android:layout_below="@id/tv_life"
-
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:orientation="horizontal">
         <RadioButton
             android:id="@+id/rb_peng"
             android:text="朋友"
+            android:textColor="#000"
             android:layout_height="40dp"
-            android:background="#000000"
+            android:background="#fa8f68"
             android:textSize="24sp"
             style="@style/radiotab"
             />
         <RadioButton
             android:id="@+id/rb_suoyou"
             android:text="所有人"
+            android:textColor="#000"
             android:layout_height="40dp"
-            android:background="#000000"
+            android:background="#fa8f68"
             android:textSize="24sp"
             style="@style/radiotab"
             />
         <RadioButton
             android:id="@+id/rb_huati"
             android:text="话题"
+            android:textColor="#000"
             android:layout_height="40dp"
-            android:background="#000000"
+            android:background="#fa8f68"
             android:textSize="24sp"
             style="@style/radiotab"
             />

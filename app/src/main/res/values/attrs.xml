@@ -3,8 +3,10 @@
     <declare-styleable name="TitleBar">
         <attr name="titleStr" format="string" />
         <attr name="leftImg" format="reference|integer" />
+        <attr name="showLeft" format="boolean"/>
         <attr name="showRight" format="boolean" />
         <attr name="rightText" format="string" />
+        <attr name="leftText" format="string" />
 
     </declare-styleable>
 
