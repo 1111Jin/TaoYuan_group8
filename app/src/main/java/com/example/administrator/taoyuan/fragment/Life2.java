@@ -32,9 +32,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 
-//import com.example.administrator.taoyuan.pojo.ListLifeInfo;
 
-public class Life2 extends BaseFragment {
+public class Life2 extends Life {
 
     private ListView lv_lifeinfo;
     BaseAdapter adapter;
@@ -43,20 +42,64 @@ public class Life2 extends BaseFragment {
     ListInfo listinfo;
     public static final Integer REQUSETCODE=1;
     private Button tv_fabu;
+    int orderFlag=0;
+    int pageNo=1;
+    int pageSize=2;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.activity_activity_life,null);
-        lv_lifeinfo = ((ListView) view.findViewById(R.id.lv_dongtai1));
-        tv_fabu = ((Button) view.findViewById(R.id.tv_fabu));
+        View view=inflater.inflate(R.layout.activity_life_list,null);
+        lv_lifeinfo = ((ListView) view.findViewById(R.id.lv_dongtai_life));
+       // tv_fabu = ((Button) view.findViewById(R.id.tv_fabu));
 
         ImageView view3=new ImageView(getActivity());
         view3.setAdjustViewBounds(true);//去掉上下空白
-        view3.setImageResource( R.drawable.background);
+        view3.setImageResource( R.drawable.gg);
         lv_lifeinfo.addHeaderView(view3,null,false);
 
 
+        initData();
+        return view;
+
+
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        initEvent();
+        super.onActivityCreated(savedInstanceState);
+    }
+
+    public  void initView() {
+
+    }
+
+
+    public void initEvent() {
+
+        lv_lifeinfo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //跳转
+                Log.i("点击事件", "onItemClick: "+position);
+
+                Intent intent=new Intent(getActivity(), LifeXiangqing.class);
+
+                //点击item的信息
+                intent.putExtra("lifeinfo", lifelist.get(position-1));
+
+                startActivityForResult(intent,1);
+
+            }
+        });
+
+
+    }
+
+
+    public void initData() {
         adapter=new BaseAdapter() {
 
 
@@ -89,8 +132,8 @@ public class Life2 extends BaseFragment {
                 ListLifeInfo.LifeInfo dongtai=lifelist.get(position);
                 try {
                     tv_title.setText(URLDecoder.decode(dongtai.userName,"utf-8"));
-                    tv_name.setText(dongtai.content);
-                    //
+                    tv_name.setText(URLDecoder.decode(dongtai.content,"utf-8"));
+
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
@@ -102,68 +145,14 @@ public class Life2 extends BaseFragment {
         };
         lv_lifeinfo.setAdapter(adapter);
         getLifeInfoList();
-        return view;
-
-
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        initView();
-        initData();
-        initEvent();
-
-    }
-
-    public  void initView() {
-
-    }
-
-
-    public void initEvent() {
-        //lvGoods的item点击事件
-        lv_lifeinfo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //跳转
-                Log.i("点击事件", "onItemClick: "+position);
-
-                Intent intent=new Intent(getActivity(), LifeXiangqing.class);
-
-                //点击item的信息
-                intent.putExtra("lifeinfo", lifelist.get(position-1));
-
-                startActivityForResult(intent,1);
-
-            }
-        });
-
-
-
-        tv_fabu.setOnClickListener(new AdapterView.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(getActivity(),fabu.class);
-                intent.putExtra("orderDeatils",tv_fabu.getClass());
-                startActivityForResult(intent,1);
-//                startActivity(intent);
-            }
-        });
-
-
-
-
-    }
-
-
-    public void initData() {
-
     }
 
 
     private void getLifeInfoList() {
         RequestParams params = new RequestParams(HttpUtils.localhost_jt+"getdongraibypage");
+        params.addQueryStringParameter("orderFlag",orderFlag+"");//排序标记
+        params.addQueryStringParameter("pageNo",pageNo+"");
+        params.addQueryStringParameter("pageSize",pageSize+"");
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {

@@ -1,43 +1,36 @@
 package com.example.administrator.taoyuan.fragment;
 
+import android.animation.ObjectAnimator;
+
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+
 import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.support.v4.view.ViewPager;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.RadioButton;
 import android.widget.Toast;
-
-
 import com.example.administrator.taoyuan.R;
-//import com.example.administrator.taoyuan.pojo.ListLifeInfo;
-import com.example.administrator.taoyuan.activity_life.LifeXiangqing;
 import com.example.administrator.taoyuan.activity_life.fabu;
-
 import com.example.administrator.taoyuan.pojo.ListInfo;
 import com.example.administrator.taoyuan.pojo.ListLifeInfo;
-import com.example.administrator.taoyuan.utils.HttpUtils;
-import com.example.administrator.taoyuan.utils.xUtilsImageUtils;
-import com.google.gson.Gson;
-
-import org.xutils.common.Callback;
-import org.xutils.http.RequestParams;
-import org.xutils.x;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
+import com.example.administrator.taoyuan.utils.MyFragmentPagerAdapter;
 import java.util.ArrayList;
+import java.util.List;
 
-public class Life extends Fragment {
+public class Life extends Fragment implements ViewPager.OnPageChangeListener,View.OnClickListener{
 
+
+    private ImageView line_tab;
     private ListView lv_lifeinfo;
     BaseAdapter adapter;
     final ArrayList<ListLifeInfo.LifeInfo> lifelist= new ArrayList<ListLifeInfo.LifeInfo>();
@@ -45,163 +38,176 @@ public class Life extends Fragment {
     ListInfo listinfo;
     public static final Integer REQUSETCODE=1;
     private Button tv_fabu;
+    private boolean isScrolling = false; // 手指是否在滑动
+    private boolean isBackScrolling = false; // 手指离开后的回弹
+    View view;
+    List<Fragment> fragmentList = new ArrayList<Fragment>();
+    private ViewPager viewPager;
+    private RadioButton tab1;
+    private RadioButton tab2;
+    private RadioButton tab3;
+    private int moveOne = 0;
+    private long startTime = 0;
+    private long currentTime = 0;
+
+
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.activity_activity_life,null);
-        lv_lifeinfo = ((ListView) view.findViewById(R.id.lv_dongtai1));
-        tv_fabu = ((Button) view.findViewById(R.id.tv_fabu));
+        view=inflater.inflate(R.layout.activity_activity_life,null);
 
-        ImageView view3=new ImageView(getActivity());
-        view3.setAdjustViewBounds(true);//去掉上下空白
-        view3.setImageResource( R.drawable.background);
-        lv_lifeinfo.addHeaderView(view3,null,false);
+        initView();
+        Fragment fragment2 = new lifeFriends();
+        Fragment fragment1 = new lifeHot();
+        Fragment fragment3 = new Life2();
+        fragmentList.add(fragment1);
+        fragmentList.add(fragment2);
+        fragmentList.add(fragment3);
+        initEvent();
 
-
-        adapter=new BaseAdapter() {
-
-
-            @Override
-            public int getCount() {
-                return lifelist.size();
-            }
-
-            @Override
-            public Object getItem(int position) {
-                return null;
-            }
-
-            @Override
-            public long getItemId(int position) {
-                return 0;
-            }
-
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-
-
-                View view1=  View.inflate(getActivity(), R.layout.activity_list_lv_dongtai_item,null);
-                ImageView iv_photo = ((ImageView) view1.findViewById(R.id.iv_photo));
-                ImageView iv_contphoto = ((ImageView) view1.findViewById(R.id.iv_contphoto));
-                TextView  tv_title= ((TextView) view1.findViewById(R.id.tv_title));
-                TextView tv_name= ((TextView) view1.findViewById(R.id.tv_name));
-
-
-                ListLifeInfo.LifeInfo dongtai=lifelist.get(position);
-                try {
-                    tv_title.setText(URLDecoder.decode(dongtai.userName,"utf-8"));
-                    tv_name.setText(dongtai.content);
-                    //
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-                // x.image().bind(iv_photo,"http://10.40.5.12:8080/Life/imags/"+dongtai.headphoto+"");
-                xUtilsImageUtils.display(iv_photo, HttpUtils.localhost_jt+"imags/"+dongtai.headphoto+"",true);
-                xUtilsImageUtils.display(iv_contphoto, HttpUtils.localhost_jt+"imags/"+dongtai.content_photo+"",false);
-                System.out.println(dongtai.content_photo+"666666666666666666666666666");
-                return view1;
-            }
-        };
-        lv_lifeinfo.setAdapter(adapter);
-        getLifeInfoList();
+//        initLineImage();
         return view;
 
 
     }
-
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    public void onActivityCreated(Bundle savedInstanceState) {
+
         super.onActivityCreated(savedInstanceState);
-        initView();
-        initData();
-        initEvent();
 
     }
-
-    public  void initView() {
-
+    private void initView() {
+        viewPager = ((ViewPager) view.findViewById(R.id.viewPager));
+        tab1 = ((RadioButton) view.findViewById(R.id.rb_peng));
+        tab2 = ((RadioButton) view.findViewById(R.id.rb_huati));
+        tab3 = ((RadioButton) view.findViewById(R.id.rb_suoyou));
+        line_tab = ((ImageView)view.findViewById(R.id.line_tab_life));
+        tv_fabu = ((Button)view.findViewById(R.id.tv_fabu));
     }
+//    private void initLineImage() {
+//        //获取屏幕的宽度；
+//        DisplayMetrics dm = new DisplayMetrics();
+//        getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
+//        int screen = dm.widthPixels;
+//        //重新设置下划线的宽度；
+//        ViewGroup.LayoutParams lp = line_tab.getLayoutParams();
+//        lp.width = screen / 2;
+//        line_tab.setLayoutParams(lp);
+//        //滑动一个页面的距离；
+//        moveOne = lp.width;
+//    }
+    public void initEvent(){
+        viewPager.setAdapter(new MyFragmentPagerAdapter(getChildFragmentManager(),fragmentList));
+//        viewPager.setCurrentItem(0);
+        tab1.setOnClickListener(this);
+        tab2.setOnClickListener(this);
+        tab3.setOnClickListener(this);
+        viewPager.setOnPageChangeListener(this);
 
 
-    public void initEvent() {
-        //lvGoods的item点击事件
-        lv_lifeinfo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //跳转
-                Log.i("点击事件", "onItemClick: "+position);
-
-                Intent intent=new Intent(getActivity(), LifeXiangqing.class);
-
-                //点击item的信息
-                intent.putExtra("lifeinfo", lifelist.get(position-1));
-
-                startActivityForResult(intent,1);
-
-            }
-        });
-
-
-
-        tv_fabu.setOnClickListener(new AdapterView.OnClickListener() {
+        tv_fabu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent=new Intent(getActivity(),fabu.class);
                 intent.putExtra("orderDeatils",tv_fabu.getClass());
                 startActivityForResult(intent,1);
-//                startActivity(intent);
-            }
-        });
-
-
-
-
-    }
-
-
-    public void initData() {
-
-    }
-
-
-    private void getLifeInfoList() {
-        RequestParams params = new RequestParams(HttpUtils.localhost_jt+"getdongraibypage");
-        x.http().get(params, new Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-                System.out.println(result);
-                Gson gson=new Gson();
-                ListLifeInfo bean= gson.fromJson(result, ListLifeInfo.class);
-//                System.out.println(bean.status+"----");
-//                System.out.println(bean.lifeinfolist.size()+"===");
-                lifelist.addAll( bean.lifeinfolist);
-
-
-                adapter.notifyDataSetChanged();
-
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-                Toast.makeText(Life.this.getActivity(),ex.toString(),Toast.LENGTH_LONG).show();
-                System.out.println(ex.toString());
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-
-            }
-
-            @Override
-            public void onFinished() {
 
             }
         });
-
     }
 
+
+
+
+
+    /** * 下划线跟随手指的滑动而移动 * @param toPosition * @param positionOffsetPixels */
+    private void movePositionX(int toPosition, float positionOffsetPixels) {
+        // TODO Auto-generated method stub
+        float curTranslationX = line_tab.getTranslationX();
+        float toPositionX = moveOne * toPosition + positionOffsetPixels;
+        ObjectAnimator animator = ObjectAnimator.ofFloat(line_tab, "translationX", curTranslationX, toPositionX);
+        animator.setDuration(500); animator.start();
+    }
+
+    //下划线滑动到新的选项卡中；
+    private void movePositionX(int toPosition) {
+        // TODO Auto-generated method stub
+        movePositionX(toPosition, 0);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.rb_peng:
+                viewPager.setCurrentItem(0);
+                Toast.makeText(getActivity().getApplicationContext(),"点击了第一个小爽",Toast.LENGTH_LONG);
+                break;
+            case R.id.rb_huati:
+                viewPager.setCurrentItem(1);
+                break;
+            case R.id.rb_suoyou:
+                viewPager.setCurrentItem(2);
+                break;
+        }
+    }
+
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        currentTime = System.currentTimeMillis();
+        if (isScrolling && (currentTime - startTime > 200)) {
+            movePositionX(position, moveOne * positionOffset);
+            startTime = currentTime;
+        }
+        if (isBackScrolling) {
+            movePositionX(position);
+        }
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+
+        switch (position){
+            case 0:
+                tab1.setTextColor(Color.BLACK);
+                tab2.setTextColor(Color.GRAY);
+                break;
+            case 1:
+                tab1.setTextColor(Color.GRAY);
+                tab2.setTextColor(Color.BLACK);
+                break;
+
+        }
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+        switch (state){
+            case 1:
+                isScrolling = true;
+                isBackScrolling = false;
+                break;
+            case 2:
+                isScrolling = false;
+                isBackScrolling = true;
+                break;
+            default:
+                isScrolling = false;
+                isBackScrolling = false;
+                break;
+        }
+    }
 }
+
+
+
+
+
+
 
 
 
