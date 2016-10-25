@@ -218,7 +218,7 @@ public class ModifyMyActivity extends AppCompatActivity {
 
     }
 
-    @OnClick({R.id.rl_mytx, R.id.rl_myName, R.id.rl_mySex,R.id.rl_myTel,R.id.rl_modify_myAddress,R.id.rl_myProfiles,R.id.rl_myBirthday})
+    @OnClick({R.id.rl_mytx, R.id.rl_myName, R.id.rl_mySex, R.id.rl_myTel, R.id.rl_modify_myAddress, R.id.rl_myProfiles, R.id.rl_myBirthday})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.rl_mytx:

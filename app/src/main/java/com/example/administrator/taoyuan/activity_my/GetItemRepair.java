@@ -1,12 +1,10 @@
 package com.example.administrator.taoyuan.activity_my;
 
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import com.example.administrator.taoyuan.R;
-import com.example.administrator.taoyuan.pojo.ReListActivityBean;
 
 public class GetItemRepair extends AppCompatActivity {
 

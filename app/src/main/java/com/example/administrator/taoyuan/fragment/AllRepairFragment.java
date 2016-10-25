@@ -19,17 +19,18 @@ import com.example.administrator.taoyuan.utils.CommonAdapter;
 import com.example.administrator.taoyuan.utils.HttpUtils;
 import com.example.administrator.taoyuan.utils.ViewHolder;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
-import butterknife.OnClick;
 
 /**
  * Created by mawuyang on 2016-10-20.
@@ -49,7 +50,7 @@ public class AllRepairFragment extends BaseFragment {
 
         View view = inflater.inflate(R.layout.fragment_all_repair, null);
 
-        Log.i(TAG, "onCreateView: ssssssss");
+//        Log.i(TAG, "onCreateView: ssssssss");
         getUserList();
         lv_repair = ((ListView) view.findViewById(R.id.lv_repair_listview));
 
@@ -62,19 +63,25 @@ public class AllRepairFragment extends BaseFragment {
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                System.out.println(result);
-                Gson gson = new Gson();
-                ReListActivityBean bean = gson.fromJson(result, ReListActivityBean.class);
+                System.out.println("1??"+result);
+                Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm")
+                        .create();
+                Type type = new TypeToken<List<ReListActivityBean.Repair>>(){}.getType();
+                List<ReListActivityBean.Repair> bean = gson.fromJson(result, type);
 
-//                repairlist.clear();
-                repairlist.addAll(bean.repairList);
+//                Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm")
+//                        .create();
+//                ReListActivityBean bean=gson.fromJson(result,ReListActivityBean.class);
+                repairlist.clear();
+//                Log.i(TAG, "onSuccess: "+new SimpleDateFormat("yyy-MM-dd HH:mm").format(bean.get(0).repairData));
+                repairlist.addAll(bean);
 
                 if (adapter == null) {
                     adapter = new CommonAdapter<ReListActivityBean.Repair>(getActivity(), repairlist, R.layout.fragment_repair_item) {
                         @Override
                         public void convert(ViewHolder viewHolder, ReListActivityBean.Repair repair, int position) {
                             //设置item中控件的取值
-                            Log.i(TAG, "convert: " + position);
+//                            Log.i(TAG, "convert: " + position);
                             initItemView(viewHolder, repair, position);
                         }
                     };

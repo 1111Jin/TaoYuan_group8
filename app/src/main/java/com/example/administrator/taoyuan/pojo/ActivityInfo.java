@@ -1,8 +1,6 @@
 package com.example.administrator.taoyuan.pojo;
 
 import java.sql.Timestamp;
-import java.util.Date;
-import java.util.List;
 
 /**
  * Created by mawuyang on 2016-10-24.

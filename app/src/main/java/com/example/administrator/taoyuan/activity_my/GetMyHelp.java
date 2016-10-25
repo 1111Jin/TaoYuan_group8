@@ -15,8 +15,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.administrator.taoyuan.R;
-import com.example.administrator.taoyuan.fragment.ActivityByAttendFragment;
-import com.example.administrator.taoyuan.fragment.ActivityByMeFragment;
+import com.example.administrator.taoyuan.fragment.HelpByJoinFragment;
+import com.example.administrator.taoyuan.fragment.HelpByMeFragment;
 import com.example.administrator.taoyuan.pojo.ListUserBean;
 import com.example.administrator.taoyuan.utils.HttpUtils;
 import com.example.administrator.taoyuan.utils.TitleBar;
@@ -29,31 +29,28 @@ import com.shizhefei.view.indicator.transition.OnTransitionTextListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GetMyActivity extends AppCompatActivity {
+public class GetMyHelp extends AppCompatActivity {
 
     private ScrollIndicatorView tab;
     private ViewPager viewpage;
     private int unSelectTextColor;
-    private String[] names = {"我发布的活动", "我参加的活动"};
-    private String[] namess={"他发布的活动","他参加的活动"};
+    private String[] names = {"我发布的互帮", "我参加的互帮"};
+    private String[] namess={"他发布的互帮","他参加的互帮"};
     private LayoutInflater inflate;
     List<Fragment> list = new ArrayList<Fragment>();
     private IndicatorViewPager indicatorViewPager;
     private TitleBar titleBar;
     private Integer userId1 = HttpUtils.userId;
     ListUserBean.User user;
-//    private FragmentManager manager;
-//    private FragmentTransaction transaction;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_get_my);
-//        manager=getFragmentManager();
+        setContentView(R.layout.activity_get_my_help);
         initData();
         initView();
     }
+
 
     public void initData() {
 
@@ -63,10 +60,6 @@ public class GetMyActivity extends AppCompatActivity {
 
         Intent intent=getIntent();
         user = intent.getParcelableExtra("user");
-//        System.out.println("123"+user.friendId);
-//        userId=Integer.parseInt(intent.getStringExtra("userId"));
-//        userId1 = intent.getIntExtra("Id",HttpUtils.userId);
-//        System.out.println("22"+);
 
         if(user!=null) {
             userId1 = user.friendId;
@@ -96,8 +89,8 @@ public class GetMyActivity extends AppCompatActivity {
         inflate = LayoutInflater.from(getApplicationContext());
         indicatorViewPager.setAdapter(new MyAdapter(getSupportFragmentManager()));
 
-        list.add(new ActivityByMeFragment());
-        list.add(new ActivityByAttendFragment());
+        list.add(new HelpByMeFragment());
+        list.add(new HelpByJoinFragment());
 
         titleBar.setLeft(new View.OnClickListener() {
             @Override
@@ -161,15 +154,14 @@ public class GetMyActivity extends AppCompatActivity {
 
     }
 
-        /**
-         * 根据dip值转化成px值
-         *
-         * @param dip
-         * @return
-         */
+    /**
+     * 根据dip值转化成px值
+     *
+     * @param dip
+     * @return
+     */
     private int dipToPix(float dip) {
         int size = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dip, getResources().getDisplayMetrics());
         return size;
     }
-
 }

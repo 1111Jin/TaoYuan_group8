@@ -76,7 +76,7 @@ public class ListHelpBean implements Parcelable {
             this.send_integral = (Integer) in.readValue(Integer.class.getClassLoader());
         }
 
-        public static final Parcelable.Creator<Help> CREATOR = new Parcelable.Creator<Help>() {
+        public static final Creator<Help> CREATOR = new Creator<Help>() {
             @Override
             public Help createFromParcel(Parcel source) {
                 return new Help(source);
@@ -107,7 +107,7 @@ public class ListHelpBean implements Parcelable {
         this.helpList = in.createTypedArrayList(Help.CREATOR);
     }
 
-    public static final Parcelable.Creator<ListHelpBean> CREATOR = new Parcelable.Creator<ListHelpBean>() {
+    public static final Creator<ListHelpBean> CREATOR = new Creator<ListHelpBean>() {
         @Override
         public ListHelpBean createFromParcel(Parcel source) {
             return new ListHelpBean(source);

@@ -4,7 +4,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -96,7 +95,7 @@ public class ActivityBean implements Parcelable {
             this.activity_people = in.readString();
         }
 
-        public static final Parcelable.Creator<Activity> CREATOR = new Parcelable.Creator<Activity>() {
+        public static final Creator<Activity> CREATOR = new Creator<Activity>() {
             @Override
             public Activity createFromParcel(Parcel source) {
                 return new Activity(source);
@@ -126,7 +125,7 @@ public class ActivityBean implements Parcelable {
         this.activityList = in.createTypedArrayList(Activity.CREATOR);
     }
 
-    public static final Parcelable.Creator<ActivityBean> CREATOR = new Parcelable.Creator<ActivityBean>() {
+    public static final Creator<ActivityBean> CREATOR = new Creator<ActivityBean>() {
         @Override
         public ActivityBean createFromParcel(Parcel source) {
             return new ActivityBean(source);
