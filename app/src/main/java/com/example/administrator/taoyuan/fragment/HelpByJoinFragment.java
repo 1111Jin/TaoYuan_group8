@@ -12,9 +12,12 @@ import android.widget.TextView;
 
 import com.example.administrator.taoyuan.R;
 import com.example.administrator.taoyuan.pojo.ActivityInfo;
+import com.example.administrator.taoyuan.pojo.HelpInfo;
+import com.example.administrator.taoyuan.pojo.ListUserBean;
 import com.example.administrator.taoyuan.utils.CommonAdapter;
 import com.example.administrator.taoyuan.utils.HttpUtils;
 import com.example.administrator.taoyuan.utils.ViewHolder;
+import com.example.administrator.taoyuan.utils.xUtilsImageUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -34,8 +37,9 @@ import java.util.List;
 public class HelpByJoinFragment extends BaseFragment {
     private ListView lv_list;
     private Integer userId;
-    List<ActivityInfo> aclist = new ArrayList<ActivityInfo>();
-    CommonAdapter<ActivityInfo> adapter;
+    List<HelpInfo> aclist = new ArrayList<HelpInfo>();
+    CommonAdapter<HelpInfo> adapter;
+    private ListUserBean.User user;
 
     @Nullable
     @Override
@@ -62,10 +66,36 @@ public class HelpByJoinFragment extends BaseFragment {
 
     @Override
     public void initEvent() {
+        RequestParams re=new RequestParams(HttpUtils.localhost+"/my?userId="+ HttpUtils.userId);
+        x.http().get(re, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Gson gson=new Gson();
+
+                ListUserBean bean=gson.fromJson(result, ListUserBean.class);
+                user = bean.userList.get(0);
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
 
     }
+
     public void getActivityList(){
-        RequestParams params = new RequestParams(HttpUtils.localhost + "/joinactivitybyid?userId=" + userId);
+        RequestParams params = new RequestParams(HttpUtils.localhost + "/gethelpbyid?userId=" + userId);
 //        params.addBodyParameter("repairState","已派员");
         System.out.println(params);
         x.http().get(params, new Callback.CommonCallback<String>() {
@@ -74,18 +104,19 @@ public class HelpByJoinFragment extends BaseFragment {
                 System.out.println(result);
                 Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm")
                         .create();
-                Type type=new TypeToken<List<ActivityInfo>>(){}.getType();
+                Type type=new TypeToken<List<HelpInfo>>(){}.getType();
+                aclist=gson.fromJson(result,type);
 
-                List<ActivityInfo> alist=new ArrayList<ActivityInfo>();
-                alist=gson.fromJson(result,type);
-                aclist.addAll(alist);
+//                Type t1=new TypeToken<List<HelpInfo>>(){}.getType();
+//                List<HelpInfo> helplist=gson.fromJson(map.get("helplist").toString(),t1);
+//                System.out.println(helplist.get(0).helpImg);
 
-                System.out.println(aclist.get(0));
-
+//                System.out.println(aclist.get(0));
+//
                 if (adapter == null) {
-                    adapter = new CommonAdapter<ActivityInfo>(getActivity(), aclist, R.layout.activity_list_view_item) {
+                    adapter = new CommonAdapter<HelpInfo>(getActivity(), aclist, R.layout.help_list_view_item) {
                         @Override
-                        public void convert(ViewHolder viewHolder, ActivityInfo activity, int position) {
+                        public void convert(ViewHolder viewHolder, HelpInfo activity, int position) {
                             //设置item中控件的取值
                             Log.i("123123", "convert: " + position);
 
@@ -117,18 +148,18 @@ public class HelpByJoinFragment extends BaseFragment {
         });
     }
 
-    public void initItemView(ViewHolder viewHolder, ActivityInfo activity, int position) {
-        ImageView iv_img = ((ImageView) viewHolder.getViewById(R.id.iv_people));
-        TextView tv_title = ((TextView) viewHolder.getViewById(R.id.tv_title));
-        TextView tv_createTime = ((TextView) viewHolder.getViewById(R.id.tv_time));
-        TextView tv_address = ((TextView) viewHolder.getViewById(R.id.tv_address));
-        TextView tv_time = ((TextView) viewHolder.getViewById(R.id.time3));
-        TextView tv_join = ((TextView) viewHolder.getViewById(R.id.tv_num));
+    public void initItemView(ViewHolder viewHolder, HelpInfo activity, int position) {
+        ImageView iv_img = ((ImageView) viewHolder.getViewById(R.id.iv_tou));
+        TextView tv_username = ((TextView) viewHolder.getViewById(R.id.tv_username));
+        TextView tv_title = ((TextView) viewHolder.getViewById(R.id.tv_help_title));
+//        ImageView iv_help = ((ImageView) viewHolder.getViewById(R.id.tv_help_title));
+        TextView tv_time = ((TextView) viewHolder.getViewById(R.id.tv_time2));
 
-        tv_title.setText(activity.activityTitle);
-        tv_address.setText(activity.status);
-        tv_createTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(activity.createTime));
-        tv_time.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(activity.beginTime));
-        tv_join.setText(activity.joinNums.toString());
+        xUtilsImageUtils.display(iv_img, HttpUtils.localhost+user.userHead,true);
+        tv_username.setText(user.userName);
+        tv_time.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(activity.helpTime));
+        tv_title.setText(activity.helpTitle);
+//        x.image().bind(iv_help,HttpUtils.localhost+activity.helpImg);
+
     }
 }

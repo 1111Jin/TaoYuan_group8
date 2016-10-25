@@ -42,6 +42,11 @@ public class TitleBar extends RelativeLayout {
         String title = ta.getString(R.styleable.TitleBar_titleStr);
         titleStr.setText(title);
 
+        Boolean leftFlag=ta.getBoolean(R.styleable.TitleBar_showLeft,true);
+        if (!leftFlag){
+            left.setVisibility(view.INVISIBLE);
+        }
+
         Boolean rightFlag= ta.getBoolean(R.styleable.TitleBar_showRight,true);
         if(!rightFlag) {
             right.setVisibility(view.INVISIBLE);
