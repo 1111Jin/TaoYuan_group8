@@ -99,7 +99,7 @@ public class linli extends Fragment implements ViewPager.OnPageChangeListener,Vi
     }
     public void initEvent(){
         viewPager.setAdapter(new MyFragmentPagerAdapter(getChildFragmentManager(),fragmentList));
-//        viewPager.setCurrentItem(0);
+        viewPager.setCurrentItem(0);
         tab1.setOnClickListener(this);
         tab2.setOnClickListener(this);
         viewPager.setOnPageChangeListener(this);
@@ -112,9 +112,9 @@ public class linli extends Fragment implements ViewPager.OnPageChangeListener,Vi
     }
     public void initPopupWindow(View v){
         View view = View.inflate(getActivity().getApplicationContext(),R.layout.publish_choose,null);
-        final PopupWindow popupWindow = new PopupWindow(view,220,180);
+        final PopupWindow popupWindow = new PopupWindow(view,300,180);
         lv_choose = ((ListView) view.findViewById(R.id.lv_publish));
-        ArrayAdapter adapter = new ArrayAdapter(getActivity(),R.layout.publish_choose_item,new String[]{"活动","互帮"});
+        ArrayAdapter adapter = new ArrayAdapter(getActivity(),R.layout.publish_choose_item,new String[]{"活 动","互 帮"});
         lv_choose.setAdapter(adapter);
         //设置popupwindow属性；
         popupWindow.setOutsideTouchable(true);//获取焦点；
@@ -167,7 +167,7 @@ public class linli extends Fragment implements ViewPager.OnPageChangeListener,Vi
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
         currentTime = System.currentTimeMillis();
-        if (isScrolling && (currentTime - startTime > 200)) {
+        if (isScrolling && (currentTime - startTime > 100)) {
             movePositionX(position, moveOne * positionOffset);
             startTime = currentTime;
         }

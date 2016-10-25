@@ -138,7 +138,7 @@ public class Utils {
 			}
 
 		} catch (Exception e) {
-			// TODO: handle exception
+
 			return false;
 		}
 		return true;
@@ -175,7 +175,7 @@ public class Utils {
 			try {
 				tag = URLEncoder.encode(str, "gbk");
 			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 			return tag;

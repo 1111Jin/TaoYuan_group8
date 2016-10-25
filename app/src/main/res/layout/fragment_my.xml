@@ -6,16 +6,20 @@
     android:background="#fff"
     android:orientation="vertical">
 
+
+
     <com.example.administrator.taoyuan.utils.TitleBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tt:showLeft="false"
         tt:titleStr="我的"
-        android:background="@color/title"
+
 
         >
 
     </com.example.administrator.taoyuan.utils.TitleBar>
+
+
 
     <RelativeLayout
         android:id="@+id/rl_modify_My"
