@@ -1,12 +1,13 @@
 package com.example.administrator.taoyuan.activity_my;
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,9 @@ import android.widget.TextView;
 import com.example.administrator.taoyuan.R;
 import com.example.administrator.taoyuan.fragment.ActivityByAttendFragment;
 import com.example.administrator.taoyuan.fragment.ActivityByMeFragment;
+import com.example.administrator.taoyuan.pojo.ListUserBean;
+import com.example.administrator.taoyuan.utils.HttpUtils;
+import com.example.administrator.taoyuan.utils.TitleBar;
 import com.shizhefei.view.indicator.IndicatorViewPager;
 import com.shizhefei.view.indicator.ScrollIndicatorView;
 import com.shizhefei.view.indicator.slidebar.DrawableBar;
@@ -31,16 +35,22 @@ public class GetMyActivity extends AppCompatActivity {
     private ViewPager viewpage;
     private int unSelectTextColor;
     private String[] names = {"我发布的活动", "我参加的活动"};
+    private String[] namess={"他发布的活动","他参加的活动"};
     private LayoutInflater inflate;
     List<Fragment> list = new ArrayList<Fragment>();
     private IndicatorViewPager indicatorViewPager;
-
+    private TitleBar titleBar;
+    private Integer userId1 = HttpUtils.userId;
+    ListUserBean.User user;
+//    private FragmentManager manager;
+//    private FragmentTransaction transaction;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_my);
+//        manager=getFragmentManager();
         initData();
         initView();
     }
@@ -49,6 +59,20 @@ public class GetMyActivity extends AppCompatActivity {
 
         tab = ((ScrollIndicatorView) findViewById(R.id.moretab_indicator));
         viewpage = ((ViewPager) findViewById(R.id.moretab_viewPager));
+        titleBar = ((TitleBar) findViewById(R.id.tt_back));
+
+        Intent intent=getIntent();
+        user = intent.getParcelableExtra("user");
+//        System.out.println("123"+user.friendId);
+//        userId=Integer.parseInt(intent.getStringExtra("userId"));
+//        userId1 = intent.getIntExtra("Id",HttpUtils.userId);
+//        System.out.println("22"+);
+
+        if(user!=null) {
+            userId1 = user.friendId;
+        }
+
+        System.out.println("111+"+userId1);
 
         tab.setBackgroundColor(Color.RED);
         tab.setScrollBar(new DrawableBar(this, R.drawable.round_border_white_selector, ScrollBar.Gravity.CENTENT_BACKGROUND) {
@@ -74,6 +98,13 @@ public class GetMyActivity extends AppCompatActivity {
 
         list.add(new ActivityByMeFragment());
         list.add(new ActivityByAttendFragment());
+
+        titleBar.setLeft(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
 
@@ -81,6 +112,7 @@ public class GetMyActivity extends AppCompatActivity {
 
         public MyAdapter(FragmentManager fragmentManager) {
             super(fragmentManager);
+
         }
 
         @Override
@@ -94,7 +126,13 @@ public class GetMyActivity extends AppCompatActivity {
                 convertView = inflate.inflate(R.layout.tab_fragment, container, false);
             }
             TextView textView = (TextView) convertView;
-            textView.setText(names[position % names.length]);
+            if (userId1.equals(HttpUtils.userId)) {
+                textView.setText(names[position % names.length]);
+            }else{
+                TextView titlestr = ((TextView) titleBar.findViewById(R.id.title));
+                titlestr.setText("他的活动");
+                textView.setText(namess[position % namess.length]);
+            }
             int padding = dipToPix(10);
             textView.setPadding(padding, 0, padding, 0);
             return convertView;
@@ -106,7 +144,12 @@ public class GetMyActivity extends AppCompatActivity {
 //            Bundle bundle = new Bundle();
 //            bundle.putInt(MoreFragment.INTENT_INT_INDEX, position);
 //            fragment.setArguments(bundle);
-            return list.get(position);
+            Fragment fragment1 = list.get(position);
+            Bundle bundle = new Bundle();
+//            String strValue = userId.toString().trim();
+            bundle.putInt("userId",userId1);
+            fragment1.setArguments(bundle);
+            return fragment1;
         }
 
         @Override

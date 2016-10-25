@@ -10,6 +10,7 @@
     <com.example.administrator.taoyuan.utils.TitleBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/tt_back"
         bar:titleStr="我的活动"
         bar:showRight="true" />
     <com.shizhefei.view.indicator.ScrollIndicatorView

@@ -36,12 +36,19 @@ public class ActivityByAttendFragment extends BaseFragment {
     private ListView lv_list;
     List<ActivityInfo> aclist = new ArrayList<ActivityInfo>();
     CommonAdapter<ActivityInfo> adapter;
+    private Integer userId;
+
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_all_repair,null);
         lv_list = ((ListView) view.findViewById(R.id.lv_repair_listview));
+        Bundle bundle = getArguments();//从activity传过来的Bundle
+        if(bundle!=null){
+            userId=bundle.getInt("userId");
+        }
         getActivityList();
         return view;
     }
@@ -62,7 +69,7 @@ public class ActivityByAttendFragment extends BaseFragment {
     }
 
     public void getActivityList(){
-        RequestParams params = new RequestParams(HttpUtils.localhost + "/getActivitybyId?userId=" + HttpUtils.userId);
+        RequestParams params = new RequestParams(HttpUtils.localhost + "/joinactivitybyid?userId=" + userId);
 //        params.addBodyParameter("repairState","已派员");
         System.out.println(params);
         x.http().get(params, new Callback.CommonCallback<String>() {

@@ -1,11 +1,14 @@
 package com.example.administrator.taoyuan.application;
 
 import android.app.Application;
+import android.content.Context;
+
 
 import com.example.administrator.taoyuan.pojo.User;
 
 import org.xutils.BuildConfig;
 import org.xutils.x;
+
 
 /**
  * Created by Administrator on 2016/9/13.
@@ -28,4 +31,5 @@ public class MyApplication extends Application {
         x.Ext.init(this);
         x.Ext.setDebug(BuildConfig.DEBUG); // 是否输出debug日志, 开启debug会影响性能.
     }
+
 }

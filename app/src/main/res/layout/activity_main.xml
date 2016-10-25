@@ -8,8 +8,6 @@
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-
     </android.support.v7.widget.Toolbar>
     <View
         android:id="@+id/struct"
@@ -21,8 +19,6 @@
         android:layout_marginBottom="80dp"
 
         />
-
-
     <FrameLayout
         android:id="@+id/fl_content"
         android:background="#ccc"
@@ -30,7 +26,6 @@
         android:layout_alignBottom="@id/struct"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
     </FrameLayout>
     <RadioGroup
         android:id="@+id/rg_tab"

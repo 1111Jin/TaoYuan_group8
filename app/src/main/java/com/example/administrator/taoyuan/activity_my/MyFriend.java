@@ -1,8 +1,8 @@
 package com.example.administrator.taoyuan.activity_my;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -34,6 +34,7 @@ public class MyFriend extends AppCompatActivity {
     ListUserBean.User user;
     private RelativeLayout rl_back_fri;
     private Button btn_delete;
+    private RelativeLayout rl_activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,8 @@ public class MyFriend extends AppCompatActivity {
 
         rl_back_fri = ((RelativeLayout) findViewById(R.id.rl_back_fri));
         btn_delete = ((Button) findViewById(R.id.btn_fri_delete));
+
+        rl_activity = ((RelativeLayout) findViewById(R.id.rl_fri_activity));
 
     }
 
@@ -115,6 +118,16 @@ public class MyFriend extends AppCompatActivity {
 
                     }
                 });
+            }
+        });
+
+        rl_activity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),GetMyActivity.class);
+//                System.out.println("333"+user.userId);
+                intent.putExtra("user",user);
+                startActivityForResult(intent,1);
             }
         });
     }

@@ -3,8 +3,8 @@ package com.example.administrator.taoyuan.pojo;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -22,7 +22,7 @@ public class ReListActivityBean implements Parcelable {
         public String repairContent;
         public Integer repairImg;
         public String repairAddress;
-        public Date repairData;
+        public Timestamp repairData;
         public String repairState;
         public Integer servicemanId;
         public String servicemanName;
@@ -61,7 +61,7 @@ public class ReListActivityBean implements Parcelable {
             dest.writeString(this.repairContent);
             dest.writeValue(this.repairImg);
             dest.writeString(this.repairAddress);
-            dest.writeLong(this.repairData != null ? this.repairData.getTime() : -1);
+            dest.writeSerializable(this.repairData);
             dest.writeString(this.repairState);
             dest.writeValue(this.servicemanId);
             dest.writeString(this.servicemanName);
@@ -79,8 +79,7 @@ public class ReListActivityBean implements Parcelable {
             this.repairContent = in.readString();
             this.repairImg = (Integer) in.readValue(Integer.class.getClassLoader());
             this.repairAddress = in.readString();
-            long tmpRepairData = in.readLong();
-            this.repairData = tmpRepairData == -1 ? null : new Date(tmpRepairData);
+            this.repairData = (Timestamp) in.readSerializable();
             this.repairState = in.readString();
             this.servicemanId = (Integer) in.readValue(Integer.class.getClassLoader());
             this.servicemanName = in.readString();
@@ -122,7 +121,7 @@ public class ReListActivityBean implements Parcelable {
         in.readList(this.repairList, Repair.class.getClassLoader());
     }
 
-    public static final Parcelable.Creator<ReListActivityBean> CREATOR = new Parcelable.Creator<ReListActivityBean>() {
+    public static final Creator<ReListActivityBean> CREATOR = new Creator<ReListActivityBean>() {
         @Override
         public ReListActivityBean createFromParcel(Parcel source) {
             return new ReListActivityBean(source);

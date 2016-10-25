@@ -11,9 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.administrator.taoyuan.R;
-import com.example.administrator.taoyuan.pojo.ActivityBean;
 import com.example.administrator.taoyuan.pojo.ActivityInfo;
-import com.example.administrator.taoyuan.pojo.ReListActivityBean;
 import com.example.administrator.taoyuan.utils.CommonAdapter;
 import com.example.administrator.taoyuan.utils.HttpUtils;
 import com.example.administrator.taoyuan.utils.ViewHolder;
@@ -38,18 +36,25 @@ public class ActivityByMeFragment extends BaseFragment {
     private ListView listview;
     List<ActivityInfo> aclist = new ArrayList<ActivityInfo>();
     CommonAdapter<ActivityInfo> adapter;
+    private Integer userId;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_all_repair,null);
         listview = ((ListView) view.findViewById(R.id.lv_repair_listview));
+        Bundle bundle = getArguments();//从activity传过来的Bundle
+        if(bundle!=null){
+            userId=bundle.getInt("userId");
+        }
         getActivityList();
         return view;
     }
 
     @Override
     public void initView() {
+
+
 
     }
 
@@ -65,7 +70,7 @@ public class ActivityByMeFragment extends BaseFragment {
 
 
     public void getActivityList(){
-        RequestParams params = new RequestParams(HttpUtils.localhost + "/getActivitybyId?userId=" + HttpUtils.userId);
+        RequestParams params = new RequestParams(HttpUtils.localhost + "/getActivitybyId?userId=" +userId);
 //        params.addBodyParameter("repairState","已派员");
         System.out.println(params);
         x.http().get(params, new Callback.CommonCallback<String>() {
@@ -80,12 +85,7 @@ public class ActivityByMeFragment extends BaseFragment {
                 alist=gson.fromJson(result,type);
                 aclist.addAll(alist);
 //                aclist.clear();
-//                aclist.addAll(bean);
-                System.out.println(aclist.get(0));
-//                String jsonStr="{'brith':'2013-11-20','name':'lmw'}";
-//                User uu=gson.fromJson(jsonStr, User.class);
-//                System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(uu.brith));  //                repairlist.clear();
-//                repairlist.addAll(bean.repairList);
+
 
                 if (adapter == null) {
                     adapter = new CommonAdapter<ActivityInfo>(getActivity(), aclist, R.layout.activity_list_view_item) {

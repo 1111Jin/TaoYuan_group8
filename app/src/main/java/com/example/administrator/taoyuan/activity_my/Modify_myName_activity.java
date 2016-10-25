@@ -12,7 +12,6 @@ import com.example.administrator.taoyuan.R;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import butterknife.OnClick;
 
 public class Modify_myName_activity extends AppCompatActivity {
 
