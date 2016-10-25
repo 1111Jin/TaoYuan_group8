@@ -29,32 +29,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by mawuyang on 2016-10-23.
+ * Created by mawuyang on 2016-10-24.
  */
-public class ActivityByMeFragment extends BaseFragment {
+public class HelpByMeFragment extends BaseFragment {
 
-    private ListView listview;
+    private ListView lv_list;
+    private Integer userId;
     List<ActivityInfo> aclist = new ArrayList<ActivityInfo>();
     CommonAdapter<ActivityInfo> adapter;
-    private Integer userId;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragment_all_repair,null);
-        listview = ((ListView) view.findViewById(R.id.lv_repair_listview));
-        Bundle bundle = getArguments();//从activity传过来的Bundle
+        View v=inflater.inflate(R.layout.fragment_all_repair,null);
+        lv_list = ((ListView) v.findViewById(R.id.lv_repair_listview));
+        Bundle bundle = getArguments();
         if(bundle!=null){
             userId=bundle.getInt("userId");
         }
         getActivityList();
-        return view;
+        return v;
     }
 
     @Override
     public void initView() {
-
-
 
     }
 
@@ -68,9 +66,8 @@ public class ActivityByMeFragment extends BaseFragment {
 
     }
 
-
     public void getActivityList(){
-        RequestParams params = new RequestParams(HttpUtils.localhost + "/getActivitybyId?userId=" +userId);
+        RequestParams params = new RequestParams(HttpUtils.localhost + "/joinactivitybyid?userId=" + userId);
 //        params.addBodyParameter("repairState","已派员");
         System.out.println(params);
         x.http().get(params, new Callback.CommonCallback<String>() {
@@ -84,8 +81,8 @@ public class ActivityByMeFragment extends BaseFragment {
                 List<ActivityInfo> alist=new ArrayList<ActivityInfo>();
                 alist=gson.fromJson(result,type);
                 aclist.addAll(alist);
-//                aclist.clear();
 
+                System.out.println(aclist.get(0));
 
                 if (adapter == null) {
                     adapter = new CommonAdapter<ActivityInfo>(getActivity(), aclist, R.layout.activity_list_view_item) {
@@ -98,7 +95,7 @@ public class ActivityByMeFragment extends BaseFragment {
                         }
                     };
 
-                    listview.setAdapter(adapter);
+                    lv_list .setAdapter(adapter);
                 }else{
                     adapter.notifyDataSetChanged();
                 }
@@ -136,4 +133,4 @@ public class ActivityByMeFragment extends BaseFragment {
         tv_time.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(activity.beginTime));
         tv_join.setText(activity.joinNums.toString());
     }
-    }
+}

@@ -25,6 +25,49 @@ public class ListUserBean implements Parcelable {
         public Integer integral;
         public Integer friendId;
 
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            User user = (User) o;
+
+            if (userId != null ? !userId.equals(user.userId) : user.userId != null) return false;
+            if (userName != null ? !userName.equals(user.userName) : user.userName != null)
+                return false;
+            if (userTel != null ? !userTel.equals(user.userTel) : user.userTel != null)
+                return false;
+            if (userHead != null ? !userHead.equals(user.userHead) : user.userHead != null)
+                return false;
+            if (userProfiles != null ? !userProfiles.equals(user.userProfiles) : user.userProfiles != null)
+                return false;
+            if (userSex != null ? !userSex.equals(user.userSex) : user.userSex != null)
+                return false;
+            if (userAddress != null ? !userAddress.equals(user.userAddress) : user.userAddress != null)
+                return false;
+            if (userPsd != null ? !userPsd.equals(user.userPsd) : user.userPsd != null)
+                return false;
+            if (integral != null ? !integral.equals(user.integral) : user.integral != null)
+                return false;
+            return friendId != null ? friendId.equals(user.friendId) : user.friendId == null;
+
+        }
+
+        @Override
+        public int hashCode() {
+            int result = userId != null ? userId.hashCode() : 0;
+            result = 31 * result + (userName != null ? userName.hashCode() : 0);
+            result = 31 * result + (userTel != null ? userTel.hashCode() : 0);
+            result = 31 * result + (userHead != null ? userHead.hashCode() : 0);
+            result = 31 * result + (userProfiles != null ? userProfiles.hashCode() : 0);
+            result = 31 * result + (userSex != null ? userSex.hashCode() : 0);
+            result = 31 * result + (userAddress != null ? userAddress.hashCode() : 0);
+            result = 31 * result + (userPsd != null ? userPsd.hashCode() : 0);
+            result = 31 * result + (integral != null ? integral.hashCode() : 0);
+            result = 31 * result + (friendId != null ? friendId.hashCode() : 0);
+            return result;
+        }
+
         public User(Integer userId, Integer integral, String userPsd, String userAddress, Boolean userSex, String userProfiles, String userHead, String userTel, String userName) {
             this.userId = userId;
             this.integral = integral;
@@ -134,7 +177,7 @@ public class ListUserBean implements Parcelable {
         in.readList(this.userList, User.class.getClassLoader());
     }
 
-    public static final Parcelable.Creator<ListUserBean> CREATOR = new Parcelable.Creator<ListUserBean>() {
+    public static final Creator<ListUserBean> CREATOR = new Creator<ListUserBean>() {
         @Override
         public ListUserBean createFromParcel(Parcel source) {
             return new ListUserBean(source);

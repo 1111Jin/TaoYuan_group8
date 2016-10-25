@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.administrator.taoyuan.activity_my.GetMyActivity">
+    tools:context="com.example.administrator.taoyuan.activity_my.GetMyHelp">
 
     <com.example.administrator.taoyuan.utils.TitleBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tt_back"
-        bar:titleStr="我的活动"
+        bar:titleStr="我的互帮"
         bar:showRight="true" />
     <com.shizhefei.view.indicator.ScrollIndicatorView
         android:id="@+id/moretab_indicator"

@@ -16,11 +16,14 @@ import com.example.administrator.taoyuan.utils.CommonAdapter;
 import com.example.administrator.taoyuan.utils.HttpUtils;
 import com.example.administrator.taoyuan.utils.ViewHolder;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,11 +71,13 @@ public class UnProcessedFragment extends BaseFragment {
             @Override
             public void onSuccess(String result) {
                 System.out.println(result);
-                Gson gson = new Gson();
-                ReListActivityBean bean = gson.fromJson(result, ReListActivityBean.class);
+                Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm")
+                        .create();
+                Type type = new TypeToken<List<ReListActivityBean.Repair>>(){}.getType();
+                List<ReListActivityBean.Repair> bean = gson.fromJson(result, type);
 
 //                repairlist.clear();
-                repairlist.addAll(bean.repairList);
+                repairlist.addAll(bean);
 
                 if (adapter == null) {
                     adapter = new CommonAdapter<ReListActivityBean.Repair>(getActivity(), repairlist, R.layout.fragment_repair_item) {
