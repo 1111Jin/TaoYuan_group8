@@ -15,7 +15,7 @@ import org.xutils.x;
  */
 public class MyApplication extends Application {
 
-    User user  = new User(4);
+    User user  = new User(5);
 
     public User getUser() {
         return user;
