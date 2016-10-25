@@ -11,10 +11,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -22,6 +22,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.administrator.taoyuan.R;
+import com.example.administrator.taoyuan.activity_my.RepairActivity;
 import com.example.administrator.taoyuan.pojo.Leixing;
 import com.example.administrator.taoyuan.pojo.RepairBean;
 import com.google.gson.Gson;
@@ -31,10 +32,8 @@ import org.xutils.http.RequestParams;
 import org.xutils.x;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -84,6 +83,10 @@ public class BaoxiuActivity2 extends Activity {
     Button bt;
     @InjectView(R.id.bt7)
     Button bt7;
+    @InjectView(R.id.tv11)
+    TextView tv11;
+    @InjectView(R.id.iv)
+    ImageView iv;
     private int mYear;
     private int mMonth;
     private int mDay;
@@ -92,19 +95,20 @@ public class BaoxiuActivity2 extends Activity {
     private final static int DIALOG = 0;
     private Dialog dialog = null;
     Leixing leixin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_baoxiu2);
         ButterKnife.inject(this);
-       leixin = (Leixing) getIntent().getSerializableExtra("e");
+        leixin = (Leixing) getIntent().getSerializableExtra("e");
         tv2.setText(leixin.getLeixing());
         tv4.setText(leixin.getXiangmu());
 
     }
 
     @TargetApi(Build.VERSION_CODES.M)
-    @OnClick({R.id.bt, R.id.et2, R.id.et3})
+    @OnClick({R.id.bt, R.id.et2, R.id.et3, R.id.tv11,R.id.iv})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bt:
@@ -144,7 +148,8 @@ public class BaoxiuActivity2 extends Activity {
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
-                datePicker.init(cal.get(Calendar.YEAR),cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH), null);;
+                datePicker.init(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH), null);
+                ;
                 timePicker.setIs24HourView(true);
                 timePicker.setHour(cal.get(Calendar.HOUR_OF_DAY));
                 timePicker.setMinute(cal.get(Calendar.MINUTE));
@@ -182,15 +187,22 @@ public class BaoxiuActivity2 extends Activity {
                 break;
             case R.id.et3:
                 break;
+            case R.id.tv11:
+                Intent intent2 = new Intent(BaoxiuActivity2.this, RepairActivity.class);
+                startActivity(intent2);
+                break;
+            case R.id.iv:
+                finish();
+                break;
         }
     }
 
     public void baoXiu() {
-        String url = Netutil.url+"insertRepair";
+        String url = Netutil.url + "insertRepair";
         RequestParams params = new RequestParams(url);
         String repairTitle = tv4.getText().toString();
         String repairType = tv2.getText().toString();
-        String repairContent =leixin.getContent() ;
+        String repairContent = leixin.getContent();
         String repairImg = leixin.getPictureName();
         String repairAddress = et3.getText().toString();
         String repairDate = et2.getText().toString();
@@ -203,12 +215,14 @@ public class BaoxiuActivity2 extends Activity {
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                System.out.println(result.toString() + "?//////////////");
+                Toast toast = Toast.makeText(BaoxiuActivity2.this, "报修成功", Toast.LENGTH_LONG);
+                toast.show();
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                System.out.println(ex.toString() + "///////////////");
+                Toast toast = Toast.makeText(BaoxiuActivity2.this, "报修失败，请重试", Toast.LENGTH_LONG);
+                toast.show();
             }
 
             @Override

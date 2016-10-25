@@ -184,21 +184,22 @@ public class Baoxiuleixing_gerenzhuzha_Fragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if ( requestCode == REQUEST_CODE) {
+            if (data != null) {
                 mResults = data.getStringArrayListExtra(PhotoPickerActivity.KEY_SELECTED_PHOTOS);
                 assert mResults != null;
                 for (int i = 0; i < mResults.size(); i++) {
-                    bitmap =BitmapUtils.decodeSampledBitmapFromFd (mResults.get(i),480,600);
-                    temp = mResults.get(i).replaceAll("\\\\","/").split("/");
+                    bitmap = BitmapUtils.decodeSampledBitmapFromFd(mResults.get(i), 480, 600);
+                    temp = mResults.get(i).replaceAll("\\\\", "/").split("/");
                 }
-            for (int j=0;j<temp.length;j++){
-                if (temp[j].contains(".jpg")||temp[j].contains(".png")){
-                    pictureName=temp[j];
+                for (int j = 0; j < temp.length; j++) {
+                    if (temp[j].contains(".jpg") || temp[j].contains(".png")) {
+                        pictureName = temp[j];
+                    }
                 }
-            }
                 imageView.setImageBitmap(bitmap);
-            btn.setVisibility(View.GONE);
+                btn.setVisibility(View.GONE);
             }
-
+        }
         super.onActivityResult(requestCode, resultCode, data);
     }
     private void showpopupwindow(View view) {
@@ -225,7 +226,7 @@ public class Baoxiuleixing_gerenzhuzha_Fragment extends Fragment {
             }
         });
         popupwindow.setBackgroundDrawable(new BitmapDrawable());
-        popupwindow.showAtLocation(view, Gravity.BOTTOM,0,0);
+        popupwindow.showAtLocation(imageView,Gravity.BOTTOM,0,40);
     }
     public void showImage(Bitmap bitmap){
         saveImage(bitmap);//保存文件

@@ -48,12 +48,12 @@
         <Button
             android:id="@+id/btn1"
             android:layout_width="350dp"
-            android:layout_height="30dp"
+            android:layout_height="50dp"
             android:background="@drawable/button"
             android:textColor="#FAFAFA"
             android:text="立即报修"
             android:gravity="center"
-            android:textSize="18sp"
+            android:textSize="24sp"
             />
     </LinearLayout>
 </RelativeLayout>
