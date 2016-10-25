@@ -12,7 +12,6 @@
     <ImageView
         android:src="@drawable/lianxidianhua"
         android:id="@+id/iv_lianxidianhua"
-
         android:layout_width="80dp"
         android:layout_height="60dp" />
     <TextView
@@ -82,7 +81,8 @@
             android:layout_height="wrap_content"
             android:textSize="20dp"
             android:textColor="@color/text_clo"
-            android:text="报修"/>
+            android:text="报修"
+            />
         <TextView
             android:gravity="center"
             android:id="@+id/tv_wygg"
@@ -92,7 +92,8 @@
             android:layout_height="wrap_content"
             android:textSize="20dp"
             android:textColor="@color/text_clo"
-            android:text="公告"/>
+            android:text="公告"
+            />
         <TextView
             android:gravity="center"
             android:layout_marginRight="10dp"
@@ -103,7 +104,8 @@
             android:layout_height="wrap_content"
             android:textSize="20dp"
             android:textColor="@color/text_clo"
-            android:text="消息"/>
+            android:text="消息"
+            />
         <TextView
             android:gravity="center"
             android:id="@+id/tv_jjxq"
@@ -113,7 +115,8 @@
             android:layout_height="wrap_content"
             android:textSize="20dp"
             android:textColor="@color/text_clo"
-            android:text="积分"/>
+            android:text="积分"
+           />
 
     </LinearLayout>
     <LinearLayout
