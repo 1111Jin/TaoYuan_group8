@@ -2,6 +2,8 @@ package com.example.administrator.taoyuan.application;
 
 import android.app.Application;
 
+import com.example.administrator.taoyuan.pojo.User;
+
 import org.xutils.BuildConfig;
 import org.xutils.x;
 
@@ -9,6 +11,17 @@ import org.xutils.x;
  * Created by Administrator on 2016/9/13.
  */
 public class MyApplication extends Application {
+
+    User user  = new User(4);
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();

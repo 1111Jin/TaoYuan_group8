@@ -26,8 +26,13 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.administrator.taoyuan.R;
+import com.example.administrator.taoyuan.application.MyApplication;
+import com.example.administrator.taoyuan.pojo.Activity;
 import com.example.administrator.taoyuan.pojo.ActivityBean;
+import com.example.administrator.taoyuan.utils.DateUtil;
+import com.example.administrator.taoyuan.utils.HttpUtils;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
@@ -77,7 +82,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
     private String items[] = {"拍照", "从相册选择"};
     String path = "";
 
-    ActivityBean.Activity activity;
+    Activity activity;
 
     private static final int PHOTO_REQUEST = 1;
     private static final int CAMERA_REQUEST = 2;
@@ -126,6 +131,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                         //保存到本地；
                         saveImageToGallery(PublishActivity.this, photo);
                         ivPhoto.setImageBitmap(photo);
+                        uploadImage();
                     }
                 }
                 break;
@@ -139,7 +145,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
 
     //上传照片;
     private void uploadImage() {
-        RequestParams params = new RequestParams("http://10.40.5.23:8080/cmty/uploadimg");
+        RequestParams params = new RequestParams(HttpUtils.localhost_su+"uploadimg");
         params.setMultipart(true);
         params.addBodyParameter("file", file);
         System.out.println(file.getName());
@@ -209,26 +215,36 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
 
     //获取输入的数据：
     private void getData(){
+        Integer userId = ((MyApplication)getApplication()).getUser().getUserId();
+        System.out.println("获取一个固定的userId:"+userId);
         String name = tvBt.getText().toString();
-        String pro = tvContent1.getText().toString();
+        String pro =tvContent1.getText().toString();
         String Imgurl="upload/"+file.getName();
-        Timestamp beg = (Timestamp) tvBegin.getText();
-        Timestamp ed = (Timestamp) tvEnd.getText();
+        Timestamp beg = Timestamp.valueOf((tvBegin.getText().toString())+":00");
+//        Timestamp ed = DateUtil.stringToDate(tvEnd.getText().toString());
+        Timestamp ed = Timestamp.valueOf((tvEnd.getText().toString())+":00");
         String addr = tvHdress.getText().toString();
         Integer num = Integer.parseInt(tvHlNums.getText().toString());
         Timestamp create = new Timestamp(System.currentTimeMillis());
+
+        /**
+         * Integer userId,String activityTitle,String activityContent,Timestamp beginTime, Timestamp endTime,
+         String activityImg,String activityAddress,Timestamp createTime,Integer joinNums
+         */
         //封装成一个对象；
-        activity = new ActivityBean.Activity(name,create,name,pro,Imgurl,beg,ed,addr,num);
+        activity = new Activity(userId,name,pro,beg,ed,Imgurl,addr,create,num);
     }
 
     //数据传输(插入数据库)；
     private void submitData() {
         getData();
-        uploadImage();
-        RequestParams request = new RequestParams("http://10.40.5.23:8080/cmty/insertactivity");
+
+        RequestParams request = new RequestParams(HttpUtils.localhost_su+"insertactivity");
         //gson串，将对象转化成string类型的传递给服务端；
+//        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm").create();
         Gson gson = new Gson();
         String acInfo = gson.toJson(activity);
+        System.out.println("要传递过去的数据："+acInfo);
         request.addBodyParameter("acInfo",acInfo);
         //传递数据；
         x.http().post(request, new Callback.CommonCallback<String>() {
@@ -285,6 +301,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.bt_submit:
                 Toast.makeText(getApplicationContext(), "点击了发布按钮", Toast.LENGTH_SHORT).show();
                 submitData();
+                finish();
                 break;
         }
     }
@@ -321,7 +338,9 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                         StringBuffer sb = new StringBuffer();
                         sb.append(String.format("%d-%02d-%02d",datePicker.getYear(),datePicker.getMonth()+1,datePicker.getDayOfMonth()));
                         sb.append(" ");
-                        sb.append(timePicker.getCurrentHour()).append(":").append(timePicker.getCurrentMinute());
+                        Integer hour=timePicker.getCurrentHour();
+                        sb.append((hour<10?"0"+hour:hour+"")).append(":").append(timePicker.getCurrentMinute());
+                        //sb.append(timePicker.getCurrentHour()).append(":").append(timePicker.getCurrentMinute());
 
                         tvBegin.setText(sb);
                         tvEnd.requestFocus();

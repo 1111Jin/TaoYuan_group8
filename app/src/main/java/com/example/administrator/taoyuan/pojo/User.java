@@ -1,8 +1,11 @@
 package com.example.administrator.taoyuan.pojo;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.sql.Timestamp;
 
-public class User {
+public class User implements Parcelable {
 	private Integer userId;
 	private String userName;
 	private String sex;
@@ -14,7 +17,9 @@ public class User {
 	private String tel;
 	private String address;
 	
-	public User(){}
+	public User(Integer userId){
+		this.userId = userId;
+	}
 	
 	public User(String userName, String sex, String userProfiles,String photo, String psd,
 			Integer integral, Timestamp birthday, String tel, String address) {
@@ -83,7 +88,49 @@ public class User {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	
-	
 
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeValue(this.userId);
+		dest.writeString(this.userName);
+		dest.writeString(this.sex);
+		dest.writeString(this.userProfiles);
+		dest.writeString(this.photo);
+		dest.writeString(this.psd);
+		dest.writeValue(this.integral);
+		dest.writeSerializable(this.birthday);
+		dest.writeString(this.tel);
+		dest.writeString(this.address);
+	}
+
+	protected User(Parcel in) {
+		this.userId = (Integer) in.readValue(Integer.class.getClassLoader());
+		this.userName = in.readString();
+		this.sex = in.readString();
+		this.userProfiles = in.readString();
+		this.photo = in.readString();
+		this.psd = in.readString();
+		this.integral = (Integer) in.readValue(Integer.class.getClassLoader());
+		this.birthday = (Timestamp) in.readSerializable();
+		this.tel = in.readString();
+		this.address = in.readString();
+	}
+
+	public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
+		@Override
+		public User createFromParcel(Parcel source) {
+			return new User(source);
+		}
+
+		@Override
+		public User[] newArray(int size) {
+			return new User[size];
+		}
+	};
 }
