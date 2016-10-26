@@ -70,8 +70,8 @@ public class LifeXiangqing extends AppCompatActivity {
             //商品名称
             tv_title.setText(listinfo.userName);
             tv_name.setText(listinfo.content);
-            x.image().bind(iv_photo, HttpUtils.localhost_jt+"imags/"+listinfo.headphoto);
-            x.image().bind(iv_contphoto,HttpUtils.localhost_jt+"imags/"+listinfo.content_photo);
+            x.image().bind(iv_photo, HttpUtils.localhost_jt+"imgs/"+listinfo.headphoto);
+            x.image().bind(iv_contphoto,HttpUtils.localhost_jt+"imgs/"+listinfo.content_photo);
 //            prodInfoTvDes.setText(listinfo.getName());
 //            prodInfoTvPrice.setText(listinfo.getPrice() + "");
 

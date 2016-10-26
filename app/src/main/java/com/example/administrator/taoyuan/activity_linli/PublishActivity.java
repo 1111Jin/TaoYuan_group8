@@ -299,7 +299,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                 }).show();
                 break;
             case R.id.bt_submit:
-                Toast.makeText(getApplicationContext(), "点击了发布按钮", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "发布成功！", Toast.LENGTH_SHORT).show();
                 submitData();
                 finish();
                 break;

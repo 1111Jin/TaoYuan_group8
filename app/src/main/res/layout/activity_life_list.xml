@@ -5,10 +5,10 @@
     android:layout_height="match_parent"
     tools:context="com.example.administrator.taoyuan.activity_life.ActivityLife">
 
-    <ListView
+    <com.example.administrator.taoyuan.utils.RefreshListView
         android:id="@+id/lv_dongtai_life"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </ListView>
+    </com.example.administrator.taoyuan.utils.RefreshListView>
 </RelativeLayout>

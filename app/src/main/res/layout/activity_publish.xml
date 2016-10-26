@@ -163,16 +163,18 @@
         android:paddingTop="8dp"
         android:paddingLeft="10dp"
         android:hint="活动人数"/>
+        <Button
+            android:layout_below="@id/tv_hl_nums"
+            android:id="@+id/bt_submit"
+            android:background="#ff5619"
+            android:layout_margin="1dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:text="发布"
+            android:textSize="22sp"/>
     </RelativeLayout>
 </ScrollView>
 
-    <Button
-        android:id="@+id/bt_submit"
-        android:background="#ff5619"
-        android:layout_margin="1dp"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_alignParentBottom="true"
-        android:text="发布"
-        android:textSize="22sp"/>
+
 </RelativeLayout>

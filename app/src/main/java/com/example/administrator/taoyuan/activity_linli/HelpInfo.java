@@ -12,7 +12,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.administrator.taoyuan.R;
+import com.example.administrator.taoyuan.pojo.Help;
 import com.example.administrator.taoyuan.pojo.ListHelpBean;
+import com.example.administrator.taoyuan.utils.HttpUtils;
 import com.example.administrator.taoyuan.utils.TitleBar;
 import com.example.administrator.taoyuan.utils.xUtilsImageUtils;
 
@@ -69,11 +71,14 @@ public class HelpInfo extends AppCompatActivity {
     @InjectView(R.id.bt_help)
     Button btHelp;
 
-    ListHelpBean.Help help = new ListHelpBean.Help();
+    Help help = new Help();
+    public TextView integral;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.help_list_view_item_content);
+        integral = ((TextView) findViewById(R.id.integral));
         ButterKnife.inject(this);
         initData();
     }
@@ -83,13 +88,14 @@ public class HelpInfo extends AppCompatActivity {
         help = intent.getParcelableExtra("HelpInfo");
         Log.i("HelpInfo", "initData: ------>"+help);
         if (help!=null){
-            xUtilsImageUtils.display(ivTou,"http://10.0.2.2:8080/cmty/upload/"+help.help_photo);
-            tvHlContent.setText(help.help_title);
-            tvHlTime.setText(help.time);
-            tvHlAddress.setText(help.address);
-            tvHlNum.setText(help.persons.toString());
-            tvHlIntegral.setText(help.send_integral.toString());
-            xUtilsImageUtils.display(ivHelpP,"http://10.0.2.2:8080/cmty/upload/"+help.help_photo);
+            xUtilsImageUtils.display(ivTou, HttpUtils.localhost_su+help.getUser().getPhoto(),true);
+            tvHlContent.setText(help.getHelpContent());
+            tvHlTime.setText(help.getCreateTime()+"");
+            tvHlAddress.setText(help.getHelpAddress());
+            tvHlNum.setText(help.getNeedNums().toString());
+            tvHlIntegral.setText(help.getSendIntegral().toString());
+            integral.setText(help.getUser().getIntegral().toString());
+            xUtilsImageUtils.display(ivHelpP,HttpUtils.localhost_su+help.getHelpImg(),false);
         }
     }
 

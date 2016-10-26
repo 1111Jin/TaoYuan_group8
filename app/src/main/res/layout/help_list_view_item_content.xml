@@ -9,8 +9,18 @@
         android:layout_height="wrap_content">
 
     </com.example.administrator.taoyuan.utils.TitleBar>
-    <RelativeLayout
+
+    <ScrollView
         android:layout_below="@id/hl_content_title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+
+    <RelativeLayout
         android:id="@+id/rl_help_content_rl"
         android:layout_width="match_parent"
         android:layout_height="100dp">
@@ -32,6 +42,7 @@
             android:layout_marginTop="10dp"
             android:text="userName"/>
         <TextView
+            android:id="@+id/integral"
             android:layout_alignBottom="@id/tv_time2"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
@@ -203,13 +214,18 @@
             android:textSize="22sp"
             android:text="赠送积分"/>
 
+        <Button
+            android:layout_below="@id/tv_hl_integral"
+            android:id="@+id/bt_help"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:text="参与互帮"/>
     </RelativeLayout>
-    <Button
-        android:id="@+id/bt_help"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="22sp"
-        android:text="参与互帮"/>
+
+        </RelativeLayout>
+    </ScrollView>
+
 
 </RelativeLayout>
