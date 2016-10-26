@@ -184,6 +184,8 @@ public class my extends Fragment {
                 break;
             case R.id.btn_myintegral:
                 Intent intent6=new Intent(getActivity(),MyIntegral.class);
+                startActivity(intent6);
+                break;
         }
     }
 

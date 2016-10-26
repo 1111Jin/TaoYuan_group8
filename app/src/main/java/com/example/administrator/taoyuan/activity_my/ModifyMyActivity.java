@@ -160,7 +160,7 @@ public class ModifyMyActivity extends AppCompatActivity {
             public void onClick(View v) {
 //                Toast.makeText(getApplicationContext(),"dianji " ,Toast.LENGTH_SHORT).show();
                 Integer id = user.userId;
-                String head = fileName;
+                String head = "/"+fileName;
 //                System.out.println(fileName);
                 String name = tvModifyMyName.getText().toString();
                 String tel = tvModifyMyTel.getText().toString();
