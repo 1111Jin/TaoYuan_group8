@@ -5,9 +5,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.example.administrator.taoyuan.activity_my.GetAllUserActivity">
-    . <RelativeLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:background="@color/title"
         >
         <RelativeLayout
             android:id="@+id/rl_back_my"

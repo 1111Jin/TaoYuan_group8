@@ -103,6 +103,7 @@ public class RepairActivity extends AppCompatActivity {
                 convertView = getLayoutInflater().inflate(R.layout.tab_fragment, container, false);
             }
             TextView textView = (TextView) convertView;
+            textView.setTextSize(15);
             textView.setText(versions[position]);
 
             int witdh = getTextWidth(textView);

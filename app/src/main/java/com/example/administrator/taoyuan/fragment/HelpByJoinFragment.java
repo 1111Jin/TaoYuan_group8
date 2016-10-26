@@ -95,8 +95,7 @@ public class HelpByJoinFragment extends BaseFragment {
     }
 
     public void getActivityList(){
-        RequestParams params = new RequestParams(HttpUtils.localhost + "/gethelpbyid?userId=" + userId);
-//        params.addBodyParameter("repairState","已派员");
+        RequestParams params = new RequestParams(HttpUtils.localhost + "/getjoinhelp?userId=" + userId);
         System.out.println(params);
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
@@ -155,7 +154,8 @@ public class HelpByJoinFragment extends BaseFragment {
 //        ImageView iv_help = ((ImageView) viewHolder.getViewById(R.id.tv_help_title));
         TextView tv_time = ((TextView) viewHolder.getViewById(R.id.tv_time2));
 
-        xUtilsImageUtils.display(iv_img, HttpUtils.localhost+user.userHead,true);
+        String imgurl = "/head"+user.userHead;
+        xUtilsImageUtils.display(iv_img, HttpUtils.localhost+imgurl,true);
         tv_username.setText(user.userName);
         tv_time.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(activity.helpTime));
         tv_title.setText(activity.helpTitle);

@@ -13,6 +13,12 @@ public abstract class BaseFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         initView();
         initData();
         initEvent();

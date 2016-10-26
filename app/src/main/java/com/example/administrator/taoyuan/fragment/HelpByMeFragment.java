@@ -160,7 +160,8 @@ public class HelpByMeFragment extends BaseFragment {
 //        ImageView iv_help = ((ImageView) viewHolder.getViewById(R.id.tv_help_title));
         TextView tv_time = ((TextView) viewHolder.getViewById(R.id.tv_time2));
 
-        xUtilsImageUtils.display(iv_img, HttpUtils.localhost+user.userHead,true);
+        String imgurl="/head"+user.userHead;
+        xUtilsImageUtils.display(iv_img, HttpUtils.localhost+imgurl,true);
         tv_username.setText(user.userName);
         tv_time.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(activity.helpTime));
         tv_title.setText(activity.helpTitle);
