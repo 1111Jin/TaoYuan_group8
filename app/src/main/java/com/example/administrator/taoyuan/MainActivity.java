@@ -73,12 +73,12 @@ public class MainActivity extends AppCompatActivity {
         this.getSupportFragmentManager().beginTransaction().replace(R.id.fl_content, fragment).commit();
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switchFragment(new my());
-
-    }
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        switchFragment(new my());
+//
+//    }
 
 
 }
