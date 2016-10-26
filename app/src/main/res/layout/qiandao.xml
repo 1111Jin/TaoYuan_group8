@@ -1,0 +1,44 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity"
+    android:background="#FFFACD">
+
+    <TextView
+        android:id="@+id/txtNowDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Large Text"
+        android:textSize="30sp"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <GridView
+        android:id="@+id/gdDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="7"
+        android:background="#FFFACD">
+    </GridView>
+    <View
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="#E3E3E3"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="点击日期签到可获得积分额"
+        android:textSize="18sp"
+        android:textColor="@color/red"/>
+    <View
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="#E3E3E3"
+        />
+</LinearLayout>
