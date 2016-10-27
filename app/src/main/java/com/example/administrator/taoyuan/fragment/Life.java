@@ -9,7 +9,6 @@ import android.support.annotation.Nullable;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +59,7 @@ public class Life extends Fragment implements ViewPager.OnPageChangeListener,Vie
 
         initView();
         Fragment fragment1 = new lifeFriends();
-        Fragment fragment2 = new Life2();
+        Fragment fragment2 = new LifeAll();
         Fragment fragment3 = new lifeHot();
 
         fragmentList.add(fragment1);
@@ -68,7 +67,7 @@ public class Life extends Fragment implements ViewPager.OnPageChangeListener,Vie
         fragmentList.add(fragment3);
         initEvent();
 
-       // initLineImage();
+       // initLineImage();w
         return view;
 
 
