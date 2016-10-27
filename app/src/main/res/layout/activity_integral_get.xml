@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:t="http://schemas.android.com/apk/res-auto"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.administrator.taoyuan.activity_my.IntegralGet">
+
+
+    <com.example.administrator.taoyuan.utils.TitleBar
+        android:id="@+id/tt_get"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        t:leftText="返回"
+        t:titleStr="积分获取" />
+
+    <TextView
+        android:padding="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="1.获取的途径。"
+        android:textSize="24sp"
+        android:textColor="@color/black"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:padding="20dp"
+        android:text="     1>签到得积分：                                        每天坚持签到可以获得签到积分。"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:padding="20dp"
+        android:text="     2>参与互帮:                                              积极参与互帮，可以获得由发布人悬赏的积分。"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:padding="20dp"
+        android:text="     3>发布动态：                                            发布每日动态，可与获取积分，每天前3次才能获得积分。"
+        />
+</LinearLayout>

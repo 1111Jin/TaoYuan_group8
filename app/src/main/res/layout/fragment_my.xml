@@ -94,19 +94,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_height="3px"
                 android:background="#C0C5C7"/>
-            <Button
-                android:id="@+id/btn_myintegral"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="我的积分"
-                android:textColor="@color/black"
 
-                android:background="#fff"
-                android:textSize="20sp"/>
-            <View android:layout_width="match_parent"
-                android:layout_alignParentBottom="true"
-                android:layout_height="3px"
-                android:background="#C0C5C7"/>
             <Button
                 android:id="@+id/btn_myrepair"
 
@@ -160,6 +148,19 @@
                 android:layout_height="3px"
                 android:background="#C0C5C7"/>
 
+            <Button
+                android:id="@+id/btn_myintegral"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="关于积分"
+                android:textColor="@color/black"
+
+                android:background="#fff"
+                android:textSize="20sp"/>
+            <View android:layout_width="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_height="3px"
+                android:background="#C0C5C7"/>
             <Button
                 android:id="@+id/btn_myinstill"
 
