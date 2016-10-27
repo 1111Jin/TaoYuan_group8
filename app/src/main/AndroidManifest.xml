@@ -56,7 +56,8 @@
         <activity android:name=".activity_my.GetMyHelp" />
         <activity android:name=".activity_my.MyIntegral" />
         <activity android:name=".activity_my.IntegralGet" />
-        <activity android:name=".activity_my.IntegralUse"></activity>
+        <activity android:name=".activity_my.IntegralUse" />
+        <activity android:name=".activity_my.LiveActivity"></activity>
     </application>
 
 </manifest>
