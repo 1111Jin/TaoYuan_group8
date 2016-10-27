@@ -118,7 +118,7 @@ public class my extends Fragment {
 
 
                 tvMyname.setText(list.get(0).userName);
-                System.out.println(list.get(0).userName);
+//                System.out.println(list.get(0).userName);
                 tvMyintegral.setText("积分：" + list.get(0).integral);
 
                 tvMyprofiles.setText(list.get(0).userProfiles);
@@ -184,7 +184,10 @@ public class my extends Fragment {
                 break;
             case R.id.btn_myintegral:
                 Intent intent6=new Intent(getActivity(),MyIntegral.class);
-                startActivity(intent6);
+                intent6.putExtra("integral",list.get(0).integral);
+
+//                System.out.println(list.get(0).integral);
+                startActivityForResult(intent6,6);
                 break;
         }
     }
