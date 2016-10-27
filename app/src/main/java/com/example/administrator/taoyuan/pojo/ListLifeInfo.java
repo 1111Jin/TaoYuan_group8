@@ -22,12 +22,14 @@ public class ListLifeInfo implements Parcelable {
         public String style;
         public String headphoto;
         public String content_photo;
+        public int dontaiId;
 
 
         @Override
         public String toString() {
             return "ListInfo{" +
                     "userId=" + userId +
+                    "dontaiId=" + dontaiId +
                     ", userName='" + userName + '\'' +
                     ", content='" + content + '\'' +
                     ", time=" + time +
@@ -45,6 +47,7 @@ public class ListLifeInfo implements Parcelable {
         @Override
         public void writeToParcel(Parcel dest, int flags) {
             dest.writeInt(this.userId);
+            dest.writeInt(this.dontaiId);
             dest.writeString(this.userName);
             dest.writeLong(this.time != null ? this.time.getTime() : -1);
             dest.writeString(this.content);
@@ -58,6 +61,7 @@ public class ListLifeInfo implements Parcelable {
 
         protected LifeInfo(Parcel in) {
             this.userId = in.readInt();
+            this.dontaiId = in.readInt();
             this.userName = in.readString();
             long tmpTime = in.readLong();
             this.time = tmpTime == -1 ? null : new Date(tmpTime);
