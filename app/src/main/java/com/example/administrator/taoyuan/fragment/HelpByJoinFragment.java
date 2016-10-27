@@ -95,8 +95,7 @@ public class HelpByJoinFragment extends BaseFragment {
     }
 
     public void getActivityList(){
-        RequestParams params = new RequestParams(HttpUtils.localhost + "/gethelpbyid?userId=" + userId);
-//        params.addBodyParameter("repairState","已派员");
+        RequestParams params = new RequestParams(HttpUtils.localhost + "/getjoinhelp?userId=" + userId);
         System.out.println(params);
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
@@ -121,6 +120,7 @@ public class HelpByJoinFragment extends BaseFragment {
                             Log.i("123123", "convert: " + position);
 
                             initItemView(viewHolder, activity, position);
+
                         }
                     };
 
@@ -149,16 +149,47 @@ public class HelpByJoinFragment extends BaseFragment {
     }
 
     public void initItemView(ViewHolder viewHolder, HelpInfo activity, int position) {
-        ImageView iv_img = ((ImageView) viewHolder.getViewById(R.id.iv_tou));
-        TextView tv_username = ((TextView) viewHolder.getViewById(R.id.tv_username));
+
+        final ImageView iv_img = ((ImageView) viewHolder.getViewById(R.id.iv_tou));
+        final TextView tv_username = ((TextView) viewHolder.getViewById(R.id.tv_username));
         TextView tv_title = ((TextView) viewHolder.getViewById(R.id.tv_help_title));
 //        ImageView iv_help = ((ImageView) viewHolder.getViewById(R.id.tv_help_title));
         TextView tv_time = ((TextView) viewHolder.getViewById(R.id.tv_time2));
 
-        xUtilsImageUtils.display(iv_img, HttpUtils.localhost+user.userHead,true);
-        tv_username.setText(user.userName);
+
+
+
         tv_time.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(activity.helpTime));
         tv_title.setText(activity.helpTitle);
+        RequestParams re1=new RequestParams(HttpUtils.localhost+"/my?userId="+ activity.userId);
+        x.http().get(re1, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Gson gson=new Gson();
+
+                ListUserBean bean=gson.fromJson(result, ListUserBean.class);
+                user = bean.userList.get(0);
+                System.out.println(user.userHead);
+                String imgurl = "/head" + user.userHead;
+                xUtilsImageUtils.display(iv_img, HttpUtils.localhost+imgurl,true);
+                tv_username.setText(user.userName);
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
 //        x.image().bind(iv_help,HttpUtils.localhost+activity.helpImg);
 
     }

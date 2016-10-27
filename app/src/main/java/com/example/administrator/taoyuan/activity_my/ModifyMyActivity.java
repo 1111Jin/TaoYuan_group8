@@ -11,6 +11,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 import com.example.administrator.taoyuan.R;
 import com.example.administrator.taoyuan.pojo.ListUserBean;
 import com.example.administrator.taoyuan.utils.HttpUtils;
+import com.example.administrator.taoyuan.utils.TitleBar;
 import com.google.gson.Gson;
 
 import org.xutils.common.Callback;
@@ -41,8 +43,10 @@ public class ModifyMyActivity extends AppCompatActivity {
 
 
     private static final String TAG = "ModifyMyActivity";
-    @InjectView(R.id.all_order_goback)
-    ImageView allOrderGoback;
+
+
+    ListUserBean.User user;
+    Bitmap bm;
     @InjectView(R.id.iv_to_myHead)
     ImageView ivToMyHead;
     @InjectView(R.id.iv_modify_myHead)
@@ -85,23 +89,22 @@ public class ModifyMyActivity extends AppCompatActivity {
     TextView tvModifyMyBirthday;
     @InjectView(R.id.rl_myBirthday)
     RelativeLayout rlMyBirthday;
-
-    ListUserBean.User user;
-    Bitmap bm;
     private RelativeLayout rl_back;
     String items[] = {"相册选择", "拍照"};
     String sex[] = {"男", "女"};
 
-    public static final int SELECT_PIC=11;
-    public static final int TAKE_PHOTO=12;
-    public static final int CROP=13;
+    public static final int SELECT_PIC = 11;
+    public static final int TAKE_PHOTO = 12;
+    public static final int CROP = 13;
     //相机拍摄照片和视频的标准目录
-    private File file ;
+    private File file;
     private Uri imageUri;
     private ImageView mImageView;
     private RelativeLayout rl_save;
     private TextView tv_save;
     private String fileName;
+    private TitleBar tt;
+    private Button btn_save;
 
 
     @Override
@@ -111,12 +114,7 @@ public class ModifyMyActivity extends AppCompatActivity {
         ButterKnife.inject(this);
 
 
-        //判断sd卡是否存在，存在
-        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            //目录，文件名Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
-            file = new File(Environment.getExternalStorageDirectory(), getPhotoFileName());
-            imageUri = Uri.fromFile(file);
-        }
+
 
         initView();
         initData();
@@ -124,18 +122,21 @@ public class ModifyMyActivity extends AppCompatActivity {
     }
 
     public void initView() {
-        rl_back = ((RelativeLayout) findViewById(R.id.rl_back));
-        rl_save = ((RelativeLayout) findViewById(R.id.rl_save));
-        tv_save = ((TextView) findViewById(R.id.tv_save));
+//        rl_back = ((RelativeLayout) findViewById(R.id.rl_back));
+//        rl_save = ((RelativeLayout) findViewById(R.id.rl_save));
+        btn_save = ((Button) findViewById(R.id.btn_save));
+//        tv_save = ((TextView) findViewById(R.id.tv_save));
+        tt = ((TitleBar) findViewById(R.id.tt_tt));
     }
 
     public void initData() {
 
         Intent intent = getIntent();
         user = intent.getParcelableExtra("user");
-        bm=  intent.getParcelableExtra("head");
+        bm = intent.getParcelableExtra("head");
         ivModifyMyHead.setImageBitmap(bm);
         if (user != null) {
+            fileName=user.userHead;
             tvModifyMyName.setText(user.userName);
             tvModifyMyAddress.setText(user.userAddress);
             tvModifyMyProfiles.setText(user.userProfiles);
@@ -145,60 +146,45 @@ public class ModifyMyActivity extends AppCompatActivity {
     }
 
     public void initEvevt() {
-        rl_back.setOnClickListener(new View.OnClickListener() {
+
+        tt.setLeft(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Integer id=user.userId;
-                String name=tvModifyMyName.getText().toString();
-                String tel=tvModifyMyTel.getText().toString();
-                String address=tvModifyMyAddress.getText().toString();
-                String profiles=tvModifyMyProfiles.getText().toString();
-                String flag=tvModifyMySex.getText().toString();
-                Boolean sex=false;
-                if(flag.equals("男")){
-                    sex=true;
-                }
-
-                user=new ListUserBean.User(name,tel,fileName,profiles,address,sex,id);
-                Intent intent=new Intent();
-                intent.putExtra("user",user);
-                setResult(RESULT_OK,intent);
                 finish();
+
             }
         });
+        btn_save.setOnClickListener(new View.OnClickListener() {
 
-        //  保存的点击事件
-        rl_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Toast.makeText(getApplicationContext(),"save",Toast.LENGTH_SHORT).show();
-//                sendImg();
-                Integer id=user.userId;
-                String head="/upload/"+fileName;
+//                Toast.makeText(getApplicationContext(),"dianji " ,Toast.LENGTH_SHORT).show();
+                Integer id = user.userId;
+                String head = "/"+fileName;
 //                System.out.println(fileName);
-                String name=tvModifyMyName.getText().toString();
-                String tel=tvModifyMyTel.getText().toString();
-                String address=tvModifyMyAddress.getText().toString();
-                String profiles=tvModifyMyProfiles.getText().toString();
-                String flag=tvModifyMySex.getText().toString();
-                Boolean sex=false;
-                if(flag.equals("男")){
-                    sex=true;
+                String name = tvModifyMyName.getText().toString();
+                String tel = tvModifyMyTel.getText().toString();
+                String address = tvModifyMyAddress.getText().toString();
+                String profiles = tvModifyMyProfiles.getText().toString();
+                String flag = tvModifyMySex.getText().toString();
+                Boolean sex = false;
+                if (flag.equals("男")) {
+                    sex = true;
                 }
 
-                ListUserBean.User user_modify=new ListUserBean.User(name,tel,head,profiles,address,sex,id);
-                Gson gson=new Gson();
-                String userJson=gson.toJson(user_modify);
-                RequestParams requestParams=new RequestParams(HttpUtils.localhost+"modifyuser");
-                requestParams.addQueryStringParameter("user",userJson);
-                Log.i(TAG, "onClick: "+requestParams);
+                ListUserBean.User user_modify = new ListUserBean.User(name, tel, head, profiles, address, sex, id);
+                Gson gson = new Gson();
+                String userJson = gson.toJson(user_modify);
+                RequestParams requestParams = new RequestParams(HttpUtils.localhost + "modifyuser");
+                requestParams.addQueryStringParameter("user", userJson);
+                Log.i(TAG, "onClick: " + requestParams);
                 x.http().post(requestParams, new Callback.CommonCallback<String>() {
                     @Override
                     public void onSuccess(String result) {
-                        Log.i(TAG, "onSuccess: "+result);
-                        if (result.equals("success")){
+                        Log.i(TAG, "onSuccess: " + result);
+                        if (result.equals("success")) {
                             finish();
-                        }else{
+                        } else {
                             Toast.makeText(ModifyMyActivity.this, "修改失败！", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -221,13 +207,20 @@ public class ModifyMyActivity extends AppCompatActivity {
 
             }
         });
-
     }
+
+
 
     @OnClick({R.id.rl_mytx, R.id.rl_myName, R.id.rl_mySex, R.id.rl_myTel, R.id.rl_modify_myAddress, R.id.rl_myProfiles, R.id.rl_myBirthday})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.rl_mytx:
+                //判断sd卡是否存在，存在
+                if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+                    //目录，文件名Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
+                    file = new File(Environment.getExternalStorageDirectory(), getPhotoFileName());
+                    imageUri = Uri.fromFile(file);
+                }
                 new AlertDialog.Builder(this).setItems(items, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -245,7 +238,7 @@ public class ModifyMyActivity extends AppCompatActivity {
                                 Intent intent2 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
                                 intent2.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
-                                startActivityForResult(intent2,TAKE_PHOTO);
+                                startActivityForResult(intent2, TAKE_PHOTO);
 
                                 break;
                         }
@@ -254,21 +247,21 @@ public class ModifyMyActivity extends AppCompatActivity {
                 }).show();
                 break;
             case R.id.rl_myName:
-                final RelativeLayout modify_myName=(RelativeLayout) getLayoutInflater().inflate(R.layout.activity_modify_my_name_activity,null);
+                final RelativeLayout modify_myName = (RelativeLayout) getLayoutInflater().inflate(R.layout.activity_modify_my_name_activity, null);
                 new AlertDialog.Builder(this).setView(modify_myName)
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
 
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    EditText et_name=((EditText) modify_myName.findViewById(R.id.et_edit_name));
-                                    String name=et_name.getText().toString();
-                                    tvModifyMyName.setText(name);
-                                }
-                            })
-                            .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                                @Override
+                            @Override
                             public void onClick(DialogInterface dialog, int which) {
-                             }
+                                EditText et_name = ((EditText) modify_myName.findViewById(R.id.et_edit_name));
+                                String name = et_name.getText().toString();
+                                tvModifyMyName.setText(name);
+                            }
+                        })
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
                         })
 
                         .show();
@@ -292,14 +285,14 @@ public class ModifyMyActivity extends AppCompatActivity {
                 }).show();
                 break;
             case R.id.rl_myTel:
-                final RelativeLayout modify_mytel=(RelativeLayout) getLayoutInflater().inflate(R.layout.activity_modify_my_name_activity,null);
+                final RelativeLayout modify_mytel = (RelativeLayout) getLayoutInflater().inflate(R.layout.activity_modify_my_name_activity, null);
                 new AlertDialog.Builder(this).setView(modify_mytel)
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                EditText et_tel=((EditText) modify_mytel.findViewById(R.id.et_edit_name));
-                                String tel=et_tel.getText().toString();
+                                EditText et_tel = ((EditText) modify_mytel.findViewById(R.id.et_edit_name));
+                                String tel = et_tel.getText().toString();
                                 tvModifyMyTel.setText(tel);
                             }
                         })
@@ -312,14 +305,14 @@ public class ModifyMyActivity extends AppCompatActivity {
                         .show();
                 break;
             case R.id.rl_modify_myAddress:
-                final RelativeLayout modify_myaddress=(RelativeLayout) getLayoutInflater().inflate(R.layout.activity_modify_my_name_activity,null);
+                final RelativeLayout modify_myaddress = (RelativeLayout) getLayoutInflater().inflate(R.layout.activity_modify_my_name_activity, null);
                 new AlertDialog.Builder(this).setView(modify_myaddress)
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                EditText et_name=((EditText) modify_myaddress.findViewById(R.id.et_edit_name));
-                                String name=et_name.getText().toString();
+                                EditText et_name = ((EditText) modify_myaddress.findViewById(R.id.et_edit_name));
+                                String name = et_name.getText().toString();
                                 tvModifyMyAddress.setText(name);
                             }
                         })
@@ -332,14 +325,14 @@ public class ModifyMyActivity extends AppCompatActivity {
                         .show();
                 break;
             case R.id.rl_myProfiles:
-                final RelativeLayout modify_myprofiles=(RelativeLayout) getLayoutInflater().inflate(R.layout.activity_modify_my_name_activity,null);
+                final RelativeLayout modify_myprofiles = (RelativeLayout) getLayoutInflater().inflate(R.layout.activity_modify_my_name_activity, null);
                 new AlertDialog.Builder(this).setView(modify_myprofiles)
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                EditText et_name=((EditText) modify_myprofiles.findViewById(R.id.et_edit_name));
-                                String name=et_name.getText().toString();
+                                EditText et_name = ((EditText) modify_myprofiles.findViewById(R.id.et_edit_name));
+                                String name = et_name.getText().toString();
                                 tvModifyMyProfiles.setText(name);
                             }
                         })
@@ -352,14 +345,14 @@ public class ModifyMyActivity extends AppCompatActivity {
                         .show();
                 break;
             case R.id.rl_myBirthday:
-                final RelativeLayout modify_mybirthday=(RelativeLayout) getLayoutInflater().inflate(R.layout.activity_modify_my_name_activity,null);
+                final RelativeLayout modify_mybirthday = (RelativeLayout) getLayoutInflater().inflate(R.layout.activity_modify_my_name_activity, null);
                 new AlertDialog.Builder(this).setView(modify_mybirthday)
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                EditText et_name=((EditText) modify_mybirthday.findViewById(R.id.et_edit_name));
-                                String name=et_name.getText().toString();
+                                EditText et_name = ((EditText) modify_mybirthday.findViewById(R.id.et_edit_name));
+                                String name = et_name.getText().toString();
                                 tvModifyMyBirthday.setText(name);
                             }
                         })
@@ -373,7 +366,6 @@ public class ModifyMyActivity extends AppCompatActivity {
                 break;
 
 
-
         }
     }
 
@@ -381,12 +373,12 @@ public class ModifyMyActivity extends AppCompatActivity {
         Date date = new Date(System.currentTimeMillis());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
 
-        System.out.println("============"+ UUID.randomUUID());
-        fileName=sdf.format(date)+"_"+UUID.randomUUID() + ".png";
-        return sdf.format(date)+"_"+UUID.randomUUID() + ".png";
+        System.out.println("============" + UUID.randomUUID());
+        fileName = sdf.format(date) + "_" + UUID.randomUUID() + ".png";
+        return sdf.format(date) + "_" + UUID.randomUUID() + ".png";
     }
 
-    public void crop(Uri uri){
+    public void crop(Uri uri) {
         //  intent.setType("image/*");
         //裁剪
         Intent intent = new Intent("com.android.camera.action.CROP");
@@ -402,11 +394,12 @@ public class ModifyMyActivity extends AppCompatActivity {
         intent.putExtra("return-data", true);
         startActivityForResult(intent, CROP);
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         //
-        switch (requestCode){
+        switch (requestCode) {
             case SELECT_PIC:
                 //相册选择
                 if (data != null) {
@@ -435,27 +428,29 @@ public class ModifyMyActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    public void showImage(Bitmap bitmap){
+    public void showImage(Bitmap bitmap) {
         ivModifyMyHead.setImageBitmap(bitmap);//iv显示图片
         saveImage(bitmap);//保存文件
         uploadImage();//上传服务器
 
     }
-    public void saveImage(Bitmap bitmap){
-        FileOutputStream fos=null;
+
+    public void saveImage(Bitmap bitmap) {
+        FileOutputStream fos = null;
         try {
-            fos=new FileOutputStream(file);
+            fos = new FileOutputStream(file);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        bitmap.compress(Bitmap.CompressFormat.JPEG,50,fos);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, fos);
     }
-    public void uploadImage(){
 
-        RequestParams requestParams=new RequestParams(HttpUtils.localhost+"upload");
+    public void uploadImage() {
+
+        RequestParams requestParams = new RequestParams(HttpUtils.localhost + "upload");
         requestParams.setMultipart(true);
-        requestParams.addBodyParameter("file",file);
-        requestParams.addBodyParameter("fileName",fileName);
+        requestParams.addBodyParameter("file", file);
+        requestParams.addBodyParameter("fileName", fileName);
         x.http().post(requestParams, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {

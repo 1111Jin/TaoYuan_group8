@@ -125,6 +125,7 @@ public class UnRemarkFragment extends BaseFragment {
         TextView tv_repair_content = ((TextView) viewHolder.getViewById(R.id.tv_repair_content));
 
         Log.i("UnpersonnalFragment", "initItemView: " + repair.repairType);
+        x.image().bind(iv_repair_img,HttpUtils.localhost+repair.repairImg);
         tv_repair_type.setText(repair.repairType);
         tv_repair_state.setText(repair.repairState);
         tv_repair_address.setText(repair.repairAddress);

@@ -1,7 +1,6 @@
 package com.example.administrator.taoyuan.fragment;
 
 
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -16,13 +15,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.administrator.taoyuan.R;
 import com.example.administrator.taoyuan.activity_my.GetAllUserActivity;
 import com.example.administrator.taoyuan.activity_my.GetMyActivity;
 import com.example.administrator.taoyuan.activity_my.GetMyHelp;
 import com.example.administrator.taoyuan.activity_my.ModifyMyActivity;
+import com.example.administrator.taoyuan.activity_my.MyIntegral;
 import com.example.administrator.taoyuan.activity_my.RepairActivity;
 import com.example.administrator.taoyuan.pojo.ListUserBean;
 import com.example.administrator.taoyuan.utils.HttpUtils;
@@ -46,7 +45,7 @@ import butterknife.OnClick;
 public class my extends Fragment {
 
 
-    private static final int REQUSETCODE =1;
+    private static final int REQUSETCODE = 1;
     private static final String TAG = "Log";
     Bitmap bm;
     @InjectView(R.id.iv_mymsg)
@@ -69,8 +68,12 @@ public class my extends Fragment {
     Button btnMyHelp;
     @InjectView(R.id.btn_myinstill)
     Button btnMyinstill;
+    @InjectView(R.id.btn_myintegral)
+    Button btnMyintegral;
+    @InjectView(R.id.btn_mydongtai)
+    Button btnMydongtai;
 
-    private List<ListUserBean.User> list=new ArrayList<ListUserBean.User>();
+    private List<ListUserBean.User> list = new ArrayList<ListUserBean.User>();
 
     @Nullable
     @Override
@@ -79,7 +82,7 @@ public class my extends Fragment {
 
 
         initView(view);
-        initData();
+
 
         ButterKnife.inject(this, view);
         return view;
@@ -90,32 +93,37 @@ public class my extends Fragment {
 
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        initData();
+    }
 
     public void initData() {
 
-        RequestParams requestParams=new RequestParams(HttpUtils.localhost+"/my?userId="+ HttpUtils.userId);
+        RequestParams requestParams = new RequestParams(HttpUtils.localhost + "/my?userId=" + HttpUtils.userId);
 
         x.http().get(requestParams, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.i(TAG, "onSuccess: "+result);
-                Gson gson=new Gson();
+                Log.i(TAG, "onSuccess: " + result);
+                Gson gson = new Gson();
 
-                ListUserBean bean=gson.fromJson(result, ListUserBean.class);
+                ListUserBean bean = gson.fromJson(result, ListUserBean.class);
 
-                list=bean.userList;
-                String url=list.get(0).userHead;
+                list = bean.userList;
+                String url = "/head" + list.get(0).userHead;
                 System.out.println(url);
-                xUtilsImageUtils.display(ivMymsg, HttpUtils.localhost+url,true);
+                xUtilsImageUtils.display(ivMymsg, HttpUtils.localhost + url, true);
 
 
                 tvMyname.setText(list.get(0).userName);
-                System.out.println(list.get(0).userName);
-                tvMyintegral.setText("积分："+list.get(0).userTel);
+//                System.out.println(list.get(0).userName);
+                tvMyintegral.setText("积分：" + list.get(0).integral);
 
                 tvMyprofiles.setText(list.get(0).userProfiles);
 
-                Log.i(TAG, "onSuccess: "+list.get(0).userAddress);
+                Log.i(TAG, "onSuccess: " + list.get(0).userAddress);
             }
 
             @Override
@@ -134,7 +142,7 @@ public class my extends Fragment {
             }
         });
 
-     }
+    }
 
     @Override
     public void onDestroyView() {
@@ -142,17 +150,17 @@ public class my extends Fragment {
         ButterKnife.reset(this);
     }
 
-    @OnClick({R.id.rl_modify_My, R.id.btn_myfriend, R.id.btn_myactivity, R.id.btn_myrepair, R.id.btn_myHelp, R.id.btn_myinstill})
-     public void onClick(View view){
-        switch (view.getId()){
+    @OnClick({R.id.rl_modify_My, R.id.btn_myfriend, R.id.btn_myactivity, R.id.btn_myrepair, R.id.btn_myHelp, R.id.btn_myinstill,R.id.btn_myintegral, R.id.btn_mydongtai})
+    public void onClick(View view) {
+        switch (view.getId()) {
             case R.id.rl_modify_My:
-                Toast.makeText(getActivity(),"modify_my",Toast.LENGTH_SHORT).show();
-                Intent intent=new Intent(getActivity(),ModifyMyActivity.class);
+//                Toast.makeText(getActivity(),"modify_my",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), ModifyMyActivity.class);
 
-                bm =((BitmapDrawable) (ivMymsg).getDrawable()).getBitmap();
-                    intent.putExtra("user", list.get(0));
-                    intent.putExtra("head", bm);
-                    startActivityForResult(intent, REQUSETCODE);
+                bm = ((BitmapDrawable) (ivMymsg).getDrawable()).getBitmap();
+                intent.putExtra("user", list.get(0));
+                intent.putExtra("head", bm);
+                startActivityForResult(intent, REQUSETCODE);
 
                 break;
             case R.id.btn_myfriend:
@@ -160,7 +168,7 @@ public class my extends Fragment {
                 startActivity(intent1);
                 break;
             case R.id.btn_myactivity:
-                Intent intent2=new Intent(getActivity(), GetMyActivity.class);
+                Intent intent2 = new Intent(getActivity(), GetMyActivity.class);
                 startActivity(intent2);
                 break;
             case R.id.btn_myHelp:
@@ -174,22 +182,31 @@ public class my extends Fragment {
             case R.id.btn_myinstill:
 
                 break;
+            case R.id.btn_myintegral:
+                Intent intent6=new Intent(getActivity(),MyIntegral.class);
+                intent6.putExtra("integral",list.get(0).integral);
+
+//                System.out.println(list.get(0).integral);
+                startActivityForResult(intent6,6);
+                break;
         }
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode){
+        switch (requestCode) {
             case REQUSETCODE:
-                ListUserBean.User u=data.getParcelableExtra("user");
-                tvMyname.setText(u.userName);
-                System.out.println(u.userName);
-                tvMyintegral.setText(u.userTel);
-
-                tvMyprofiles.setText(u.userProfiles);
+//                ListUserBean.User u=data.getParcelableExtra("user");
+//                tvMyname.setText(u.userName);
+//                System.out.println(u.userName);
+//                tvMyintegral.setText(u.userTel);
+//
+//                tvMyprofiles.setText(u.userProfiles);
                 break;
 
         }
     }
+
+
 }

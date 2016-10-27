@@ -122,34 +122,17 @@ public class BaoxiuActivity2 extends Activity {
                 final TimePicker timePicker = (TimePicker) view.findViewById(R.id.time_picker);
                 builder.setView(view);
 
-                final Calendar cal = Calendar.getInstance();
+                Calendar cal = Calendar.getInstance();
                 int day = cal.get(Calendar.DAY_OF_MONTH);
+                int month=cal.get(Calendar.MONTH);
                 cal.setTime(new Date());
                 //设置当天为最小值
-                datePicker.setMinDate(cal.getTimeInMillis());
+                datePicker.setMinDate(cal.getTimeInMillis()-1000);
                 //设置最大值是７天
                 cal.set(Calendar.DAY_OF_MONTH, day + 6);
+                cal.set(Calendar.MONTH,month+0);
                 datePicker.setMaxDate(cal.getTimeInMillis());
-                try {
-                    //获取指定的字段
-                    Field field = datePicker.getClass().getDeclaredField("mYearSpinner");
-                    Field field1 = datePicker.getClass().getDeclaredField("mMonthSpinner");
-
-                    //解封装
-                    field.setAccessible(true);
-                    field1.setAccessible(true);
-                    //获取当前实例的值
-                    NumberPicker np = ((NumberPicker) field.get(datePicker));
-                    NumberPicker np2 = ((NumberPicker) field1.get(datePicker));
-                    np.setVisibility(View.GONE);
-                    np2.setVisibility(View.GONE);
-                } catch (NoSuchFieldException e) {
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
                 datePicker.init(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH), null);
-                ;
                 timePicker.setIs24HourView(true);
                 timePicker.setHour(cal.get(Calendar.HOUR_OF_DAY));
                 timePicker.setMinute(cal.get(Calendar.MINUTE));
@@ -239,7 +222,13 @@ public class BaoxiuActivity2 extends Activity {
 
     @OnClick(R.id.bt7)
     public void onClick() {
-        baoXiu();
+        if (et2.getText().toString().equals("")||et2.getText().toString().equals("请选择预约时间")){
+            Toast toast=Toast.makeText(BaoxiuActivity2.this,"请选择预约时间",Toast.LENGTH_LONG);
+            toast.show();
+        }else {
+            baoXiu();
+            finish();
+        }
 
     }
 

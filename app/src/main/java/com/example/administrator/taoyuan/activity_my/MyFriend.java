@@ -35,6 +35,7 @@ public class MyFriend extends AppCompatActivity {
     private RelativeLayout rl_back_fri;
     private Button btn_delete;
     private RelativeLayout rl_activity;
+    private RelativeLayout rl_help;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +59,8 @@ public class MyFriend extends AppCompatActivity {
         btn_delete = ((Button) findViewById(R.id.btn_fri_delete));
 
         rl_activity = ((RelativeLayout) findViewById(R.id.rl_fri_activity));
+        rl_help = ((RelativeLayout) findViewById(R.id.rl_fri_help));
+
 
     }
 
@@ -65,7 +68,7 @@ public class MyFriend extends AppCompatActivity {
         Intent intent = getIntent();
         user = intent.getParcelableExtra("friend");
         System.out.println(user.friendId);
-        xUtilsImageUtils.display(iv_fri_head, HttpUtils.localhost+user.userHead,10);
+        xUtilsImageUtils.display(iv_fri_head, HttpUtils.localhost+"/head"+user.userHead,10);
         tv_fri_name.setText(user.userName);
         tv_fri_sex.setText(user.userSex?"男":"女");
         tv_fri_tel.setText(user.userTel);
@@ -130,6 +133,17 @@ public class MyFriend extends AppCompatActivity {
                 startActivityForResult(intent,1);
             }
         });
+
+
+        rl_help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),GetMyHelp.class);
+                intent.putExtra("user",user);
+                startActivityForResult(intent,2);
+            }
+        });
+
     }
 
 

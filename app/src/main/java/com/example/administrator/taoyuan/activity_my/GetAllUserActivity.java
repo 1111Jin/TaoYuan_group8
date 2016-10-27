@@ -88,7 +88,8 @@ public class GetAllUserActivity extends AppCompatActivity {
                 }
                 ListUserBean.User user=userList.get(position);
 
-                xUtilsImageUtils.display(viewholder.iv_head, HttpUtils.localhost+user.userHead,10);
+                String imgurl="/head"+user.userHead;
+                xUtilsImageUtils.display(viewholder.iv_head, HttpUtils.localhost+imgurl,10);
                 viewholder.tv_name.setText(user.userName);
                 viewholder.tv_profiles.setText(user.userProfiles);
                 return convertView;

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:t="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.administrator.taoyuan.activity_my.IntegralUse">
+
+    <com.example.administrator.taoyuan.utils.TitleBar
+        android:id="@+id/tt_use"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        t:leftText="返回"
+        t:titleStr="积分的使用"/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="30dp"
+        android:textSize="24sp"
+        android:textColor="@color/black"
+        android:text="积分的使用："
+
+
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:padding="20dp"
+        android:text="      1.发布互帮：                                          发布互帮，使用积分作为酬劳，可以让更多人参与进来。
+    "
+        />
+
+</LinearLayout>

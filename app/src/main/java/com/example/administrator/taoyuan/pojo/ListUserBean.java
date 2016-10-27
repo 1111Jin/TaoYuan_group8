@@ -68,6 +68,19 @@ public class ListUserBean implements Parcelable {
             return result;
         }
 
+        public User(Integer userId, String userName, String userTel, String userHead, String userProfiles, Boolean userSex, String userAddress, Integer integral, String userPsd, Integer friendId) {
+            this.userId = userId;
+            this.userName = userName;
+            this.userTel = userTel;
+            this.userHead = userHead;
+            this.userProfiles = userProfiles;
+            this.userSex = userSex;
+            this.userAddress = userAddress;
+            this.integral = integral;
+            this.userPsd = userPsd;
+            this.friendId = friendId;
+        }
+
         public User(Integer userId, Integer integral, String userPsd, String userAddress, Boolean userSex, String userProfiles, String userHead, String userTel, String userName) {
             this.userId = userId;
             this.integral = integral;
@@ -111,10 +124,11 @@ public class ListUserBean implements Parcelable {
                     ", userProfiles='" + userProfiles + '\'' +
                     ", userSex=" + userSex +
                     ", userAddress='" + userAddress + '\'' +
-                    ", friendId='" + friendId + '\'' +
+                    ", userPsd='" + userPsd + '\'' +
+                    ", integral=" + integral +
+                    ", friendId=" + friendId +
                     '}';
         }
-
 
         @Override
         public int describeContents() {

@@ -51,9 +51,12 @@
         <activity android:name=".activity_linli.PublishHelp" />
         <activity android:name=".activity_my.MyFriend" />
         <activity android:name=".activity_linli.HelpInfo" />
-        <activity android:name=".activity_home.QiandaoActivity"/>
-        <activity android:name=".activity_home.TellphoneActivity"/>
+        <activity android:name=".activity_home.TellphoneActivity" />
+        <activity android:name=".activity_home.QianActivity" />
         <activity android:name=".activity_my.GetMyHelp" />
+        <activity android:name=".activity_my.MyIntegral" />
+        <activity android:name=".activity_my.IntegralGet" />
+        <activity android:name=".activity_my.IntegralUse"></activity>
     </application>
 
 </manifest>

@@ -6,30 +6,30 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/tb_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="47dp"
         android:background="#ff5619">
     </android.support.v7.widget.Toolbar>
     <ImageView
         android:src="@drawable/lianxidianhua"
         android:id="@+id/iv_lianxidianhua"
         android:layout_width="80dp"
-        android:layout_height="60dp" />
+        android:layout_height="45dp" />
     <TextView
-        android:textSize="25sp"
+        android:textSize="24sp"
         android:gravity="center"
         android:textColor="@color/bottom_bar_normal_bg"
         android:layout_width="80dp"
-        android:layout_height="60dp"
+        android:layout_height="45dp"
         android:layout_centerInParent="true"
         android:layout_alignParentTop="true"
         android:text="首页"
         android:id="@+id/textView" />
     <TextView
-        android:textSize="25sp"
+        android:textSize="24sp"
         android:textColor="@color/bottom_bar_normal_bg"
         android:gravity="center"
         android:layout_width="80dp"
-        android:layout_height="60dp"
+        android:layout_height="45dp"
         android:text="签到"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"

@@ -20,7 +20,7 @@ public class ReListActivityBean implements Parcelable {
         public String repairTitle;
         public String repairType;
         public String repairContent;
-        public Integer repairImg;
+        public String  repairImg;
         public String repairAddress;
         public Timestamp repairData;
         public String repairState;
@@ -59,7 +59,7 @@ public class ReListActivityBean implements Parcelable {
             dest.writeString(this.repairTitle);
             dest.writeString(this.repairType);
             dest.writeString(this.repairContent);
-            dest.writeValue(this.repairImg);
+            dest.writeString(this.repairImg);
             dest.writeString(this.repairAddress);
             dest.writeSerializable(this.repairData);
             dest.writeString(this.repairState);
@@ -77,7 +77,7 @@ public class ReListActivityBean implements Parcelable {
             this.repairTitle = in.readString();
             this.repairType = in.readString();
             this.repairContent = in.readString();
-            this.repairImg = (Integer) in.readValue(Integer.class.getClassLoader());
+            this.repairImg = in.readString();
             this.repairAddress = in.readString();
             this.repairData = (Timestamp) in.readSerializable();
             this.repairState = in.readString();
