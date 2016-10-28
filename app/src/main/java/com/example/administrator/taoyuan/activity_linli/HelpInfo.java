@@ -104,6 +104,12 @@ public class HelpInfo extends AppCompatActivity {
         switch (v.getId()){
             case R.id.hl_content_title:
                 finish();
+                break;
+           /* //跳到我要报名界面
+            case R.id.bt_help:
+                Intent intent =new Intent(getApplicationContext(),JoinHelp.class);
+                startActivity(intent);*/
+
         }
     }
 }
