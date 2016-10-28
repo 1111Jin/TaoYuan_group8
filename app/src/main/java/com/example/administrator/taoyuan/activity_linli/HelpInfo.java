@@ -12,8 +12,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.administrator.taoyuan.R;
+import com.example.administrator.taoyuan.pojo.Activity;
 import com.example.administrator.taoyuan.pojo.Help;
-import com.example.administrator.taoyuan.pojo.ListHelpBean;
 import com.example.administrator.taoyuan.utils.HttpUtils;
 import com.example.administrator.taoyuan.utils.TitleBar;
 import com.example.administrator.taoyuan.utils.xUtilsImageUtils;
@@ -26,6 +26,7 @@ import butterknife.OnClick;
  * Created by Administrator on 2016/10/24.
  */
 public class HelpInfo extends AppCompatActivity {
+    private static final String TAG = "HelpInfo";
     @InjectView(R.id.hl_content_title)
     TitleBar hlContentTitle;
     @InjectView(R.id.iv_tou)
@@ -70,6 +71,7 @@ public class HelpInfo extends AppCompatActivity {
     TextView tvHlIntegral;
     @InjectView(R.id.bt_help)
     Button btHelp;
+    Activity activity;
 
     Help help = new Help();
     public TextView integral;
@@ -105,11 +107,11 @@ public class HelpInfo extends AppCompatActivity {
             case R.id.hl_content_title:
                 finish();
                 break;
-           /* //跳到我要报名界面
+            //跳到我要报名界面
             case R.id.bt_help:
-                Intent intent =new Intent(getApplicationContext(),JoinHelp.class);
-                startActivity(intent);*/
-
+                Intent intent =new Intent(HelpInfo.this,JoinHelp.class);
+                startActivity(intent);
+            break;
         }
     }
 }
