@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tit="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="2dp"
@@ -7,19 +8,25 @@
     <com.example.administrator.taoyuan.utils.TitleBar
         android:id="@+id/ac_con_title"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="50dp"
+        tit:titleStr="活动详情">
+
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="22sp"
-            android:text="活动详情"
-            android:layout_centerInParent="true"/>
+            android:id="@+id/pull"
+            android:visibility="invisible"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/pull"/>
     </com.example.administrator.taoyuan.utils.TitleBar>
     <ScrollView
         android:layout_marginTop="-1dp"
         android:layout_below="@id/ac_con_title"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#f4f3f3">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -73,7 +80,7 @@
         android:layout_below="@id/v_bgline"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ccc">
+        >
         <TextView
             android:id="@+id/tv_ac_address"
             android:ellipsize="start"
@@ -191,15 +198,20 @@
                 android:layout_height="1dp"
                 android:background="#ccc"/>
 
-            <GridView
-                android:layout_below="@id/v_line_item"
-                android:id="@+id/gridview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                    <GridView
+                        android:layout_below="@id/v_line_item"
+                        android:id="@+id/gridview"
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:numColumns="5">
 
-            </GridView>
+                    </GridView>
+
         </RelativeLayout>
         <Button
+
+            android:visibility="visible"
             android:layout_below="@id/rl_ac_rl"
             android:id="@+id/bt_ac_join"
             android:layout_alignParentBottom="true"
