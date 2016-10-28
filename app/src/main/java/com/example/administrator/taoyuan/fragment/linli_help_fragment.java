@@ -13,18 +13,23 @@ import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.administrator.taoyuan.R;
 import com.example.administrator.taoyuan.activity_linli.HelpInfo;
+import com.example.administrator.taoyuan.pojo.Help;
 import com.example.administrator.taoyuan.pojo.ListHelpBean;
+import com.example.administrator.taoyuan.utils.HttpUtils;
 import com.example.administrator.taoyuan.utils.xUtilsImageUtils;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import java.lang.reflect.Type;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +42,7 @@ public class linli_help_fragment extends linli{
     private ListView lv_help;
     private BaseAdapter adapter;
 
-    final List<ListHelpBean.Help> helpList = new ArrayList<ListHelpBean.Help>();
+    List<Help> helpList = new ArrayList<Help>();
     private FrameLayout fm;
 
     @Nullable
@@ -70,6 +75,7 @@ public class linli_help_fragment extends linli{
     private void initdata() {
 
         adapter = new BaseAdapter() {
+            public ImageView helpImg;
             private TextView help_title;
             private TextView help_content;
             private TextView tv_time2;
@@ -99,14 +105,16 @@ public class linli_help_fragment extends linli{
                 tv_time2 = ((TextView) view.findViewById(R.id.tv_time2));
 //                help_content = ((TextView) view.findViewById(R.id.tv_help_content));
                 help_title = ((TextView) view.findViewById(R.id.tv_help_title));
+                helpImg = ((ImageView) view.findViewById(R.id.iv_hl_img));
 
 
-                ListHelpBean.Help helpBean = helpList.get(position);
-                tv_username.setText(URLDecoder.decode(helpBean.userName));
-                tv_time2.setText(helpBean.time);
-                help_title.setText(URLDecoder.decode(helpBean.help_title));
+                Help helpBean = helpList.get(position);
+                tv_username.setText(URLDecoder.decode(helpBean.getUser().getUserName()));
+                tv_time2.setText(helpBean.getCreateTime()+"");
+                help_title.setText(URLDecoder.decode(helpBean.getHelpTitle()));
 //                help_content.setText(URLDecoder.decode(helpBean.help_content));
-                xUtilsImageUtils.display(iv_tou,"http://10.40.5.23:8080/cmty/upload/"+helpBean.help_photo+"",true);
+                xUtilsImageUtils.display(iv_tou, HttpUtils.localhost_su+helpBean.getUser().getPhoto()+"",true);
+                xUtilsImageUtils.display(helpImg,HttpUtils.localhost_su+helpBean.getHelpImg()+"",false);
                 return view;
             }
         };
@@ -118,7 +126,7 @@ public class linli_help_fragment extends linli{
     private void gethelpList() {
         Log.i("linli_help_fragment", "onSuccess: =====>help数据传递进来了");
 
-        RequestParams params = new RequestParams("http://10.40.5.23:8080/cmty/toshowhelp");
+        RequestParams params = new RequestParams(HttpUtils.localhost_su+"queryhelp");
         x.http().get(params, new Callback.CommonCallback<String>() {
 
             @Override
@@ -129,11 +137,12 @@ public class linli_help_fragment extends linli{
                 //土司，打印
 //                Toast.makeText(getActivity().getApplicationContext(),result,Toast.LENGTH_LONG).show();
                 Gson gson = new Gson();
+                Type type = new TypeToken<List<Help>>(){}.getType();
+                helpList = gson.fromJson(result,type);
 
-                ListHelpBean bean = gson.fromJson(result,ListHelpBean.class);
 
-                Log.i("linli_help_fragment", "onSuccess: help接收数据对象：=====>"+bean);
-                helpList.addAll(bean.helpList);
+                Log.i("linli_help_fragment", "onSuccess: help接收数据对象：=====>"+helpList);
+                helpList.addAll(helpList);
 
                 adapter.notifyDataSetChanged();
             }

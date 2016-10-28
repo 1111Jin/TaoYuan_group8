@@ -54,6 +54,7 @@
         <activity android:name=".activity_home.QiandaoActivity"/>
         <activity android:name=".activity_home.TellphoneActivity"/>
         <activity android:name=".activity_my.GetMyHelp" />
+        <activity android:name=".activity_linli.JoinActivity"/>
     </application>
 
 </manifest>
