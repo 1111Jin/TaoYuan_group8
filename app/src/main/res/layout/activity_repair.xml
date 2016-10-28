@@ -10,6 +10,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:background="@color/title"
         >
         <RelativeLayout
             android:id="@+id/rl_back"

@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -20,7 +21,8 @@ public class TitleBar extends RelativeLayout {
     private TextView titleStr;
     private RelativeLayout right;
     private ImageView leftImage;
-    private TextView rightText;
+    private Button rightText;
+    private TextView left_Text;
 
     public TitleBar(Context context) {
         super(context);
@@ -35,7 +37,9 @@ public class TitleBar extends RelativeLayout {
         titleStr = ((TextView) view.findViewById(R.id.title));
         right = ((RelativeLayout) view.findViewById(R.id.right));
         leftImage = ((ImageView) view.findViewById(R.id.iv_leftImage));
-        rightText = ((TextView) view.findViewById(R.id.right_text));
+        left_Text = ((TextView) view.findViewById(R.id.left_text));
+//        rightText = ((Button) view.findViewById(R.id.right_text));
+
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.TitleBar);
 
@@ -46,20 +50,15 @@ public class TitleBar extends RelativeLayout {
         if (!leftFlag){
             left.setVisibility(view.INVISIBLE);
         }
-
-        Boolean rightFlag= ta.getBoolean(R.styleable.TitleBar_showRight,true);
-        if(!rightFlag) {
-            right.setVisibility(view.INVISIBLE);
-        }
-//        Boolean leftFlag=ta.getBoolean(R.styleable.TitleBar_showLeft,true);
+//        Boolean rightFlag=ta.getBoolean(R.styleable.TitleBar_showRight,true);
 //        if (!leftFlag){
-//            left.setVisibility(view.INVISIBLE);
+//            right.setVisibility(view.INVISIBLE);
 //        }
 
-        String righttext = ta.getString(R.styleable.TitleBar_rightText);
-        rightText.setText(righttext);
         String lefttext = ta.getString(R.styleable.TitleBar_leftText);
-        rightText.setText(lefttext);
+        left_Text.setText(lefttext);
+//        String righttext = ta.getString(R.styleable.TitleBar_rightText);
+//        rightText.setText(righttext);
 
     }
 
@@ -70,6 +69,12 @@ public class TitleBar extends RelativeLayout {
     public void setLeft(@Nullable OnClickListener l){
         left.setOnClickListener(l);
     }
+
+//    public void setRight(@Nullable OnClickListener l){
+//        right.setOnClickListener(l);
+//    }
+
+
 
 
 }

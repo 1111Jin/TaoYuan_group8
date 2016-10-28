@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/tt_back"
         bar:titleStr="我的活动"
-        bar:showRight="true" />
+        bar:leftText="返回"
+       />
     <com.shizhefei.view.indicator.ScrollIndicatorView
         android:id="@+id/moretab_indicator"
         android:layout_width="match_parent"

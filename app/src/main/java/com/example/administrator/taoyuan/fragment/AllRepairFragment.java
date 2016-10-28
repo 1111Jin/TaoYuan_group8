@@ -123,6 +123,7 @@ public class AllRepairFragment extends BaseFragment {
         TextView tv_repair_content = ((TextView) viewHolder.getViewById(R.id.tv_repair_content));
 
         Log.i(TAG, "initItemView: " + repair.repairType);
+        x.image().bind(iv_repair_img,HttpUtils.localhost+repair.repairImg);
         tv_repair_type.setText(repair.repairType);
         tv_repair_state.setText(repair.repairState);
         tv_repair_address.setText(repair.repairAddress);
@@ -142,14 +143,14 @@ public class AllRepairFragment extends BaseFragment {
     @Override
     public void initData() {
 
-        lv_repair.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), GetItemRepair.class);
-                intent.putExtra("item",repairlist.get(position));
-                startActivityForResult(intent,1);
-            }
-        });
+//        lv_repair.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Intent intent = new Intent(getActivity(), GetItemRepair.class);
+//                intent.putExtra("item",repairlist.get(position));
+//                startActivityForResult(intent,1);
+//            }
+//        });
     }
 
     @Override

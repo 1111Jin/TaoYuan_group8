@@ -128,7 +128,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="图片"
-        android:background="#ff00ff"
+
         android:src="@drawable/add_life_picture"
         android:textSize="28dp"
        android:layout_below="@id/editText"

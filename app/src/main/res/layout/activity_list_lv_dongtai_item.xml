@@ -49,16 +49,16 @@
 
         />
 
-    <ImageView
+    <ImageButton
         android:id="@+id/iv_zan"
-        android:src="@drawable/fm_run_loved_prs"
+        android:src="@drawable/zan"
         android:layout_width="wrap_content"
         android:layout_height="35dp"
         android:layout_below="@+id/tv_name"
         android:layout_toRightOf="@+id/tv_title"
         android:layout_toEndOf="@+id/tv_title"
         android:layout_marginLeft="30dp"
-        android:layout_marginStart="95dp"
+        android:layout_marginStart="60dp"
         android:layout_marginTop="68dp" />
 
     <TextView
