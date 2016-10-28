@@ -41,6 +41,8 @@
     <!-- 米黄 -->
     <color name="cream_colored">#fefda7</color>
     <color name="title">#ff5619</color>
+
+    <color name="bg">#f2f2f2</color>
 </resources>
 
 

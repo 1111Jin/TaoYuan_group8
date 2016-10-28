@@ -20,6 +20,7 @@ import com.example.administrator.taoyuan.R;
 import com.example.administrator.taoyuan.activity_my.GetAllUserActivity;
 import com.example.administrator.taoyuan.activity_my.GetMyActivity;
 import com.example.administrator.taoyuan.activity_my.GetMyHelp;
+import com.example.administrator.taoyuan.activity_my.LiveActivity;
 import com.example.administrator.taoyuan.activity_my.ModifyMyActivity;
 import com.example.administrator.taoyuan.activity_my.MyIntegral;
 import com.example.administrator.taoyuan.activity_my.RepairActivity;
@@ -94,10 +95,10 @@ public class my extends Fragment {
     }
 
     @Override
-    public void onStart() {
+      public void onStart() {
         super.onStart();
         initData();
-    }
+}
 
     public void initData() {
 
@@ -179,6 +180,7 @@ public class my extends Fragment {
                 Intent intent4 = new Intent(getActivity(), RepairActivity.class);
                 startActivity(intent4);
                 break;
+            //设置
             case R.id.btn_myinstill:
 
                 break;
@@ -189,6 +191,8 @@ public class my extends Fragment {
 //                System.out.println(list.get(0).integral);
                 startActivityForResult(intent6,6);
                 break;
+            case R.id.btn_mydongtai:
+                Intent intent7= new Intent(getActivity(),LiveActivity.class);
         }
     }
 

@@ -133,4 +133,20 @@ public class User implements Parcelable {
 			return new User[size];
 		}
 	};
+
+	@Override
+	public String toString() {
+		return "User{" +
+				"address='" + address + '\'' +
+				", userId=" + userId +
+				", userName='" + userName + '\'' +
+				", sex='" + sex + '\'' +
+				", userProfiles='" + userProfiles + '\'' +
+				", photo='" + photo + '\'' +
+				", psd='" + psd + '\'' +
+				", integral=" + integral +
+				", birthday=" + birthday +
+				", tel='" + tel + '\'' +
+				'}';
+	}
 }

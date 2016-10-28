@@ -11,11 +11,13 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.administrator.taoyuan.R;
 import com.example.administrator.taoyuan.activity_linli.ActivityInfo;
 import com.example.administrator.taoyuan.pojo.Activity;
+import com.example.administrator.taoyuan.pojo.User;
 import com.example.administrator.taoyuan.utils.HttpUtils;
 import com.example.administrator.taoyuan.utils.xUtilsImageUtils;
 import com.google.gson.Gson;
@@ -36,11 +38,13 @@ import static com.example.administrator.taoyuan.utils.DateUtil.dateToString1;
  * Created by Administrator on 2016/9/22.
  */
 public class linli_activity_fragment extends linli {
+    private static final String TAG = "linli_activity_fragment";
     private ImageView iv_people;
     private TextView tv_time;
     private TextView tv_title;
     private BaseAdapter adapter;
     final List<Activity> activityList = new ArrayList<Activity>();
+
     private ListView lv_list;
 
     @Nullable
@@ -48,10 +52,16 @@ public class linli_activity_fragment extends linli {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.linli_activity_listview,null);
         lv_list  = ((ListView) view.findViewById(R.id.ac_listview));
-
         initData();
         return view;
     }
+
+    @Override
+    public void onStart() {
+        initData();
+        super.onStart();
+    }
+
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -63,10 +73,13 @@ public class linli_activity_fragment extends linli {
     }
 
 
+    //跳转到另一个activity（具体的单个信息显示页面）
     public void initEvent(){
         lv_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
                 //从Fragment跳转到非嵌套的Activity页面
                 Intent intent = new Intent(getActivity(), ActivityInfo.class);
                 //带参传值；
@@ -79,6 +92,7 @@ public class linli_activity_fragment extends linli {
         });
     }
 
+    //获取服务端传递过来的数据；
     public void initData() {
         adapter = new BaseAdapter() {
             private TextView time;
@@ -118,7 +132,6 @@ public class linli_activity_fragment extends linli {
                 address.setText(activity.getActivityAddress());
                 tv_time.setText(dateToString(activity.getCreateTime()));
                 time.setText(dateToString1(activity.getBeginTime())+" -- "+dateToString1(activity.getEndTime()));
-//                time.setText(dateToString(activity.activity_begintime));
 
                 return view;
             }
@@ -135,7 +148,7 @@ public class linli_activity_fragment extends linli {
 
     private void getActivityList(){
 
-        RequestParams params = new RequestParams("http://10.40.5.23:8080/ty/queryactivity");
+        RequestParams params = new RequestParams(HttpUtils.localhost_su+"queryactivity");
 
 
         x.http().get(params, new Callback.CommonCallback<String>() {
@@ -144,14 +157,17 @@ public class linli_activity_fragment extends linli {
             public void onSuccess(String result) {
                 Log.i("linli_activity_fragment", "onSuccess:activity数据传递进来了： =====>"+result);
 
+                List<Activity> newacList = new ArrayList<Activity>();
+
 //                Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm").create();
                 Gson gson = new Gson();
                 Type type=new TypeToken<List<Activity>>(){}.getType();
-                List<Activity> aclist = gson.fromJson(result,type);
+                newacList = gson.fromJson(result,type);
 
-                Log.i("linli_activity_fragment", "onSuccess:activityBean对象:-------> "+aclist.get(0));
+                activityList.clear();
+                Log.i("linli_activity_fragment", "onSuccess:activityBean对象:-------> "+newacList.get(0));
 
-                activityList.addAll(aclist);
+                activityList.addAll(newacList);
 
 
                 System.out.println("ActivityList:"+activityList);
