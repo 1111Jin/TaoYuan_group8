@@ -5,18 +5,19 @@
     android:layout_height="match_parent"
     android:background="@color/bg">
     <com.example.administrator.taoyuan.utils.TitleBar
-        android:id="@+id/join_help_title"
+        android:id="@+id/join_helptitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         title:titleStr="报 名">
+
     </com.example.administrator.taoyuan.utils.TitleBar>
     <LinearLayout
-        android:layout_below="@id/join_help_title"
-        android:id="@+id/ll_join_help_tel"
+        android:layout_below="@id/join_helptitle"
+        android:id="@+id/ll_joinhelp_tel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <EditText
-            android:id="@+id/et_help_tel"
+            android:id="@+id/et_helptel"
             android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:gravity="center_vertical"
@@ -27,19 +28,19 @@
             android:hint="手机号码"/>
     </LinearLayout>
     <TextView
-        android:id="@+id/tv_help_telp"
+        android:id="@+id/tv_helptelp"
         android:layout_marginTop="5dp"
-        android:layout_below="@id/join_help_title"
+        android:layout_below="@id/ll_joinhelp_tel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="18sp"
         android:paddingLeft="10dp"
-        android:hint="报名该互帮活动需要填写手机号"
+        android:hint="该报名活动需要填写手机号"
         />
     <EditText
-        android:id="@+id/et_help_self"
+        android:id="@+id/help_self"
         android:background="#fff"
-        android:layout_below="@id/tv_help_telp"
+        android:layout_below="@id/tv_helptelp"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_marginTop="20dp"
@@ -47,8 +48,8 @@
         android:layout_marginBottom="10dp"
         android:hint="可以填写自我介绍"/>
     <Button
-        android:id="@+id/join_help_hand"
-        android:layout_below="@id/et_help_self"
+        android:id="@+id/joinhelp_hand"
+        android:layout_below="@id/help_self"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"

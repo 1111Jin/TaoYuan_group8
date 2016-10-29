@@ -110,6 +110,7 @@ public class JoinActivity extends AppCompatActivity {
             case R.id.join_title:
                 finish();
 
+
         }
     }
 }
