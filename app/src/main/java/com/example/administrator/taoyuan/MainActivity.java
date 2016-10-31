@@ -8,14 +8,25 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.example.administrator.taoyuan.application.MyApplication;
 import com.example.administrator.taoyuan.fragment.Life;
 import com.example.administrator.taoyuan.fragment.home;
 import com.example.administrator.taoyuan.fragment.linli;
 import com.example.administrator.taoyuan.fragment.my;
+import com.example.administrator.taoyuan.pojo.User;
+import com.example.administrator.taoyuan.utils.HttpUtils;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import cn.jpush.android.api.JPushInterface;
+import cn.jpush.android.api.TagAliasCallback;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,6 +41,34 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        JPushInterface.setDebugMode(true);//如果时正式版就改成false
+        JPushInterface.init(this);
+
+        String alias=String.valueOf(((MyApplication)getApplication()).getUser().getUserId());
+//设置别名，单对单传递
+        JPushInterface.setAlias(this, //上下文对象
+                alias, //别名
+                new TagAliasCallback() {//回调接口,i=0表示成功,其它设置失败
+                    @Override
+                    public void gotResult(int i, String s, Set<String> set) {
+                        Log.d("alias", "set alias result is" + i);
+                    }
+                });
+
+
+        //设置Tag，群组
+        Set<String> sets = new HashSet<>();
+//        sets.add("sport");//运行第二个模拟器上时把这个注掉
+        sets.add("game");
+        sets.add("music");//运行第二个模拟器上时把这个打开
+
+        JPushInterface.setTags(this, sets, new TagAliasCallback() {
+            @Override
+            public void gotResult(int i, String s, Set<String> set) {
+                Log.d("alias", "set tag result is" + i);
+            }
+        });
+
         initview();
         initdata();
     }

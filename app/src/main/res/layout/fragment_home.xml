@@ -46,13 +46,17 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="200dp">
-            <ImageView
-                android:id="@+id/iv_gg"
-                android:src="@drawable/gg"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:scaleType="fitXY"
-                />
+        <com.youth.banner.Banner
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/banner"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:indicator_margin="6dp"
+            app:indicator_drawable_selected="@drawable/zhishiqi"
+            app:indicator_drawable_unselected="@drawable/zhishiqi1"
+            app:indicator_height="10dp"
+            app:indicator_width="16dp"
+            app:title_textsize="20sp"/>
     </LinearLayout>
             <View
                 android:id="@+id/v"
@@ -78,13 +82,13 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
+            android:textSize="24sp"
             android:textColor="@color/text_clo"
             android:text="报修"
             />
         <View
             style="@style/md_line"
-            android:layout_width="1dp"
+            android:layout_width="7dp"
             android:layout_height="match_parent"
             android:background="#E3E3E3"
             />
@@ -95,13 +99,13 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
+            android:textSize="24sp"
             android:textColor="@color/text_clo"
             android:text="公告"
             />
         <View
             style="@style/md_line"
-            android:layout_width="1dp"
+            android:layout_width="7dp"
             android:layout_height="match_parent"
             android:background="#E3E3E3"
             />
@@ -113,7 +117,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
+            android:textSize="24sp"
             android:textColor="@color/text_clo"
             android:text="消息"
             />
@@ -123,17 +127,6 @@
             android:layout_height="match_parent"
             android:background="#E3E3E3"
             />
-        <TextView
-            android:gravity="center"
-            android:id="@+id/tv_jjxq"
-            android:drawableTop="@drawable/jfxq"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:textColor="@color/text_clo"
-            android:text="积分"
-           />
     </LinearLayout>
             <View
                 android:id="@+id/v1"
@@ -146,7 +139,11 @@
         android:layout_below="@id/v1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <TextView
+            android:id="@+id/tv12"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:textSize="25sp"
@@ -154,94 +151,26 @@
             android:gravity="center_vertical"
             android:text="活动推荐"
             />
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@drawable/more"
+                android:scaleType="fitXY"
+                android:layout_marginTop="6dp"
+                android:layout_alignParentRight="true"/>
+        </RelativeLayout>
         <View
             android:layout_width="match_parent"
             android:layout_height="10dp"
             android:background="#E3E3E3"/>
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <RelativeLayout
-                android:id="@+id/rl_hd1"
-                android:layout_weight="1"
-                android:layout_width="130dp"
-                android:layout_height="200dp">
-                <ImageView
-                    android:id="@+id/iv_hd1"
-                    android:src="@drawable/hd1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:scaleType="fitXY"/>
-                <TextView
-                    android:gravity="center"
-                    android:background="@color/veryblack"
-                    android:layout_alignParentBottom="true"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/common_bg"
-                    android:text="活动1"/>
-            </RelativeLayout>
-            <View
-                android:layout_width="6dp"
-                android:layout_height="match_parent"
-                android:background="#E3E3E3"
-                />
-            <RelativeLayout
-                android:layout_weight="1"
-                android:id="@+id/rl_hd2"
-                android:layout_width="130dp"
-                android:layout_height="200dp">
-                <ImageView
-                    android:background="@color/veryblack"
-                    android:id="@+id/iv_hd2"
-                    android:src="@drawable/hd2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:scaleType="fitXY"/>
-                <TextView
-                    android:gravity="center"
-                    android:textColor="@color/common_bg"
-                    android:background="@color/veryblack"
-                    android:layout_alignParentBottom="true"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="活动2"/>
-            </RelativeLayout>
-            <View
-                android:layout_width="6dp"
-                android:layout_height="match_parent"
-                android:background="#E3E3E3"
-                />
-            <RelativeLayout
-                android:layout_weight="1"
-                android:id="@+id/rl_hd3"
-                android:layout_width="130dp"
-                android:layout_height="200dp"
-                android:background="@color/white">
-                <ImageView
-                    android:background="@color/veryblack"
-                    android:scaleType="fitXY"
-                    android:id="@+id/iv_hd3"
-                    android:src="@drawable/hd3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    />
-                <TextView
-                    android:background="@color/veryblack"
-                    android:gravity="center"
-                    android:textColor="@color/common_bg"
-                    android:layout_alignParentBottom="true"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="活动3"/>
-            </RelativeLayout>
-            <View
-                android:layout_width="6dp"
-                android:layout_height="match_parent"
-                android:background="#E3E3E3"
-                />
-        </LinearLayout>
+        <com.example.administrator.taoyuan.activity_home.HorizontalListView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:widget="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/HorizontalListView"
+            android:layout_width="fill_parent"
+            android:layout_height="250dp"
+            android:divider="#878787"
+            widget:dividerWidth="10dp" />
     </LinearLayout>
     </RelativeLayout>
     </ScrollView>

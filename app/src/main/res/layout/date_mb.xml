@@ -19,12 +19,12 @@
 
     <TextView
         android:id="@+id/txtDayDateMB"
-        android:layout_width="30dp"
+        android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:textColor="@color/black"
         android:textSize="24sp"
-        android:gravity="right"
-        android:background="#FFFACD"/>
+        android:gravity="center"
+        android:background="@drawable/qiandao"/>
 
 </LinearLayout>

@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,7 +46,7 @@ public class QianActivity extends Activity {
 
 
     @InjectView(R.id.tv4)
-    TextView tv4;
+    ImageView tv4;
     @InjectView(R.id.tv1)
     TextView tv1;
     @InjectView(R.id.tv3)
@@ -75,7 +76,7 @@ public class QianActivity extends Activity {
         chauxunjifen();
         year = cal.get(Calendar.YEAR);
         month =cal.get(Calendar.MONTH)+1;
-        day =cal.get(Calendar.DAY_OF_MONTH);
+        day =cal.get(Calendar.DAY_OF_MONTH)+1/3;
         Calendar rightNow = Calendar.getInstance();
         rightNow.set(year, month, 1);
         week = (rightNow.DAY_OF_WEEK);
@@ -89,8 +90,8 @@ public class QianActivity extends Activity {
                                     long arg3) {
                 //判断是否已经签到 从服务器获取签到信息
                 //模拟从本地数据库获取信息
-                System.out.println(arg2 - week + 3+"/////////////");
-                System.out.println(day+"?????????????????");
+                Integer a= Integer.valueOf(tv1.getText().toString());
+                Integer b= Integer.valueOf(tv5.getText().toString());
                 if (day != arg2 - week + 3) {
                     Toast toast = Toast.makeText(QianActivity.this, "只能签到今天", Toast.LENGTH_SHORT);
                     toast.show();
@@ -103,10 +104,14 @@ public class QianActivity extends Activity {
                     } else {
                         //在数据库插入一条数据
                         sdao.insertSinInfo("zhangsan", "张三", year + "-" + month + "-" + (arg2 - week + 3), year + "" + month);
-                        Toast toast = Toast.makeText(QianActivity.this, "今日签到成功", Toast.LENGTH_SHORT);
+                        Toast toast = Toast.makeText(QianActivity.this, "今日签到成功,成功获得5积分", Toast.LENGTH_SHORT);
                         toast.show();
+                        a=a+1;
+                        b=b+5;
+                        tv1.setText(a+"");
+                        tv5.setText(b+"");
                         insertQiandao();
-                        initData();
+                       initData();
                     }
                 }
             }
@@ -121,7 +126,7 @@ public class QianActivity extends Activity {
             list.add(1 + "");
         }
         dayMaxNum = getCurrentMonthDay();
-        for (int i = 0; i < dayMaxNum; i++) {
+        for (int i = 0; i <= dayMaxNum; i++) {
             list.add(i + 1 + "");
         }
         gdDate.setSelector(new ColorDrawable(Color.TRANSPARENT));
@@ -188,11 +193,10 @@ public class QianActivity extends Activity {
                 txtWeek.setVisibility(View.VISIBLE);
             }
 
-            if (position < week - 2) {
+            if (position < week - 2||Integer.parseInt(list.get(position))>dayMaxNum) {
                 txtDay.setVisibility(View.GONE);
             }
             int lstDay = Integer.parseInt(list.get(position));
-
             //标记当前日期
             if (day == lstDay) {
                 txtDay.setText(list.get(position).toString());
@@ -238,7 +242,7 @@ public class QianActivity extends Activity {
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                refresh();
+
             }
 
             @Override
@@ -287,13 +291,5 @@ public class QianActivity extends Activity {
 
             }
         });
-    }
-    public void refresh() {
-        onCreate(null);
-    }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        chauxunjifen();
-        super.onActivityResult(requestCode, resultCode, data);
     }
 }

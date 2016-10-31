@@ -18,7 +18,11 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
@@ -39,6 +43,28 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <receiver
+            android:name=".Reciver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTRATION" />
+                <!-- Required  用户注册SDK的intent -->
+                <action android:name="cn.jpush.android.intent.UNREGISTRATION" />
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />
+                <!-- Required  用户接收SDK消息的intent -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />
+                <!-- Required  用户接收SDK通知栏信息的intent -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
+                <!-- Required  用户打开自定义通知栏的intent -->
+                <action android:name="cn.jpush.android.intent.ACTION_RICHPUSH_CALLBACK" />
+                <!-- Optional 用户接受Rich Push Javascript 回调函数的intent -->
+                <action android:name="cn.jpush.android.intent.CONNECTION" />
+                <!-- 接收网络变化 连接/断开 since 1.6.3 -->
+                <category android:name="com.example.administrator.taoyuan" />
+            </intent-filter>
+        </receiver>
+
         <activity
             android:name="me.iwf.photopicker.PhotoPickerActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
@@ -60,14 +86,16 @@
         <activity android:name=".activity_linli.PublishHelp" />
         <activity android:name=".activity_my.MyFriend" />
         <activity android:name=".activity_linli.HelpInfo" />
+        <activity android:name=".activity_linli.JoinActivity" />
+        <activity android:name=".activity_linli.JoinHelp" />
         <activity android:name=".activity_home.TellphoneActivity" />
         <activity android:name=".activity_home.QianActivity" />
         <activity android:name=".activity_my.GetMyHelp" />
         <activity android:name=".activity_my.MyIntegral" />
         <activity android:name=".activity_my.IntegralGet" />
         <activity android:name=".activity_my.IntegralUse" />
-        <activity android:name=".activity_linli.JoinActivity" />
-        <activity android:name=".activity_life.AddFriend_agree" />
+        <activity android:name=".activity_home.GonggaoActivity" />
+        <activity android:name=".activity_home.GonggaoXiangqing" />
         <activity
             android:name="com.mob.tools.MobUIShell"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -90,8 +118,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity_life.AddFriend_agree" />
-        <activity android:name=".activity_life.LifeToFriend"></activity>
+        <activity android:name=".activity_home.HuodongTuijian"></activity>
     </application>
 
 </manifest>

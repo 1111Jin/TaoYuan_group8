@@ -203,19 +203,22 @@ public class Baoxiuleixing_gerenzhuzha_Fragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
     }
     private void showpopupwindow(View view) {
+
         View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.shanchu,null);
         shanchu = ((Button) contentView.findViewById(R.id.shanchu));
+        final PopupWindow popupwindow = new PopupWindow(contentView,
+                ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
          shanchu.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
                  imageView.setImageBitmap(null);
                   pictureName="";
+                 popupwindow.dismiss();
                  btn.setVisibility(View.VISIBLE);
              }
          });
-        final PopupWindow popupwindow = new PopupWindow(contentView,
-                ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
         popupwindow.setTouchable(true);
+        popupwindow.showAsDropDown(imageView);
 
         popupwindow.setTouchInterceptor(new View.OnTouchListener() {
 

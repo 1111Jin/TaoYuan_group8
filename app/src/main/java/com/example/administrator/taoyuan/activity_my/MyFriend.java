@@ -36,6 +36,7 @@ public class MyFriend extends AppCompatActivity {
     private Button btn_delete;
     private RelativeLayout rl_activity;
     private RelativeLayout rl_help;
+    private RelativeLayout rl_fri_address;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +61,7 @@ public class MyFriend extends AppCompatActivity {
 
         rl_activity = ((RelativeLayout) findViewById(R.id.rl_fri_activity));
         rl_help = ((RelativeLayout) findViewById(R.id.rl_fri_help));
+        rl_fri_address= ((RelativeLayout) findViewById(R.id.rl_fri_address));
 
 
     }
@@ -141,6 +143,38 @@ public class MyFriend extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(),GetMyHelp.class);
                 intent.putExtra("user",user);
                 startActivityForResult(intent,2);
+            }
+        });
+
+        rl_fri_address.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Integer u = user.friendId;
+                System.out.println(u);
+                RequestParams requestParams=new RequestParams("http://10.40.5.55:8080/ty/tsAlias");
+                requestParams.addBodyParameter("title","5号发送的消息");
+                requestParams.addBodyParameter("alias",String.valueOf(u));
+                x.http().get(requestParams, new Callback.CommonCallback<String>() {
+                    @Override
+                    public void onSuccess(String result) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable ex, boolean isOnCallback) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(CancelledException cex) {
+
+                    }
+
+                    @Override
+                    public void onFinished() {
+
+                    }
+                });
             }
         });
 

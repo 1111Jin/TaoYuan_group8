@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="标题"
+            android:layout_marginLeft="20dp"
+            android:textSize="24sp"
+            android:textColor="@color/black"
+            android:padding="15dp"
+            android:id="@+id/tv_title"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="时间"
+            android:layout_below="@id/tv_title"
+            android:textSize="18sp"
+            android:layout_marginLeft="20dp"
+            android:padding="10dp"
+            android:id="@+id/tv_time" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/iv_editinfo"
+
+
+            android:layout_above="@id/tv_time"
+            android:layout_alignRight="@id/tv_time"
+            android:layout_alignEnd="@id/tv_time"
+            android:layout_marginRight="20dp"
+             />
+
+
+    </RelativeLayout>
+    </LinearLayout>
