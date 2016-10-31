@@ -9,10 +9,10 @@ public class User implements Parcelable {
 	private Integer userId;
 	private String userName;
 	private String sex;
-	private String userProfiles;
+	private String userProfiles;//简介
 	private String photo;
 	private String psd;
-	private Integer integral;
+	private Integer integral;//积分
 	private Timestamp birthday;
 	private String tel;
 	private String address;
