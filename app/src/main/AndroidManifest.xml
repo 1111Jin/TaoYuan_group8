@@ -16,9 +16,13 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
-    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
@@ -60,25 +64,27 @@
         <activity android:name=".activity_linli.PublishHelp" />
         <activity android:name=".activity_my.MyFriend" />
         <activity android:name=".activity_linli.HelpInfo" />
-        <activity android:name=".activity_linli.JoinActivity"/>
-        <activity android:name=".activity_linli.JoinHelp"/>
+        <activity android:name=".activity_linli.JoinActivity" />
+        <activity android:name=".activity_linli.JoinHelp" />
         <activity android:name=".activity_home.TellphoneActivity" />
         <activity android:name=".activity_home.QianActivity" />
         <activity android:name=".activity_my.GetMyHelp" />
         <activity android:name=".activity_my.MyIntegral" />
         <activity android:name=".activity_my.IntegralGet" />
-        <activity android:name=".activity_my.IntegralUse"></activity>
-
+        <activity android:name=".activity_my.IntegralUse" />
+        <activity android:name=".activity_home.GonggaoActivity" />
+        <activity android:name=".activity_home.GonggaoXiangqing" />
         <activity
             android:name="com.mob.tools.MobUIShell"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize" >
-
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <data android:scheme="tencent100371282" />
+
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -86,11 +92,11 @@
             <!-- 调用新浪原生SDK，需要注册的回调activity -->
             <intent-filter>
                 <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
-
+        <activity android:name=".activity_home.HuodongTuijian"></activity>
     </application>
 
 </manifest>

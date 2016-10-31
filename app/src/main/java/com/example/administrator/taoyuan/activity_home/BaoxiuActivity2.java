@@ -123,7 +123,7 @@ public class BaoxiuActivity2 extends Activity {
                 builder.setView(view);
 
                 Calendar cal = Calendar.getInstance();
-                int day = cal.get(Calendar.DAY_OF_MONTH);
+                int day = cal.get(Calendar.DAY_OF_MONTH)+1/3;
                 int month=cal.get(Calendar.MONTH);
                 cal.setTime(new Date());
                 //设置当天为最小值
@@ -134,7 +134,7 @@ public class BaoxiuActivity2 extends Activity {
                 datePicker.setMaxDate(cal.getTimeInMillis());
                 datePicker.init(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH), null);
                 timePicker.setIs24HourView(true);
-                timePicker.setHour(cal.get(Calendar.HOUR_OF_DAY));
+                timePicker.setHour(cal.get(Calendar.HOUR_OF_DAY)+8);
                 timePicker.setMinute(cal.get(Calendar.MINUTE));
                 final int inType = et2.getInputType();
                 et2.setInputType(InputType.TYPE_NULL);
@@ -200,11 +200,12 @@ public class BaoxiuActivity2 extends Activity {
             public void onSuccess(String result) {
                 Toast toast = Toast.makeText(BaoxiuActivity2.this, "报修成功", Toast.LENGTH_LONG);
                 toast.show();
+                finish();
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Toast toast = Toast.makeText(BaoxiuActivity2.this, "报修失败，请重试", Toast.LENGTH_LONG);
+                Toast toast = Toast.makeText(BaoxiuActivity2.this, "报修失败，请检查网络是否连接", Toast.LENGTH_LONG);
                 toast.show();
             }
 
@@ -227,7 +228,6 @@ public class BaoxiuActivity2 extends Activity {
             toast.show();
         }else {
             baoXiu();
-            finish();
         }
 
     }

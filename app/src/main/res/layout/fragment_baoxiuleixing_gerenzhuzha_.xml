@@ -2,6 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:context="com.example.administrator.taoyuan.fragment.Baoxiuleixing_gerenzhuzha_Fragment">
     <TextView
         android:id="@+id/tv"
@@ -79,8 +81,8 @@
        android:background="@android:drawable/edit_text"
        android:gravity="top"
        android:layout_alignLeft="@id/bt1"
-       android:text=""
        android:textSize="16sp"
+       android:hint="请描述您的报修项目"
        android:textColor="#a9b7a7"/>
     <Button
         android:id="@+id/btn"
