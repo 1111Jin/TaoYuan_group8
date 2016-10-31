@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tt="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<com.example.administrator.taoyuan.utils.TitleBar
+    android:id="@+id/tt_tt"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tt:titleStr="通知"
+    tt:leftText="返回"
+
+    />
+    <ListView
+        android:id="@+id/lv_msg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </ListView>
+</LinearLayout>

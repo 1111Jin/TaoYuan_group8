@@ -3,20 +3,29 @@
     xmlns:tt="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
+    android:background="@color/wifi_around_line"
     android:orientation="vertical">
 
-
-
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <com.example.administrator.taoyuan.utils.TitleBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tt:showLeft="false"
         tt:titleStr="我的"
-         >
+             />
 
-    </com.example.administrator.taoyuan.utils.TitleBar>
-
+        <Button
+            android:id="@+id/btn_msg"
+            android:layout_width="30dp"
+            android:layout_height="35dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/msg"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="6dp"
+            />
+      </RelativeLayout>
 
 
 
@@ -32,7 +41,7 @@
                 android:id="@+id/rl_modify_My"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="220dp"
+                android:layout_height="240dp"
                 android:background="@drawable/bc">
 
 
@@ -82,18 +91,20 @@
 
             </RelativeLayout>
             <Button
-                android:id="@+id/btn_myfriend"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="我的好友"
-                android:textColor="@color/black"
+            android:id="@+id/btn_myfriend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="我的好友"
+            android:textColor="@color/black"
 
-                android:background="#fff"
-                android:textSize="20sp"/>
+            android:background="#fff"
+            android:textSize="20sp"/>
             <View android:layout_width="match_parent"
                 android:layout_alignParentBottom="true"
                 android:layout_height="3px"
                 android:background="#C0C5C7"/>
+
+
 
             <Button
                 android:id="@+id/btn_myrepair"
@@ -152,6 +163,7 @@
                 android:id="@+id/btn_myintegral"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:text="关于积分"
                 android:textColor="@color/black"
 

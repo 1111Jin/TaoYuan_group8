@@ -24,6 +24,7 @@ import com.example.administrator.taoyuan.activity_my.LiveActivity;
 import com.example.administrator.taoyuan.activity_my.ModifyMyActivity;
 import com.example.administrator.taoyuan.activity_my.MyIntegral;
 import com.example.administrator.taoyuan.activity_my.RepairActivity;
+import com.example.administrator.taoyuan.activity_my.TextActivity;
 import com.example.administrator.taoyuan.pojo.ListUserBean;
 import com.example.administrator.taoyuan.utils.HttpUtils;
 import com.example.administrator.taoyuan.utils.xUtilsImageUtils;
@@ -151,7 +152,7 @@ public class my extends Fragment {
         ButterKnife.reset(this);
     }
 
-    @OnClick({R.id.rl_modify_My, R.id.btn_myfriend, R.id.btn_myactivity, R.id.btn_myrepair, R.id.btn_myHelp, R.id.btn_myinstill,R.id.btn_myintegral, R.id.btn_mydongtai})
+    @OnClick({R.id.rl_modify_My, R.id.btn_myfriend, R.id.btn_msg,R.id.btn_myactivity, R.id.btn_myrepair, R.id.btn_myHelp, R.id.btn_myinstill,R.id.btn_myintegral, R.id.btn_mydongtai})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.rl_modify_My:
@@ -193,6 +194,13 @@ public class my extends Fragment {
                 break;
             case R.id.btn_mydongtai:
                 Intent intent7= new Intent(getActivity(),LiveActivity.class);
+
+                break;
+
+            case R.id.btn_msg:
+                Intent intent8 = new Intent(getActivity(), TextActivity.class);
+                startActivity(intent8);
+                break;
         }
     }
 
