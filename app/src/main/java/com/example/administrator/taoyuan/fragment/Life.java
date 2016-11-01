@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,6 +69,8 @@ public class Life extends Fragment implements ViewPager.OnPageChangeListener,Vie
         initEvent();
 
        // initLineImage();w
+        onPageSelected(0);
+        initLineImage();
         return view;
 
 
@@ -107,10 +110,18 @@ public class Life extends Fragment implements ViewPager.OnPageChangeListener,Vie
             }
         });
     }
-
-
-
-
+    private void initLineImage() {
+        //获取屏幕的宽度；
+        DisplayMetrics dm = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
+        int screen = dm.widthPixels;
+        //重新设置下划线的宽度；
+        ViewGroup.LayoutParams lp = line_tab.getLayoutParams();
+        lp.width = screen / 3;
+        line_tab.setLayoutParams(lp);
+        //滑动一个页面的距离；
+        moveOne = lp.width;
+    }
 
     /** * 下划线跟随手指的滑动而移动 * @param toPosition * @param positionOffsetPixels */
     private void movePositionX(int toPosition, float positionOffsetPixels) {
@@ -118,7 +129,7 @@ public class Life extends Fragment implements ViewPager.OnPageChangeListener,Vie
         float curTranslationX = line_tab.getTranslationX();
         float toPositionX = moveOne * toPosition + positionOffsetPixels;
         ObjectAnimator animator = ObjectAnimator.ofFloat(line_tab, "translationX", curTranslationX, toPositionX);
-        animator.setDuration(500); animator.start();
+        animator.setDuration(1); animator.start();
     }
 
     //下划线滑动到新的选项卡中；

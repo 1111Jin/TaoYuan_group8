@@ -84,7 +84,6 @@ public class Baoxiuleixing_gonggongquyu_Fragment extends Fragment {
                 return false;
             }
         });
-        System.out.println(str.toString()+"???????????????");
         return view;
     }
 
@@ -199,12 +198,14 @@ public class Baoxiuleixing_gonggongquyu_Fragment extends Fragment {
         x.http().post(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                System.out.println("上传成功" + result.toString());
+                Toast toast = Toast.makeText(getActivity(), "报修成功", Toast.LENGTH_LONG);
+                toast.show();
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                System.out.println(ex.toString() + "????????????????");
+                Toast toast = Toast.makeText(getActivity(), "报修失败，请检查网络是否连接", Toast.LENGTH_LONG);
+                toast.show();
             }
 
             @Override

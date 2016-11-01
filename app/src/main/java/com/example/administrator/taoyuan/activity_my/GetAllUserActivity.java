@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -15,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.administrator.taoyuan.R;
+import com.example.administrator.taoyuan.activity_life.AddFriend_agree;
 import com.example.administrator.taoyuan.pojo.ListUserBean;
 import com.example.administrator.taoyuan.utils.HttpUtils;
 import com.example.administrator.taoyuan.utils.xUtilsImageUtils;
@@ -35,6 +37,7 @@ public class GetAllUserActivity extends AppCompatActivity {
     final List<ListUserBean.User> userList=new ArrayList<ListUserBean.User>();
     private ProgressBar progressBar;
     private RelativeLayout rl_back_my;
+    private Button add_friend;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +46,24 @@ public class GetAllUserActivity extends AppCompatActivity {
 
         initView();
         initData();
+        initEvent();
+    }
+
+    private void initEvent() {
+        add_friend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(GetAllUserActivity.this, AddFriend_agree.class);
+                startActivityForResult(intent, 1);
+            }
+        });
     }
 
     public void initView(){
         lv_userList = ((ListView) findViewById(R.id.lv_userList));
         progressBar = ((ProgressBar) findViewById(R.id.progressBar));
         rl_back_my = ((RelativeLayout) findViewById(R.id.rl_back_my));
+        add_friend = ((Button) findViewById(R.id.add_friend));
     }
 
 

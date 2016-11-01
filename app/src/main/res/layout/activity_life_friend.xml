@@ -328,7 +328,7 @@
                 android:layout_marginTop="20dp"
                 android:background="@drawable/shape_red"
                 android:layout_margin="20dp"
-                android:text="删除好友"
+                android:text="添加好友"
                 android:textSize="20sp"
                 android:gravity="center"
                 android:textColor="@color/black"

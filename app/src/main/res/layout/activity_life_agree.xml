@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:t="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.example.administrator.taoyuan.utils.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/agree_biao"
+        t:leftText="返回"
+        t:titleStr="新朋友">
+    <Button
+        android:id="@+id/addFriend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:background="@color/none"
+        android:text="添加"
+        android:textSize="20sp"
+        />
+    </com.example.administrator.taoyuan.utils.TitleBar>
+
+    <ListView
+        android:id="@+id/lv_friend_agree"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@id/agree_biao">
+
+    </ListView>
+</RelativeLayout>

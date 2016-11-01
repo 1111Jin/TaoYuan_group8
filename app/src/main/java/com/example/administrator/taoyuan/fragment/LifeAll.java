@@ -21,7 +21,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.administrator.taoyuan.R;
+import com.example.administrator.taoyuan.activity_life.LifeToFriend;
 import com.example.administrator.taoyuan.activity_life.LifeXiangqing;
+import com.example.administrator.taoyuan.activity_my.MyFriend;
 import com.example.administrator.taoyuan.application.MyApplication;
 import com.example.administrator.taoyuan.pojo.ListInfo;
 import com.example.administrator.taoyuan.pojo.ListLifeInfo;
@@ -51,7 +53,7 @@ import cn.sharesdk.onekeyshare.OnekeyShare;
 public class LifeAll extends Life implements RefreshListView.OnRefreshUploadChangeListener{
 
     private RefreshListView lv_lifeinfo;
-    BaseAdapter adapter;
+    CommonAdapter<ListLifeInfo.LifeInfo> adapter;
     final List<ListLifeInfo.LifeInfo> lifelist= new ArrayList<ListLifeInfo.LifeInfo>();
     private  ListView lv_dongtai1;
     ListInfo listinfo;
@@ -75,10 +77,6 @@ public class LifeAll extends Life implements RefreshListView.OnRefreshUploadChan
         sharedPreferences = LifeAll.this.getActivity().getSharedPreferences("dianzan_sp", Context.MODE_PRIVATE);
         editor1 = sharedPreferences.edit();
         ib_share = ((ImageButton) view.findViewById(R.id.share));
-//        ImageView view3=new ImageView(getActivity());
-//        view3.setAdjustViewBounds(true);//去掉上下空白
-//        view3.setImageResource( R.drawable.background);
-//        lv_lifeinfo.addHeaderView(view3,null,false);
 
 
         initData();
@@ -90,10 +88,6 @@ public class LifeAll extends Life implements RefreshListView.OnRefreshUploadChan
 
 
 
-    public  void initView() {
-
-
-    }
 
 
     public void initEvent() {
@@ -117,10 +111,7 @@ public class LifeAll extends Life implements RefreshListView.OnRefreshUploadChan
 
         lv_lifeinfo.setOnRefreshUploadChangeListener(this);
 
-
-
     }
-
 
     public void initData() {
         adapter=new CommonAdapter<ListLifeInfo.LifeInfo>(getActivity(),lifelist,R.layout.activity_list_lv_dongtai_item) {
@@ -144,9 +135,17 @@ public class LifeAll extends Life implements RefreshListView.OnRefreshUploadChan
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
-                // x.image().bind(iv_photo,"http://10.40.5.12:8080/Life/imags/"+dongtai.headphoto+"");
                 xUtilsImageUtils.display(iv_photo, HttpUtils.localhost_jt+"imgs/"+dongtai.headphoto+"",true);
                 xUtilsImageUtils.display(iv_contphoto, HttpUtils.localhost_jt+"imgs/"+dongtai.content_photo+"",false);
+
+                iv_photo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent=new Intent(getActivity(), LifeToFriend.class);
+                        startActivityForResult(intent, 1);
+                    }
+                });
+
                 iv_zan.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -252,7 +251,7 @@ public class LifeAll extends Life implements RefreshListView.OnRefreshUploadChan
 
     }
 
-    //  http://localhost:8080/Life/getdongraibypage?orderFlag=0&pageNo=1&pageSize=1
+    //  http://localhost:8080/Life/getdongraibypage?pageNo=1&pageSize=1
     private void getLifeInfoList() {
         RequestParams params = new RequestParams(HttpUtils.localhost_jt+"getdongraibypage");
 
@@ -280,7 +279,7 @@ public class LifeAll extends Life implements RefreshListView.OnRefreshUploadChan
 //                    }
 //                }
                 lifelist.addAll(bean.lifeinfolist);
-
+                System.out.println("pppppppp"+bean.lifeinfolist);
                 adapter.notifyDataSetChanged();
 
             }

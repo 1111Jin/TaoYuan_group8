@@ -2,6 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:context="com.example.administrator.taoyuan.fragment.Baoxiuleixing_gonggongquyu_Fragment">
     <EditText
         android:id="@+id/et"
@@ -11,8 +13,8 @@
         android:layout_marginTop="20dp"
         android:background="@android:drawable/edit_text"
         android:layout_alignLeft="@id/bt1"
-        android:text="请告诉我们您的报修项目"
         android:textSize="16sp"
+        android:hint="请描述您的报修项目"
         android:gravity="top"
         android:textColor="#a9b7a7"/>
     <Button

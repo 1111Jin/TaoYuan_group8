@@ -72,40 +72,9 @@ public class LifeXiangqing extends AppCompatActivity {
             tv_name.setText(listinfo.content);
             x.image().bind(iv_photo, HttpUtils.localhost_jt+"imgs/"+listinfo.headphoto);
             x.image().bind(iv_contphoto,HttpUtils.localhost_jt+"imgs/"+listinfo.content_photo);
-//            prodInfoTvDes.setText(listinfo.getName());
-//            prodInfoTvPrice.setText(listinfo.getPrice() + "");
 
-            //....
         }
-        //获取网络数据，显示用户加入购物车的商品总数量
-//        RequestParams requestParams=new RequestParams("http://10.40.5.45:8080/Life/getdongraibypage");
-        //传参数：userId
-//        MyApplication myApplication= (MyApplication) getApplication();
-//        requestParams.addQueryStringParameter("userId", myApplication.getUser().getUserId()+"");
-
-//        x.http().get(requestParams, new Callback.CommonCallback<String>() {
-//            @Override
-//            public void onSuccess(String result) {
-//                //
-//
-//                Gson gson=new Gson();
-//                ListLifeInfo bean= gson.fromJson(result, ListLifeInfo.class);
-//                 System.out.println(bean.status+"----");
-//                System.out.println(bean.lifeinfolist.size()+"===");
-//                lifelist.addAll( bean.lifeinfolist);
-
-
-
-            }
-
-
-
-
-
-
-
-
-
     }
+}
 
 
