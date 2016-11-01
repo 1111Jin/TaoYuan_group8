@@ -65,8 +65,6 @@ public class GetMyHelp extends AppCompatActivity {
             userId1 = user.friendId;
         }
 
-        System.out.println("111+"+userId1);
-
         tab.setBackgroundColor(Color.RED);
         tab.setScrollBar(new DrawableBar(this, R.drawable.round_border_white_selector, ScrollBar.Gravity.CENTENT_BACKGROUND) {
             @Override

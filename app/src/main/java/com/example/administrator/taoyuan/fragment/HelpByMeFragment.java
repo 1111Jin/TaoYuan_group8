@@ -55,6 +55,7 @@ public class HelpByMeFragment extends BaseFragment {
         if(bundle!=null){
             userId=bundle.getInt("userId");
         }
+//        System.out.println("传过来的Id"+userId);
         getActivityList();
         return v;
     }
@@ -71,7 +72,7 @@ public class HelpByMeFragment extends BaseFragment {
 
     @Override
     public void initEvent() {
-        RequestParams re=new RequestParams(HttpUtils.localhost+"/my?userId="+ HttpUtils.userId);
+        RequestParams re=new RequestParams(HttpUtils.localhost+"/my?userId="+ userId);
         x.http().get(re, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
@@ -157,7 +158,7 @@ public class HelpByMeFragment extends BaseFragment {
         ImageView iv_img = ((ImageView) viewHolder.getViewById(R.id.iv_tou));
         TextView tv_username = ((TextView) viewHolder.getViewById(R.id.tv_username));
         TextView tv_title = ((TextView) viewHolder.getViewById(R.id.tv_help_title));
-//        ImageView iv_help = ((ImageView) viewHolder.getViewById(R.id.tv_help_title));
+        ImageView iv_help = ((ImageView) viewHolder.getViewById(R.id.iv_hl_img));
         TextView tv_time = ((TextView) viewHolder.getViewById(R.id.tv_time2));
 
 
@@ -165,7 +166,7 @@ public class HelpByMeFragment extends BaseFragment {
         tv_username.setText(user.userName);
         tv_time.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(activity.helpTime));
         tv_title.setText(activity.helpTitle);
-//        x.image().bind(iv_help,HttpUtils.localhost+activity.helpImg);
+        x.image().bind(iv_help,HttpUtils.localhost+activity.helpImg);
 
     }
 }

@@ -195,6 +195,8 @@ public class my extends Fragment {
             case R.id.btn_mydongtai:
                 Intent intent7= new Intent(getActivity(),LiveActivity.class);
 
+                startActivity(intent7);
+
                 break;
 
             case R.id.btn_msg:
