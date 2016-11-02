@@ -128,9 +128,10 @@ public class ModifyActivity extends AppCompatActivity implements View.OnTouchLis
 
                     @Override
                     public void onFinished() {
-                        finish();
+
                     }
                 });
+                finish();
             }
         });
 

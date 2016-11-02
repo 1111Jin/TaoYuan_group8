@@ -56,18 +56,18 @@ public class MainActivity extends AppCompatActivity {
                 });
 
 
-        //设置Tag，群组
-        Set<String> sets = new HashSet<>();
-//        sets.add("sport");//运行第二个模拟器上时把这个注掉
-        sets.add("game");
-        sets.add("music");//运行第二个模拟器上时把这个打开
-
-        JPushInterface.setTags(this, sets, new TagAliasCallback() {
-            @Override
-            public void gotResult(int i, String s, Set<String> set) {
-                Log.d("alias", "set tag result is" + i);
-            }
-        });
+//        //设置Tag，群组
+//        Set<String> sets = new HashSet<>();
+////        sets.add("sport");//运行第二个模拟器上时把这个注掉
+//        sets.add("game");
+//        sets.add("music");//运行第二个模拟器上时把这个打开
+//
+//        JPushInterface.setTags(this, sets, new TagAliasCallback() {
+//            @Override
+//            public void gotResult(int i, String s, Set<String> set) {
+//                Log.d("alias", "set tag result is" + i);
+//            }
+//        });
 
         initview();
         initdata();

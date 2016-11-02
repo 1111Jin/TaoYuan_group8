@@ -22,9 +22,14 @@ import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import cn.jpush.android.api.JPushInterface;
+import cn.jpush.android.api.TagAliasCallback;
 
 /**
  * Created by Administrator on 2016/10/27.
@@ -62,7 +67,7 @@ public class JoinActivity extends AppCompatActivity {
             case R.id.join_hand:
             Bundle bundle = new Bundle();
             bundle = this.getIntent().getExtras();
-            Integer acId = bundle.getInt("acId");
+            final Integer acId = bundle.getInt("acId");
             Log.i(TAG, "onClick: =======接收到的acID为：" + acId);
             userId = ((MyApplication) getApplication()).getUser().getUserId();
             tel = etTel.getText().toString();
@@ -85,6 +90,18 @@ public class JoinActivity extends AppCompatActivity {
                     public void onSuccess(String result) {
                         Log.i(TAG, "onSuccess: 成功插入参与表：" + result);
                         Toast.makeText(getApplicationContext(), "参与成功", Toast.LENGTH_SHORT).show();
+                        //设置Tag，群组
+                        Set<String> sets = new HashSet<>();
+                        String tag=String.valueOf(acId);
+//                       sets.add("sport");//运行第二个模拟器上时把这个注掉
+                         sets.add(tag);//运行第二个模拟器上时把这个打开
+
+                        JPushInterface.setTags(getApplicationContext(), sets, new TagAliasCallback() {
+                         @Override
+                             public void gotResult(int i, String s, Set<String> set) {
+                         Log.d("alias", "set tag result is" + i);
+                        }
+                        });
                     }
 
                     @Override

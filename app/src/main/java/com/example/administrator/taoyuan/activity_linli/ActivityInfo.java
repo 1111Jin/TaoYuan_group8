@@ -331,49 +331,6 @@ public class ActivityInfo extends AppCompatActivity implements View.OnClickListe
         setListViewHeightBasedOnChildren(list);
     }
 
-//    private void showPopupwindow(View view) {
-//
-//        final View contentView = LayoutInflater.from(this).inflate(R.layout.cancel_ac, null);
-//
-//        ac = ((Button) contentView.findViewById(R.id.cancel_ac));
-//        ac.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                btAcJoin.setVisibility(View.VISIBLE);
-//            }
-//
-//        });
-//        cancel = ((Button) contentView.findViewById(R.id.cancel));
-//        cancel.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                 closeOptionsMenu();
-//                Toast.makeText(getApplicationContext(),"点击了取消按钮",Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//
-//        final PopupWindow popupwindow = new PopupWindow(contentView,
-//                ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
-//        popupwindow.setTouchable(true);
-//        popupwindow.dismiss();
-//        popupwindow.setTouchInterceptor(new View.OnTouchListener() {
-//
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                return false;
-//                // 这里如果返回true的话，touch事件将被拦截
-//                // 拦截后 PopupWindow的onTouchEvent不被调用，这样点击外部区域无法dismiss
-//            }
-//        });
-//
-//        // 如果不设置PopupWindow的背景，无论是点击外部区域还是Back键都无法dismiss弹框
-//        // 我觉得这里是API的一个bug
-//        popupwindow.setBackgroundDrawable(new BitmapDrawable());
-//
-//        // 设置好参数之后再show
-////        popupWindow.showAsDropDown(view,100,50);
-//        popupwindow.showAtLocation(view, Gravity.BOTTOM, 0, 0);
-//    }
 
     //取消报名、取消  参与人
     public void initPopupWindow(View v){
@@ -465,7 +422,7 @@ public class ActivityInfo extends AppCompatActivity implements View.OnClickListe
                 if(position==0){
                     Intent intent = new Intent(ActivityInfo.this,ModifyActivity.class);
                     intent.putExtra("acInfo",activity);
-                    startActivity(intent);
+                    startActivityForResult(intent,0);
 
                 }else if(position==1){
                     RequestParams params = new RequestParams(HttpUtils.localhost_su+"deleteactivity");
@@ -625,6 +582,73 @@ public class ActivityInfo extends AppCompatActivity implements View.OnClickListe
         listView.setLayoutParams(params);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (resultCode){
+            case 0:
+                System.out.println("回来了");
+                RequestParams requestParams=new RequestParams(HttpUtils.localhost_su+"/queryacbyid");
+                requestParams.addBodyParameter("acId",String.valueOf(activity.getActivityId()));
+                x.http().get(requestParams, new Callback.CommonCallback<String>() {
+                    @Override
+                    public void onSuccess(String result) {
+                        System.out.println(result);
+                        Gson gson=new Gson();
+                        activity = gson.fromJson(result,Activity.class);
+                        if (activity != null) {
+                            tvAcTitle.setText(activity.getActivityTitle());
+                            tvAcName.setText(activity.getUser().getUserName());
+                            tvAcAcpro.setText(activity.getActivityContent());
+                            tvAcAddress.setText(activity.getActivityAddress());
+                            tvAcTime3.setText(dateToString1(activity.getBeginTime()) + " -- " + dateToString1(activity.getEndTime()));
+                            xUtilsImageUtils.display(ivAcImage, HttpUtils.localhost_su + activity.getActivityImg());
+
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable ex, boolean isOnCallback) {
+                        System.out.println("错误：："+ex.toString());
+                    }
+
+                    @Override
+                    public void onCancelled(CancelledException cex) {
+
+                    }
+
+                    @Override
+                    public void onFinished() {
+
+                    }
+                });
+                RequestParams re=new RequestParams(HttpUtils.localhost+"tstag");
+                String tag=String.valueOf(activity.getActivityId());
+                String title = "您参加的活动更新了";
+                String content = "有wyMa发布的活动："+activity.getActivityContent()+"有新的变化！";
+                re.addBodyParameter("tag",tag);
+                re.addBodyParameter("content",content);
+                x.http().get(re, new Callback.CommonCallback<String>() {
+                    @Override
+                    public void onSuccess(String result) {
 
 
+                    }
+
+                    @Override
+                    public void onError(Throwable ex, boolean isOnCallback) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(CancelledException cex) {
+
+                    }
+
+                    @Override
+                    public void onFinished() {
+
+                    }
+                });
+        }
+    }
 }
