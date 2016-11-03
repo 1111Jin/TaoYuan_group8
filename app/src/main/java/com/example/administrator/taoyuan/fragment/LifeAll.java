@@ -1,6 +1,5 @@
 package com.example.administrator.taoyuan.fragment;
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -49,7 +48,6 @@ import java.util.List;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 
-
 public class LifeAll extends Life implements RefreshListView.OnRefreshUploadChangeListener{
 
     private RefreshListView lv_lifeinfo;
@@ -61,8 +59,8 @@ public class LifeAll extends Life implements RefreshListView.OnRefreshUploadChan
     private Button tv_fabu;
 
     int pageNo=1;
-    int pageSize=7;
-    boolean flag11 = true;
+    int pageSize=4;
+    boolean flag11 = false;
     Handler handler=new Handler();
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor1;
@@ -91,28 +89,24 @@ public class LifeAll extends Life implements RefreshListView.OnRefreshUploadChan
 
 
     public void initEvent() {
-
-
-        lv_lifeinfo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //跳转
-                Log.i("点击事件", "onItemClick: " + position);
-
-                Intent intent = new Intent(getActivity(), LifeXiangqing.class);
-
-                //点击item的信息
-                intent.putExtra("lifeinfo", lifelist.get(position - 1));
-
-                startActivityForResult(intent, 1);
-
-            }
-        });
-
+//        lv_lifeinfo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                //跳转
+//                Log.i("点击事件", "onItemClick: " + position);
+//
+//                Intent intent = new Intent(getActivity(), LifeXiangqing.class);
+//
+//                //点击item的信息
+//                intent.putExtra("lifeinfo", lifelist.get(position - 1));
+//
+//                startActivityForResult(intent, 1);
+//
+//            }
+//        });
         lv_lifeinfo.setOnRefreshUploadChangeListener(this);
 
     }
-
     public void initData() {
         adapter=new CommonAdapter<ListLifeInfo.LifeInfo>(getActivity(),lifelist,R.layout.activity_list_lv_dongtai_item) {
             @Override
@@ -142,6 +136,7 @@ public class LifeAll extends Life implements RefreshListView.OnRefreshUploadChan
                     @Override
                     public void onClick(View v) {
                         Intent intent=new Intent(getActivity(), LifeToFriend.class);
+                        intent.putExtra("lifeinfo", lifelist.get(position));
                         startActivityForResult(intent, 1);
                     }
                 });
@@ -267,11 +262,13 @@ public class LifeAll extends Life implements RefreshListView.OnRefreshUploadChan
 //                List<ListLifeInfo.LifeInfo> bean = new ArrayList<ListLifeInfo.LifeInfo>();
 
                 ListLifeInfo bean = gson.fromJson(result, ListLifeInfo.class);
-
-//                if (flag11) {
-//                    lifelist.clear();
-//                } else {
-//                    if (bean.size() == 0) {//服务器没有返回新的数据
+//
+                if (flag11) {
+                    lifelist.clear();
+                }
+//                else {
+//                    if (bean.lifeinfolist.size() == 0) {//服务器没有返回新的数据
+//                        System.out.println("=====++++++====="+bean.lifeinfolist.size());
 //                        pageNo--; //下一次继续加载这一页
 //                        Toast.makeText(getActivity(), "没有更多数据", Toast.LENGTH_SHORT).show();
 //                        lv_lifeinfo.completeLoad();//没获取到数据也要改变界面
@@ -279,6 +276,7 @@ public class LifeAll extends Life implements RefreshListView.OnRefreshUploadChan
 //                    }
 //                }
                 lifelist.addAll(bean.lifeinfolist);
+
                 System.out.println("pppppppp"+bean.lifeinfolist);
                 adapter.notifyDataSetChanged();
 
@@ -286,7 +284,7 @@ public class LifeAll extends Life implements RefreshListView.OnRefreshUploadChan
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Toast.makeText(LifeAll.this.getActivity(),ex.toString(),Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "无法获取网络数据，请检查网络连接", Toast.LENGTH_SHORT).show();
                 System.out.println(ex.toString());
             }
 
@@ -313,6 +311,7 @@ public class LifeAll extends Life implements RefreshListView.OnRefreshUploadChan
                 flag11 = true;
                 getLifeInfoList();  //再次获取数据
                 lv_lifeinfo.completeRefresh();  //刷新数据后，改变页面为初始页面：隐藏头部
+                Toast.makeText(getActivity(), "数据已更新", Toast.LENGTH_SHORT).show();
             }
         }, 1000);
     }

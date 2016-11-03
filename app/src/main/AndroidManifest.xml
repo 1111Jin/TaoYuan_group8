@@ -96,6 +96,9 @@
         <activity android:name=".activity_my.IntegralUse" />
         <activity android:name=".activity_home.GonggaoActivity" />
         <activity android:name=".activity_home.GonggaoXiangqing" />
+        <activity android:name=".activity_life.AddFriend_agree" />
+        <activity android:name=".activity_life.LifeToFriend"></activity>
+
         <activity
             android:name="com.mob.tools.MobUIShell"
             android:configChanges="keyboardHidden|orientation|screenSize"

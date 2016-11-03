@@ -81,7 +81,7 @@
         android:layout_below="@id/biaoti"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="请填写标题"
+        android:hint="请填写标题"
         android:textSize="18sp"
         android:background="#ccc"/>
 
@@ -98,7 +98,7 @@
         android:layout_below="@id/neirong"
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:text="你可以在这里发布你想发布的信息"
+        android:hint="你可以在这里发布你想发布的信息"
         android:textSize="18sp"
         android:background="#ccc"
 

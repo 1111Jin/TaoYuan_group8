@@ -1,10 +1,5 @@
 package com.example.administrator.taoyuan;
 
-
-
-
-import android.content.Intent;
-
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,21 +7,15 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-
 import com.example.administrator.taoyuan.application.MyApplication;
 import com.example.administrator.taoyuan.fragment.Life;
 import com.example.administrator.taoyuan.fragment.home;
 import com.example.administrator.taoyuan.fragment.linli;
 import com.example.administrator.taoyuan.fragment.my;
-import com.example.administrator.taoyuan.pojo.User;
-import com.example.administrator.taoyuan.utils.HttpUtils;
-
 import java.util.HashSet;
 import java.util.Set;
-
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.api.TagAliasCallback;
-
 
 public class MainActivity extends AppCompatActivity {
 
