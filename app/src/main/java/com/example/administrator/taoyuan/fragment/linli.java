@@ -22,10 +22,12 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.administrator.taoyuan.R;
+import com.example.administrator.taoyuan.activity_linli.MyAnimations;
 import com.example.administrator.taoyuan.activity_linli.PublishActivity;
 import com.example.administrator.taoyuan.activity_linli.PublishHelp;
 import com.example.administrator.taoyuan.utils.MyFragmentPagerAdapter;
@@ -55,11 +57,15 @@ public class linli extends Fragment implements ViewPager.OnPageChangeListener,Vi
     private int moveOne = 0;
     private ListView lv_list;
     private FrameLayout fm;
-
+    private boolean isShowing;
+    private RelativeLayout buttons_wrapper_layout;
+    private ImageView buttons_show_hide_button;
+    private RelativeLayout buttons_show_hide_button_layout;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-       view = inflater.inflate(R.layout.fragment_linli,null);
+        view = inflater.inflate(R.layout.fragment_linli,null);
+        MyAnimations.initOffset(getActivity());
 
         initView();
         Fragment fragment2 = new linli_activity_fragment();
@@ -84,6 +90,9 @@ public class linli extends Fragment implements ViewPager.OnPageChangeListener,Vi
         tab2 = ((TextView) view.findViewById(R.id.tab2));
         line_tab = ((ImageView)view.findViewById(R.id.line_tab));
         publish = ((Button) view.findViewById(R.id.bt_publish));
+        buttons_wrapper_layout = (RelativeLayout)view.findViewById(R.id.buttons_wrapper_layout);
+        buttons_show_hide_button_layout = (RelativeLayout) view.findViewById(R.id.buttons_show_hide_button_layout);
+        buttons_show_hide_button = (ImageView) view.findViewById(R.id.buttons_show_hide_button);
     }
     private void initLineImage() {
         //获取屏幕的宽度；
@@ -103,6 +112,10 @@ public class linli extends Fragment implements ViewPager.OnPageChangeListener,Vi
         tab1.setOnClickListener(this);
         tab2.setOnClickListener(this);
         viewPager.setOnPageChangeListener(this);
+        buttons_show_hide_button_layout.setOnClickListener(this);
+        for (int i = 0; i < buttons_wrapper_layout.getChildCount(); i++) {
+            buttons_wrapper_layout.getChildAt(i).setOnClickListener(new OnClickImageButton());
+        }
         publish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -152,19 +165,6 @@ public class linli extends Fragment implements ViewPager.OnPageChangeListener,Vi
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.tv_tab1:
-                viewPager.setCurrentItem(0);
-                Toast.makeText(getActivity().getApplicationContext(),"点击了第一个小爽",Toast.LENGTH_LONG);
-                break;
-            case R.id.tab2:
-                viewPager.setCurrentItem(1);
-                break;
-        }
-    }
-
-    @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
         currentTime = System.currentTimeMillis();
         if (isScrolling && (currentTime - startTime > 100)) {
@@ -209,4 +209,48 @@ public class linli extends Fragment implements ViewPager.OnPageChangeListener,Vi
                 break;
         }
     }
+
+    class OnClickImageButton implements View.OnClickListener{
+
+        @Override
+        public void onClick(View arg0) {
+            switch(arg0.getId()){
+                case R.id.button_photo:
+                    Toast.makeText(getActivity(), "photo", Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.button_people:
+                    Toast.makeText(getActivity(), "people", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.tv_tab1:
+                viewPager.setCurrentItem(0);
+                Toast.makeText(getActivity().getApplicationContext(),"点击了第一个小爽",Toast.LENGTH_LONG);
+                break;
+            case R.id.tab2:
+                viewPager.setCurrentItem(1);
+                break;
+            case R.id.buttons_show_hide_button_layout:
+                if (!isShowing) {
+                    MyAnimations.startAnimationsIn(buttons_wrapper_layout, 300);
+                    buttons_show_hide_button
+                            .startAnimation(MyAnimations.getRotateAnimation(0,
+                                    -270, 300));
+                } else {
+                    MyAnimations
+                            .startAnimationsOut(buttons_wrapper_layout, 300);
+                    buttons_show_hide_button
+                            .startAnimation(MyAnimations.getRotateAnimation(
+                                    -270, 0, 300));
+                }
+                isShowing = !isShowing;
+        }
+    }
+
 }

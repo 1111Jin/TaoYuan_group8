@@ -1,12 +1,13 @@
 package com.example.administrator.taoyuan.activity_linli;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
@@ -34,7 +35,6 @@ import com.example.administrator.taoyuan.application.MyApplication;
 import com.example.administrator.taoyuan.pojo.Activity;
 import com.example.administrator.taoyuan.pojo.Comment;
 import com.example.administrator.taoyuan.pojo.User;
-import com.example.administrator.taoyuan.utils.AdapterComment;
 import com.example.administrator.taoyuan.utils.HttpUtils;
 import com.example.administrator.taoyuan.utils.TitleBar;
 import com.example.administrator.taoyuan.utils.xUtilsImageUtils;
@@ -47,6 +47,7 @@ import org.xutils.x;
 
 import java.lang.reflect.Type;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,6 +62,7 @@ import static com.example.administrator.taoyuan.utils.DateUtil.dateToString1;
  */
 public class ActivityInfo extends AppCompatActivity implements View.OnClickListener{
     private static final String TAG = "ActivityInfo";
+    private static final int JOIN = 1;
     private Integer num = -1;
     @InjectView(R.id.iv_ac_image)
     ImageView ivAcImage;
@@ -111,6 +113,7 @@ public class ActivityInfo extends AppCompatActivity implements View.OnClickListe
     List<User> users = new ArrayList<>();
     public Button end;
     User user;
+    User user1;
     BaseAdapter adapter;
     public TextView say;
     public ListView list;
@@ -127,7 +130,7 @@ public class ActivityInfo extends AppCompatActivity implements View.OnClickListe
     List<Comment> comList = new ArrayList<>();
     public TextView name;
     public TextView content;
-
+    private String items[] = {"删除", "取消"};
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -136,18 +139,15 @@ public class ActivityInfo extends AppCompatActivity implements View.OnClickListe
         initView();
         initData();
         initEvent();
-//        getData();
         //如果：活动里面的userId等于默认的userId，就表示这个活动是我自己发布的；
         if (activity.getUser().getUserId()==((MyApplication)getApplication()).getUser().getUserId()){
             //右上角按钮显示；
             pull.setVisibility(View.VISIBLE);
             //参与按钮消失；
-            btAcJoin.setVisibility(View.GONE);
+            btAcJoin.setVisibility(View.INVISIBLE);
 
         }
     }
-
-
 
     private void initView() {
         say = ((TextView) findViewById(R.id.tv_say));
@@ -178,7 +178,10 @@ public class ActivityInfo extends AppCompatActivity implements View.OnClickListe
         super.onStart();
         initData();
     }
-    //用户头像点击事件；
+
+    /**
+     * 参与活动的用户头像点击事件；
+     */
     private void initEvent() {
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -188,51 +191,46 @@ public class ActivityInfo extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
             }
         } );
+        list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+
+                final Integer userId = data.get(position).getUserId();
+                final Integer comId = data.get(position).getId();
+
+                if (data.get(position).getUserId().equals(((MyApplication)getApplication()).getUser().getUserId())){
+
+                    new AlertDialog.Builder(ActivityInfo.this).setItems(items, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            switch (which) {
+                                case 0:
+                                    delete(userId, comId);
+                                    data.remove(position);
+                                    adapterComment.notifyDataSetChanged();
+                                    break;
+                                case 1:
+                                    dialog.dismiss();
+                            }
+                        }
+                    }).show();
+                }else{
+                    Toast.makeText(ActivityInfo.this,"无法操作",Toast.LENGTH_SHORT).show();
+                }
+                return false;
+            }
+        });
     }
 
-//    private void getData(){
-//        RequestParams params = new RequestParams(HttpUtils.localhost_su+"querycommnet");
-//        params.addBodyParameter("acId", String.valueOf(activity.getActivityId()));
-//        params.addBodyParameter("userId", String.valueOf(((MyApplication)getApplication()).getUser().getUserId()));
-//        params.addBodyParameter("pageNo",pageNo+"");
-//        params.addBodyParameter("pageSize",pageSize+"");
-//        x.http().post(params, new Callback.CommonCallback<String>() {
-//            @Override
-//            public void onSuccess(String result) {
-//                List<Comment> newComList = new ArrayList<Comment>();
-//                Gson gson = new Gson();
-//                Type type = new TypeToken<List<Comment>>(){}.getType();
-//                newComList = gson.fromJson(result,type);
-//                comList.clear();
-//                comList.addAll(newComList);
-//
-//            }
-//
-//            @Override
-//            public void onError(Throwable ex, boolean isOnCallback) {
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(CancelledException cex) {
-//
-//            }
-//
-//            @Override
-//            public void onFinished() {
-//
-//            }
-//        });
-//
-//    }
-
-    //获取数据；
+    /**
+     * 从服务器获取信息
+     */
     public void initData() {
         Intent intent = getIntent();
-        //获取活动信息；
+
         activity = intent.getParcelableExtra("ActivityInfo");
-        //获取评论信息；
         data=(List<Comment>) intent.getSerializableExtra("comment");
+
         //将活动id传递给服务端，通过服务端的方法获得相应的用户信息；
         RequestParams requestParams = new RequestParams(HttpUtils.localhost_su + "queryac");
         Integer acId = activity.getActivityId();
@@ -253,8 +251,12 @@ public class ActivityInfo extends AppCompatActivity implements View.OnClickListe
                 tvAcNum.setText("需要人数："+activity.getJoinNums()+"");
                 tvAcBmNums.setText(num+"人报名");
                 Log.i("info1111", "onSuccess: jjjj"+tvAcBmNums.getText());
-                if (user.getUserId()==((MyApplication)getApplication()).getUser().getUserId()|| users.size()==activity.getJoinNums()){
-//                    end.setVisibility(View.VISIBLE);
+//                if (user.getUserId()==((MyApplication)getApplication()).getUser().getUserId()){
+//                    pull.setVisibility(View.VISIBLE);
+//                    btAcJoin.setVisibility(View.GONE);
+//                }
+                if ( users.size()==activity.getJoinNums()){
+                    end.setVisibility(View.VISIBLE);
                     pull.setVisibility(View.VISIBLE);
                     btAcJoin.setVisibility(View.GONE);
                 }
@@ -289,6 +291,38 @@ public class ActivityInfo extends AppCompatActivity implements View.OnClickListe
             xUtilsImageUtils.display(ivAcImage, HttpUtils.localhost_su + activity.getActivityImg());
             Log.i(TAG, "initData: QQQQQQQQQQQQQQ" + data);
         }
+        /**
+         * 获得用户信息
+         */
+
+        RequestParams re=new RequestParams(HttpUtils.localhost_su+"queryuser");
+        re.addBodyParameter("userId",String.valueOf(((MyApplication)getApplication()).getUser().getUserId()));
+        System.out.println(re);
+        x.http().post(re, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                System.out.println("__________________________________________________"+result);
+                Gson gson = new Gson();
+                Type type = new TypeToken<User>(){}.getType();
+                user1 = gson.fromJson(result,type);
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                System.out.println(ex.toString());
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+            }
+        });
+
+
         //评论信息；
         gridview.setAdapter(new BaseAdapter() {
             public ImageView img;
@@ -328,19 +362,17 @@ public class ActivityInfo extends AppCompatActivity implements View.OnClickListe
         // 为评论列表设置适配器
         list.setAdapter(adapterComment);
         adapterComment.notifyDataSetChanged();
+        adapterComment.notifyDataSetInvalidated();
         setListViewHeightBasedOnChildren(list);
     }
-
 
     //取消报名、取消  参与人
     public void initPopupWindow(View v){
         //content
         View view=LayoutInflater.from(this).inflate(R.layout.publish_choose,null);
         final PopupWindow popupWindow=new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
-
         //listview设置数据源
         ListView lv= (ListView) view.findViewById(R.id.lv_publish);
-
         ArrayAdapter arrayAdapter=new ArrayAdapter(this,R.layout.publish_choose_item,new String[]{"取消报名","取 消"});
         lv.setAdapter(arrayAdapter);
 
@@ -393,6 +425,7 @@ public class ActivityInfo extends AppCompatActivity implements View.OnClickListe
             }
         });
     }
+    
     //修改活动、取消活动、取消,发布人；
     public void showPopupWindow(View v){
         //content
@@ -456,6 +489,10 @@ public class ActivityInfo extends AppCompatActivity implements View.OnClickListe
         });
     }
 
+    /**
+     * 按钮点击事件；参与活动，操作活动，输入框，，
+     * @param v
+     */
     @OnClick({R.id.bt_ac_join,R.id.pull,R.id.ac_con_title})
     public void onClick(View v) {
         switch (v.getId()) {
@@ -464,7 +501,8 @@ public class ActivityInfo extends AppCompatActivity implements View.OnClickListe
                 Bundle bundle = new Bundle();
                 bundle.putInt("acId", activity.getActivityId());
                 intent.putExtras(bundle);
-                startActivity(intent);
+//                startActivity(intent);
+                startActivityForResult(intent,JOIN);
                 Log.i(TAG, "onClick: +++++++>传递到下一个页面的id" + activity.getActivityId());
                 break;
             case R.id.pull:
@@ -507,24 +545,25 @@ public class ActivityInfo extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    //发送评论；
+    /**
+     * 发送留言；
+     */
     public void sendComment() {
         if (comment_content.getText().toString().equals("")) {
             Toast.makeText(getApplicationContext(), "评论不能为空！", Toast.LENGTH_SHORT).show();
         } else {
             // 生成评论数据
             Comment comment = new Comment();
-//            comment.setName(activity.getUser().getUserName()+"：");
-//            comment.setContent(activity.getUser().getUserName()+":");
-//            User user = new User(5);
-            comment.setUser(user);
+            Log.i(TAG, "sendComment: gerenxinxiwei:++++"+user1);
+            comment.setUser(user1);
             comment.setContent(comment_content.getText().toString());
             comment.setCreate(new Timestamp(System.currentTimeMillis()));
-            System.out.println(comment);
+            System.out.println("-----------------------------------------"+comment);
             adapterComment.addComment(comment);
             // 发送完，清空输入框
             comment_content.setText("");
 
+            //插入数据库；
             Toast.makeText(getApplicationContext(), "评论成功！", Toast.LENGTH_SHORT).show();
             RequestParams params = new RequestParams(HttpUtils.localhost_su + "insertcomment");
             params.addBodyParameter("acId", String.valueOf(activity.getActivityId()));
@@ -557,7 +596,10 @@ public class ActivityInfo extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    //解决ListView中只能显示一条数据的方法；
+    /**
+     * 解决ListView中只能显示一条数据的方法；
+     * @param listView
+     */
     public void setListViewHeightBasedOnChildren(ListView listView) {
         // 获取ListView对应的Adapter
         ListAdapter listAdapter = listView.getAdapter();
@@ -649,6 +691,126 @@ public class ActivityInfo extends AppCompatActivity implements View.OnClickListe
 
                     }
                 });
+            case JOIN:
+                initData();
+                break;
         }
     }
+
+    /**
+     * 根据留言表里的id删除留言表里面的数据；
+     * 前提是这条留言是自己发布的
+     * @param userId
+     * @param acmId
+     */
+    private void delete(Integer userId, Integer acmId) {
+        RequestParams parms = new RequestParams(HttpUtils.localhost_su+"deletecom");
+        parms.addBodyParameter("userId", String.valueOf(userId));
+        Log.i(TAG, "delete: chuanguoqude  userId::"+String.valueOf(userId));
+        parms.addBodyParameter("id", String.valueOf(acmId));
+        Log.i(TAG, "delete: chuanguoqude  acmId::"+String.valueOf(acmId));
+        x.http().post(parms, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Log.i(TAG, "onError: 删除comment出错了："+ex);
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+    }
+
+    /**
+     * 内部类，自定义的适配器；
+     */
+    public class AdapterComment extends BaseAdapter {
+
+        Context context;
+        List<Comment> data;
+
+        public AdapterComment(Context c, List<Comment> data){
+            this.context = c;
+            this.data = data;
+        }
+
+        @Override
+        public int getCount() {
+            return data.size();
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return data.get(i);
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup viewGroup) {
+            System.out.println("+"+position);
+            ViewHolder holder = null;
+            // 重用convertView
+            if (convertView == null) {
+                holder = new ViewHolder();
+                convertView = LayoutInflater.from(context).inflate(R.layout.omment_item, null);
+                holder.comment_photo = ((ImageView) convertView.findViewById(R.id.comment_photo));
+                holder.comment_name = (TextView) convertView.findViewById(R.id.comment_name);
+                holder.comment_content = (TextView) convertView.findViewById(R.id.comment_content);
+                holder.comment_time = ((TextView) convertView.findViewById(R.id.comment_time));
+                Log.i(TAG, "onItemClick: 留言的用户id：-----"+data.get(position).getUserId());
+                Log.i(TAG, "onItemClick: 默认的用户id:------"+((MyApplication)getApplication()).getUser().getUserId());
+                convertView.setTag(holder);
+            } else
+                System.out.println("++++"+data.size());
+            Log.i("评论人的Id", "getView: " + data.get(position).getUserId());
+            Log.i("评论人的NAme", "getView: " + data.get(position).getUser().getUserName());
+            holder = (ViewHolder) convertView.getTag();
+            holder.comment_content.setText(data.get(position).getContent());
+            holder.comment_time.setText(new SimpleDateFormat("MM-dd HH:mm").format(data.get(position).getCreate()));
+            x.image().bind(holder.comment_photo, HttpUtils.localhost_su + data.get(position).getUser().getPhoto());
+            holder.comment_name.setText(data.get(position).getUser().getUserName()+":");
+
+
+            return convertView;
+
+        }
+
+        /**
+         * 添加一条评论,刷新列表
+         * @param comment
+         */
+        public void addComment(Comment comment) {
+            data.add(comment);
+            System.out.println(".........." + data.size());
+            notifyDataSetChanged();
+            notifyDataSetInvalidated();
+        }
+
+        /**
+         * 静态类，便于GC回收
+         */
+        public class ViewHolder{
+            ImageView comment_photo;
+            TextView comment_name;
+            TextView comment_content;
+            TextView comment_time;
+        }
+
+    }
+
 }

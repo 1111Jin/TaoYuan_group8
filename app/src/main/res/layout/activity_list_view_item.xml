@@ -47,19 +47,19 @@
         android:drawableLeft="@drawable/time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:textColor="#000"
         android:layout_marginTop="10dp"
         android:text="time"/>
-    <TextView
-        android:id="@+id/tv_num"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/time3"
-        android:layout_alignParentRight="true"
-        android:drawableLeft="@drawable/person"
-        android:textColor="#000"
-        android:text="join"/>
+    <!--<TextView-->
+        <!--android:id="@+id/tv_num"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignBottom="@id/time3"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:drawableLeft="@drawable/person"-->
+        <!--android:textColor="#000"-->
+        <!--android:text="join"/>-->
     <View
         android:id="@+id/vv_line"
         android:layout_below="@id/iv_people"

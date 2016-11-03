@@ -137,13 +137,13 @@ public class ActivityByMeFragment extends BaseFragment {
         TextView tv_createTime = ((TextView) viewHolder.getViewById(R.id.tv_time));
         TextView tv_address = ((TextView) viewHolder.getViewById(R.id.tv_address));
         TextView tv_time = ((TextView) viewHolder.getViewById(R.id.time3));
-        TextView tv_join = ((TextView) viewHolder.getViewById(R.id.tv_num));
+//        TextView tv_join = ((TextView) viewHolder.getViewById(R.id.tv_num));
 
         x.image().bind(iv_img,HttpUtils.localhost+activity.Img);
         tv_title.setText(activity.activityTitle);
         tv_address.setText(activity.status);
         tv_createTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(activity.createTime));
         tv_time.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(activity.beginTime));
-        tv_join.setText(activity.joinNums.toString());
+//        tv_join.setText(activity.joinNums.toString());
     }
     }

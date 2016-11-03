@@ -39,6 +39,7 @@
         android:textColor="#000"
         android:text="time"/>
     <TextView
+        android:visibility="gone"
         android:id="@+id/delete_com"
         android:layout_marginRight="20dp"
         android:layout_alignParentRight="true"

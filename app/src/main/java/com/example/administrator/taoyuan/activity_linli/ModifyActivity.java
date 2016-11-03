@@ -187,7 +187,6 @@ public class ModifyActivity extends AppCompatActivity implements View.OnTouchLis
         return sdf.format(date) + ".png";
     }
 
-
     //关闭某个Activity时，会自动调用此方法；
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
