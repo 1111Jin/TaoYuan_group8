@@ -119,6 +119,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity_home.HuodongTuijian"></activity>
+        <activity android:name=".activity_linli.UserInfo"/>
+        <activity android:name=".activity_linli.ModifyActivity"/>
+
     </application>
 
 </manifest>
