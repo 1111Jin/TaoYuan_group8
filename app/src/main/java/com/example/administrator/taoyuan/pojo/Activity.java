@@ -4,9 +4,11 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Activity implements Parcelable {
-	
+
 	private Integer activityId;
 	private Integer userId;
 	private String activityTitle;
@@ -19,10 +21,30 @@ public class Activity implements Parcelable {
 	private Integer joinNums;
 	private String status;
 	private User user;
-	
+	private List<Comment> list;
+
+
+
 	public Activity(){}
 
+
+
+
 	//userId,name,create,name,pro,Imgurl,beg,ed,addr,num
+	public Activity(Integer userId,String activityTitle,String activityContent,Timestamp beginTime, Timestamp endTime,
+					String activityImg,String activityAddress,Timestamp createTime,Integer joinNums,List<Comment> list) {
+		super();
+		this.userId=userId;
+		this.activityTitle = activityTitle;
+		this.activityContent = activityContent;
+		this.activityImg = activityImg;
+		this.activityAddress = activityAddress;
+		this.beginTime = beginTime;
+		this.endTime = endTime;
+		this.createTime = createTime;
+		this.joinNums = joinNums;
+		this.list = list;
+	}
 	public Activity(Integer userId,String activityTitle,String activityContent,Timestamp beginTime, Timestamp endTime,
 					String activityImg,String activityAddress,Timestamp createTime,Integer joinNums) {
 		super();
@@ -35,11 +57,11 @@ public class Activity implements Parcelable {
 		this.endTime = endTime;
 		this.createTime = createTime;
 		this.joinNums = joinNums;
+
 	}
-	
 	public Activity(String activityTitle, String activityContent,
-			String activityImg,String activityAddress, Timestamp beginTime, Timestamp endTime,
-			Timestamp createTime,  String status) {
+					String activityImg,String activityAddress, Timestamp beginTime, Timestamp endTime,
+					Timestamp createTime,  String status) {
 		super();
 		this.activityTitle = activityTitle;
 		this.activityContent = activityContent;
@@ -51,9 +73,9 @@ public class Activity implements Parcelable {
 		this.status = status;
 	}
 	public Activity(Integer userId, String activityTitle,
-			String activityContent, String activityImg,String activityAddress, Timestamp beginTime,
-			Timestamp endTime, Timestamp createTime,
-			String status) {
+					String activityContent, String activityImg,String activityAddress, Timestamp beginTime,
+					Timestamp endTime, Timestamp createTime,Integer joinNums,
+					String status) {
 		super();
 		this.userId = userId;
 		this.activityTitle = activityTitle;
@@ -63,13 +85,13 @@ public class Activity implements Parcelable {
 		this.beginTime = beginTime;
 		this.endTime = endTime;
 		this.createTime = createTime;
+		this.joinNums = joinNums;
 		this.status = status;
 	}
 
 	public Activity(Integer activityId, Integer userId, String activityTitle,
-			String activityContent, String activityImg, Timestamp beginTime,
-			Timestamp endTime, Timestamp createTime, Integer joinNums,
-			String status) {
+					String activityContent, String activityImg, Timestamp beginTime,
+					Timestamp endTime, Timestamp createTime, Integer joinNums,String activityAddress) {
 		super();
 		this.activityId = activityId;
 		this.userId = userId;
@@ -80,8 +102,20 @@ public class Activity implements Parcelable {
 		this.endTime = endTime;
 		this.createTime = createTime;
 		this.joinNums = joinNums;
-		this.status = status;
+		this.activityAddress = activityAddress;
+
 	}
+
+
+
+	public List<Comment> getList() {
+		return list;
+	}
+
+	public void setList(List<Comment> list) {
+		this.list = list;
+	}
+
 	public Integer getActivityId() {
 		return activityId;
 	}
@@ -142,8 +176,8 @@ public class Activity implements Parcelable {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
-	
+
+
 	public String getActivityAddress() {
 		return activityAddress;
 	}
@@ -161,9 +195,9 @@ public class Activity implements Parcelable {
 	}
 
 	public Activity(User user,Integer activityId, String activityTitle,
-			String activityContent, String activityImg, String activityAddress,Timestamp beginTime,
-			Timestamp endTime, Timestamp createTime,
-			String status) {
+					String activityContent, String activityImg, String activityAddress,Timestamp beginTime,
+					Timestamp endTime, Timestamp createTime,Integer joinNums,
+					String status) {
 		super();
 		this.user = user;
 		this.activityId = activityId;
@@ -174,20 +208,28 @@ public class Activity implements Parcelable {
 		this.beginTime = beginTime;
 		this.endTime = endTime;
 		this.createTime = createTime;
-		
+		this.joinNums = joinNums;
 		this.status = status;
 	}
 
 	@Override
 	public String toString() {
-		return "Activity [activityId=" + activityId + ", userId=" + userId
-				+ ", activityTitle=" + activityTitle + ", activityContent="
-				+ activityContent + ", activityImg=" + activityImg
-				+ ", beginTime=" + beginTime + ", endTime=" + endTime
-				+ ", createTime=" + createTime + ", joinNums=" + joinNums
-				+ ", status=" + status + ", user=" + user + "]";
+		return "Activity{" +
+				"activityAddress='" + activityAddress + '\'' +
+				", activityId=" + activityId +
+				", userId=" + userId +
+				", activityTitle='" + activityTitle + '\'' +
+				", activityContent='" + activityContent + '\'' +
+				", activityImg='" + activityImg + '\'' +
+				", beginTime=" + beginTime +
+				", endTime=" + endTime +
+				", createTime=" + createTime +
+				", joinNums=" + joinNums +
+				", status='" + status + '\'' +
+				", user=" + user +
+				", comments=" + list +
+				'}';
 	}
-
 
 	@Override
 	public int describeContents() {
@@ -208,6 +250,7 @@ public class Activity implements Parcelable {
 		dest.writeValue(this.joinNums);
 		dest.writeString(this.status);
 		dest.writeParcelable(this.user, flags);
+		dest.writeList(this.list);
 	}
 
 	protected Activity(Parcel in) {
@@ -223,6 +266,8 @@ public class Activity implements Parcelable {
 		this.joinNums = (Integer) in.readValue(Integer.class.getClassLoader());
 		this.status = in.readString();
 		this.user = in.readParcelable(User.class.getClassLoader());
+		this.list = new ArrayList<Comment>();
+		in.readList(this.list, Comment.class.getClassLoader());
 	}
 
 	public static final Parcelable.Creator<Activity> CREATOR = new Parcelable.Creator<Activity>() {

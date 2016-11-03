@@ -9,7 +9,7 @@ import java.util.ArrayList;
 /**
  * Created by Administrator on 2016/10/29.
  */
-public class User_jt implements Parcelable {
+public class user_jt implements Parcelable {
     public int status;
     public ArrayList<friend_agree> friendAgrees;
 
@@ -229,24 +229,24 @@ public class User_jt implements Parcelable {
         dest.writeList(this.friendAgrees);
     }
 
-    public User_jt() {
+    public user_jt() {
     }
 
-    protected User_jt(Parcel in) {
+    protected user_jt(Parcel in) {
         this.status = in.readInt();
         this.friendAgrees = new ArrayList<friend_agree>();
         in.readList(this.friendAgrees, friend_agree.class.getClassLoader());
     }
 
-    public static final Parcelable.Creator<User_jt> CREATOR = new Parcelable.Creator<User_jt>() {
+    public static final Parcelable.Creator<user_jt> CREATOR = new Parcelable.Creator<user_jt>() {
         @Override
-        public User_jt createFromParcel(Parcel source) {
-            return new User_jt(source);
+        public user_jt createFromParcel(Parcel source) {
+            return new user_jt(source);
         }
 
         @Override
-        public User_jt[] newArray(int size) {
-            return new User_jt[size];
+        public user_jt[] newArray(int size) {
+            return new user_jt[size];
         }
     };
 }

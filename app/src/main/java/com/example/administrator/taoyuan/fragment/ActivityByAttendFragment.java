@@ -129,6 +129,8 @@ public class ActivityByAttendFragment extends BaseFragment {
         TextView tv_time = ((TextView) viewHolder.getViewById(R.id.time3));
         TextView tv_join = ((TextView) viewHolder.getViewById(R.id.tv_num));
 
+        System.out.println(activity.Img);
+        x.image().bind(iv_img,HttpUtils.localhost+activity.Img);
         tv_title.setText(activity.activityTitle);
         tv_address.setText(activity.status);
         tv_createTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(activity.createTime));

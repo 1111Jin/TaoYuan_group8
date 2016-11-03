@@ -2,6 +2,7 @@ package com.example.administrator.taoyuan.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import com.example.administrator.taoyuan.R;
 import com.example.administrator.taoyuan.activity_linli.ActivityInfo;
 import com.example.administrator.taoyuan.pojo.Activity;
+import com.example.administrator.taoyuan.pojo.Comment;
 import com.example.administrator.taoyuan.pojo.User;
 import com.example.administrator.taoyuan.utils.HttpUtils;
 import com.example.administrator.taoyuan.utils.xUtilsImageUtils;
@@ -27,6 +29,7 @@ import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +46,7 @@ public class linli_activity_fragment extends linli {
     private TextView tv_time;
     private TextView tv_title;
     private BaseAdapter adapter;
-    final List<Activity> activityList = new ArrayList<Activity>();
+    List<Activity> activityList = new ArrayList<Activity>();
 
     private ListView lv_list;
 
@@ -65,8 +68,6 @@ public class linli_activity_fragment extends linli {
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-
-
         initEvent();
         super.onActivityCreated(savedInstanceState);
 
@@ -78,12 +79,12 @@ public class linli_activity_fragment extends linli {
         lv_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-
                 //从Fragment跳转到非嵌套的Activity页面
                 Intent intent = new Intent(getActivity(), ActivityInfo.class);
                 //带参传值；
-                intent.putExtra("ActivityInfo",activityList.get(position));
+                List<Comment> coList  = activityList.get(position).getList();
+                intent.putExtra("ActivityInfo", activityList.get(position));
+                intent.putExtra("comment",(Serializable) coList);
                 Log.i("222","商品信息：======="+activityList.get(position));
                 //获取响应码，开启一个Activity；
 //                startActivityForResult(intent,REQUESTCODE);
@@ -157,17 +158,15 @@ public class linli_activity_fragment extends linli {
             public void onSuccess(String result) {
                 Log.i("linli_activity_fragment", "onSuccess:activity数据传递进来了： =====>"+result);
 
-                List<Activity> newacList = new ArrayList<Activity>();
-
 //                Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm").create();
                 Gson gson = new Gson();
                 Type type=new TypeToken<List<Activity>>(){}.getType();
-                newacList = gson.fromJson(result,type);
+                activityList = gson.fromJson(result,type);
 
-                activityList.clear();
-                Log.i("linli_activity_fragment", "onSuccess:activityBean对象:-------> "+newacList.get(0));
+//                activityList.clear();
+                Log.i("linli_activity_fragment", "onSuccess:activityBean对象:-------> "+activityList);
 
-                activityList.addAll(newacList);
+//                activityList.addAll(newacList);
 
 
                 System.out.println("ActivityList:"+activityList);

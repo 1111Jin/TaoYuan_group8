@@ -37,6 +37,7 @@ public class MyFriend extends AppCompatActivity {
     private RelativeLayout rl_activity;
     private RelativeLayout rl_help;
     private RelativeLayout rl_fri_address;
+    private RelativeLayout rl_fri_live;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +63,7 @@ public class MyFriend extends AppCompatActivity {
         rl_activity = ((RelativeLayout) findViewById(R.id.rl_fri_activity));
         rl_help = ((RelativeLayout) findViewById(R.id.rl_fri_help));
         rl_fri_address= ((RelativeLayout) findViewById(R.id.rl_fri_address));
+        rl_fri_live = ((RelativeLayout) findViewById(R.id.rl_fri_life));
 
 
     }
@@ -154,6 +156,7 @@ public class MyFriend extends AppCompatActivity {
                 RequestParams requestParams=new RequestParams("http://10.40.5.55:8080/ty/tsAlias");
                 requestParams.addBodyParameter("title","5号发送的消息");
                 requestParams.addBodyParameter("alias",String.valueOf(u));
+                System.out.println(requestParams);
                 x.http().get(requestParams, new Callback.CommonCallback<String>() {
                     @Override
                     public void onSuccess(String result) {
@@ -175,6 +178,16 @@ public class MyFriend extends AppCompatActivity {
 
                     }
                 });
+
+            }
+        });
+
+        rl_fri_live.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),LiveActivity.class);
+                intent.putExtra("user",user);
+                startActivityForResult(intent,1);
             }
         });
 

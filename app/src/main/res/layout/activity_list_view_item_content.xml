@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:layout_marginTop="2dp"
     android:background="#fff">
-
     <com.example.administrator.taoyuan.utils.TitleBar
         android:id="@+id/ac_con_title"
         android:layout_width="match_parent"
@@ -23,6 +22,7 @@
             android:background="@drawable/pull"/>
     </com.example.administrator.taoyuan.utils.TitleBar>
     <ScrollView
+        android:layout_marginBottom="50dp"
         android:layout_marginTop="-1dp"
         android:layout_below="@id/ac_con_title"
         android:layout_width="match_parent"
@@ -33,43 +33,43 @@
             android:layout_height="match_parent">
 
 
-    <RelativeLayout
-        android:id="@+id/rl_ac_content"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="#99000000"
-        >
-        <ImageView
-            android:id="@+id/iv_ac_image"
-            android:layout_width="120dp"
-            android:layout_height="150dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="6dp"
-            android:src="@drawable/yumaoqiu"/>
-        <LinearLayout
-            android:layout_toRightOf="@id/iv_ac_image"
-            android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:layout_marginLeft="6dp"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/tv_ac_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:textSize="24sp"
-                android:textColor="#000"
-                android:text="这是一个标题"/>
-            <TextView
-                android:id="@+id/tv_ac_num"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/time3"
-                android:layout_marginTop="20dp"
-                android:drawableLeft="@drawable/person"
-                android:text="5人报名"/>
-        </LinearLayout>
-    </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/rl_ac_content"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="#99000000"
+                >
+                <ImageView
+                    android:id="@+id/iv_ac_image"
+                    android:layout_width="120dp"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="6dp"
+                    android:src="@drawable/yumaoqiu"/>
+                <LinearLayout
+                    android:layout_toRightOf="@id/iv_ac_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:layout_marginLeft="6dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/tv_ac_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="40dp"
+                        android:textSize="24sp"
+                        android:textColor="#000"
+                        android:text="这是一个标题"/>
+                    <TextView
+                        android:id="@+id/tv_ac_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@id/time3"
+                        android:layout_marginTop="20dp"
+                        android:drawableLeft="@drawable/person"
+                        android:text="5人报名"/>
+                </LinearLayout>
+            </RelativeLayout>
             <View
                 android:id="@+id/v_bgline"
                 android:layout_below="@id/rl_ac_content"
@@ -77,156 +77,276 @@
                 android:background="#ccc"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"/>
-    <RelativeLayout
-        android:layout_below="@id/v_bgline"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
-        <TextView
-            android:id="@+id/tv_ac_address"
-            android:ellipsize="start"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_below="@id/tv_time"
-            android:layout_toRightOf="@id/iv_people"
-            android:drawableLeft="@drawable/address"
-            android:layout_marginTop="2dp"
-            android:paddingLeft="10dp"
-            android:gravity="center_vertical"
-            android:textSize="20sp"
-            android:background="#fff"
-            android:text="address"/>
-        <TextView
-            android:id="@+id/tv_ac_time3"
-            android:layout_below="@id/tv_ac_address"
-            android:layout_alignLeft="@id/tv_address"
-            android:drawableLeft="@drawable/time"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:gravity="center_vertical"
-            android:textSize="20sp"
-            android:background="#fff"
-            android:layout_marginTop="4dp"
-            android:paddingLeft="10dp"
-            android:text="time"/>
-        <LinearLayout
-            android:id="@+id/ll_ac_l"
-            android:layout_below="@id/tv_ac_time3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/tv_ac_activity"
-                android:layout_below="@id/tv_ac_time3"
+            <RelativeLayout
+                android:layout_below="@id/v_bgline"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="4dp"
-                android:paddingLeft="6dp"
-                android:background="#fff"
-                android:textSize="22sp"
-                android:text="活动介绍"/>
-            <View
-                style="@style/bg_line"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"/>
-            <TextView
-                android:id="@+id/tv_ac_acpro"
-                android:background="#fff"
-                android:layout_width="match_parent"
-                android:layout_height="140dp"
-                android:paddingTop="5dp"
-                android:paddingLeft="10dp"
-                android:textSize="20sp"
-                android:text="活动具体介绍"/>
-        </LinearLayout>
-        <RelativeLayout
-            android:id="@+id/rl_ac_master"
-            android:layout_below="@id/ll_ac_l"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/tv_ac_master"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="4dp"
-                android:paddingLeft="10dp"
-                android:background="#fff"
-                android:textSize="22sp"
-                android:text="主办方"/>
-            <TextView
-                android:id="@+id/tv_ac_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:textSize="20sp"
-                android:layout_marginRight="10dp"
-                android:drawableRight="@drawable/next"
-                android:text="jack"/>
-        </RelativeLayout>
+                android:layout_height="match_parent"
+                >
+                <TextView
+                    android:id="@+id/tv_ac_address"
+                    android:ellipsize="start"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_below="@id/tv_time"
+                    android:layout_toRightOf="@id/iv_people"
+                    android:drawableLeft="@drawable/address"
+                    android:layout_marginTop="2dp"
+                    android:paddingLeft="10dp"
+                    android:gravity="center_vertical"
+                    android:textSize="20sp"
+                    android:background="#fff"
+                    android:text="address"/>
+                <TextView
+                    android:id="@+id/tv_ac_time3"
+                    android:layout_below="@id/tv_ac_address"
+                    android:layout_alignLeft="@id/tv_address"
+                    android:drawableLeft="@drawable/time"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center_vertical"
+                    android:textSize="20sp"
+                    android:background="#fff"
+                    android:layout_marginTop="4dp"
+                    android:paddingLeft="10dp"
+                    android:text="time"/>
+                <LinearLayout
+                    android:id="@+id/ll_ac_l"
+                    android:layout_below="@id/tv_ac_time3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <View
+                        style="@style/bg_line"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"/>
+                    <TextView
+                        android:id="@+id/tv_ac_acpro"
+                        android:background="#fff"
+                        android:layout_width="match_parent"
+                        android:layout_height="140dp"
+                        android:paddingTop="5dp"
+                        android:paddingLeft="10dp"
+                        android:textSize="20sp"
+                        android:text="活动具体介绍"/>
+                </LinearLayout>
+                <RelativeLayout
+                    android:id="@+id/rl_ac_master"
+                    android:layout_below="@id/ll_ac_l"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/tv_ac_master"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="4dp"
+                        android:paddingLeft="10dp"
+                        android:background="#fff"
+                        android:textSize="22sp"
+                        android:text="主办方"/>
+                    <TextView
+                        android:id="@+id/tv_ac_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:textSize="20sp"
+                        android:layout_marginRight="10dp"
+                        android:drawableRight="@drawable/next"
+                        android:text="jack"/>
+                </RelativeLayout>
 
 
-
-        <RelativeLayout
-            android:id="@+id/rl_ac_rl"
-            android:layout_below="@id/rl_ac_master"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-
-                android:id="@+id/ac_bm_nums"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginTop="4dp"
-                android:paddingLeft="10dp"
-                android:background="#fff"
-                android:textSize="22sp"
-                android:text="报名人数"/>
-            <TextView
-                android:layout_alignParentRight="true"
-                android:id="@+id/tv_ac_bm_nums"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/time3"
-                android:layout_marginTop="20dp"
-                android:drawableLeft="@drawable/person"
-                android:layout_marginRight="5dp"
-                android:text="5人报名"/>
-            <View
-                android:id="@+id/v_line_item"
-                android:layout_below="@id/tv_ac_bm_nums"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#ccc"/>
-
+                <RelativeLayout
+                    android:id="@+id/rl_ac_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/rl_ac_master">
+                    <TextView
+                        android:id="@+id/ac_bm_nums"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_marginTop="4dp"
+                        android:background="#fff"
+                        android:paddingLeft="10dp"
+                        android:text="报名人数"
+                        android:textSize="22sp" />
+                    <TextView
+                        android:id="@+id/tv_ac_bm_nums"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@id/time3"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginTop="20dp"
+                        android:drawableLeft="@drawable/person"
+                        android:text="5人报名" />
+                    <View
+                        android:id="@+id/v_line_item"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@id/tv_ac_bm_nums"
+                        android:background="#ccc" />
                     <GridView
-                        android:layout_below="@id/v_line_item"
                         android:id="@+id/gridview"
-                        android:layout_marginTop="10dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_below="@id/v_line_item"
+                        android:layout_marginTop="10dp"
                         android:numColumns="5">
-
                     </GridView>
 
-        </RelativeLayout>
-        <Button
+                </RelativeLayout>
 
-            android:visibility="visible"
-            android:layout_below="@id/rl_ac_rl"
-            android:id="@+id/bt_ac_join"
-            android:layout_alignParentBottom="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="1dp"
-            android:background="#ff0000"
-            android:textSize="22sp"
-            android:textColor="#fff"
-            android:text=" 报 名 "/>
-    </RelativeLayout>
+                <View
+                    android:layout_below="@id/rl_ac_rl"
+                    android:id="@+id/v6"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#ccc" />
+                //说点什么。。。
+                <LinearLayout
+                    android:id="@+id/ll_ac_say"
+                    android:layout_below="@id/v6"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@color/white">
+                    <TextView
+                        android:id="@+id/tv_say"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:paddingLeft="6dp"
+                        android:gravity="center_vertical"
+                        android:drawableLeft="@drawable/write_board"
+                        android:hint="说点什么吧。。。"/>
+                </LinearLayout>
+                <RelativeLayout
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/rl_liuyanban"
+                    android:layout_below="@id/ll_ac_say"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@color/white">
+                    <View
+                        android:id="@+id/v_left"
+                        style="@style/md_line"
+                        android:layout_width="6dp"
+                        android:layout_height="30dp"/>
+                    <TextView
+                        android:layout_toRightOf="@id/v_left"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:gravity="center_vertical"
+                        android:textSize="20sp"
+                        android:text="留言板"/>
+                </RelativeLayout>
+
+                //显示内容；
+                <ListView
+                    android:background="@color/white"
+                    android:id="@+id/comment_list"
+                    android:layout_below="@id/rl_liuyanban"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp">
+
+                </ListView>
+                //输入框；
+                <RelativeLayout
+                    android:id="@+id/rl_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@color/white"
+                    android:visibility="gone"
+                    android:layout_alignParentBottom="true">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#000" />
+
+                    <TextView
+                        android:id="@+id/hide_down"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/hide_down"
+                        android:textSize="13sp"
+                        android:textColor="#ff0"
+                        android:drawableBottom="@drawable/hide_dowm"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"/>
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="#ccc"
+                        android:layout_toRightOf="@id/hide_down"
+                        android:layout_marginLeft="10dp"/>
+                    <EditText
+                        android:id="@+id/comment_content1"
+                        android:hint="@string/comment_content"
+                        android:textSize="15sp"
+                        android:singleLine="true"
+                        android:layout_width="240dp"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:layout_toRightOf="@id/hide_down"
+                        android:layout_marginLeft="20dp"/>
+
+                    <Button
+                        android:id="@+id/comment_send"
+                        android:layout_width="50dp"
+                        android:layout_height="35dp"
+                        android:layout_margin="5dp"
+                        android:text="@string/send"
+                        android:textSize="13sp"
+                        android:textColor="@color/white"
+                        android:background="#ccc"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="15dp"/>
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tv_ac_activity"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:paddingLeft="6dp"
+                    android:background="#fff"
+                    android:textSize="22sp"
+                    android:text="活动介绍"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@+id/rl_comment"
+                    android:layout_toEndOf="@+id/rl_comment" />
+
+            </RelativeLayout>
         </RelativeLayout>
     </ScrollView>
 
-
+    <Button
+        android:visibility="visible"
+        android:id="@+id/bt_ac_join"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="1dp"
+        android:background="#ff0000"
+        android:textSize="22sp"
+        android:textColor="#fff"
+        android:text=" 报 名 "/>
+    <Button
+        android:visibility="gone"
+        android:layout_below="@id/bt_ac_join"
+        android:id="@+id/bt_ac_end"
+        android:layout_margin="1dp"
+        android:background="#ccc"
+        android:textSize="22sp"
+        android:textColor="#fff"
+        android:enabled="false"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="报名结束"/>
 
 </RelativeLayout>
