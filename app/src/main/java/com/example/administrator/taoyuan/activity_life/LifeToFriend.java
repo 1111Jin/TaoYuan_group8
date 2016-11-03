@@ -15,6 +15,8 @@ import android.widget.Toast;
 import com.example.administrator.taoyuan.R;
 import com.example.administrator.taoyuan.activity_my.GetMyActivity;
 import com.example.administrator.taoyuan.activity_my.GetMyHelp;
+import com.example.administrator.taoyuan.application.MyApplication;
+import com.example.administrator.taoyuan.pojo.ListLifeInfo;
 import com.example.administrator.taoyuan.pojo.ListUserBean;
 import com.example.administrator.taoyuan.utils.HttpUtils;
 import com.example.administrator.taoyuan.utils.xUtilsImageUtils;
@@ -44,7 +46,7 @@ public class LifeToFriend extends AppCompatActivity {
         private RelativeLayout rl_help;
         private ProgressBar progressBar;
         private BaseAdapter adapter;
-
+        ListLifeInfo.LifeInfo listinfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +61,10 @@ public class LifeToFriend extends AppCompatActivity {
         }
 
     private void initView(){
+        Intent intent= getIntent();
+        listinfo= intent.getParcelableExtra("lifeinfo");
+
+
 
         iv_fri_head = ((ImageView) findViewById(R.id.iv_fri_head));
         tv_fri_name = ((TextView) findViewById(R.id.tv_fri_name));
@@ -79,7 +85,8 @@ public class LifeToFriend extends AppCompatActivity {
 
     private void initData(){
 
-        RequestParams params=new RequestParams(HttpUtils.localhost+"/getmyfriend?userId="+ HttpUtils.userId);
+        RequestParams params=new RequestParams(HttpUtils.localhost+"/my?userId="+ listinfo.userId);
+        System.out.println("用户id========"+listinfo.userId);
         Log.i(TAG, "initData: "+params);
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
@@ -102,7 +109,9 @@ public class LifeToFriend extends AppCompatActivity {
              @Override
              public void onClick(View v) {
                  RequestParams params = new RequestParams(HttpUtils.localhost_jt + "ApplyAgreeServlet");
-                 params.addBodyParameter("userId", String.valueOf(user.userId));
+                 params.addBodyParameter("userId", String.valueOf(((MyApplication)getApplication()).getUser().getUserId()));
+                 params.addBodyParameter("friendTel",user.userTel);
+                 System.out.println("=-=--=-=-=--"+user.userTel);
 
                  x.http().post(params, new Callback.CommonCallback<String>() {
                      @Override

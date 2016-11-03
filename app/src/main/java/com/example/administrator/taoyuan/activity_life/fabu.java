@@ -281,6 +281,8 @@ public class fabu extends AppCompatActivity {
 
             }
         });
+
+        finish();
     }
 
 

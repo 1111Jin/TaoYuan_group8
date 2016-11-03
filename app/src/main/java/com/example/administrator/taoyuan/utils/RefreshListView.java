@@ -319,7 +319,6 @@ public class RefreshListView extends ListView implements AbsListView.OnScrollLis
     public void initFoot(Context context) {
         Log.i("RefreshListView", "initFoot: ");
         footView = LayoutInflater.from(context).inflate(R.layout.pull_to_refresh_footer, null);
-
         footPb= (ProgressBar) footView.findViewById(R.id.footer_progressbar);
         footTv= (TextView) footView.findViewById(R.id.footer_hint_textview);
         addFooterView(footView);//添加footview
