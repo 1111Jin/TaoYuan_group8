@@ -11,7 +11,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.administrator.taoyuan.R;
-import com.example.administrator.taoyuan.pojo.User_jt;
+import com.example.administrator.taoyuan.application.MyApplication;
+import com.example.administrator.taoyuan.pojo.user_jt;
 import com.example.administrator.taoyuan.utils.CommonAdapter;
 import com.example.administrator.taoyuan.utils.HttpUtils;
 import com.example.administrator.taoyuan.utils.ViewHolder;
@@ -28,10 +29,10 @@ import java.util.List;
 public class AddFriend_agree extends AppCompatActivity {
 
     private ListView lv_agree;
-    CommonAdapter<User_jt.friend_agree> adapter;
-    private List<User_jt.friend_agree> userinfo=new ArrayList<User_jt.friend_agree>();
+    CommonAdapter<user_jt.friend_agree> adapter;
+    private List<user_jt.friend_agree> userinfo=new ArrayList<user_jt.friend_agree>();
     private Button agree;
-    User_jt.friend_agree userJt;
+    user_jt.friend_agree userJt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +57,9 @@ public class AddFriend_agree extends AppCompatActivity {
 
     private void initData() {
 
-            adapter=new CommonAdapter<User_jt.friend_agree>(AddFriend_agree.this,userinfo,R.layout.addfriend_agree_item) {
+            adapter=new CommonAdapter<user_jt.friend_agree>(AddFriend_agree.this,userinfo,R.layout.addfriend_agree_item) {
                     @Override
-            public void convert(ViewHolder viewHolder, User_jt.friend_agree friend_agree, final int position) {
+            public void convert(ViewHolder viewHolder, user_jt.friend_agree friend_agree, final int position) {
 
                 userJt=userinfo.get(position);
                 ImageButton ib_head = viewHolder.getViewById(R.id.ib_head);
@@ -73,12 +74,18 @@ public class AddFriend_agree extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         RequestParams params = new RequestParams(HttpUtils.localhost_jt + "AddFriendServlet");
-                        params.addBodyParameter("userId", String.valueOf(userinfo.get(position).getUserId()));
-                        params.addBodyParameter("userTel", userinfo.get(position).getUserTel());
+                        params.addBodyParameter("userId", String.valueOf(((MyApplication)getApplication()).getUser().getUserId()));
+                        params.addBodyParameter("friendTel", userinfo.get(position).getUserTel());
                         x.http().post(params, new Callback.CommonCallback<String>() {
                             @Override
                             public void onSuccess(String result) {
-
+                                System.out.println(result);
+                                Integer line = Integer.parseInt(result);
+                                if(line.equals(1)){
+                                    System.out.println("已同意");
+                                    agree.setBackgroundResource(R.color.none);
+                                    agree.setText("已同意");
+                                }
                             }
 
                             @Override
@@ -119,12 +126,15 @@ public class AddFriend_agree extends AppCompatActivity {
 
     private void addFriendInfo() {
         RequestParams params = new RequestParams(HttpUtils.localhost_jt+"FriendagreeServlet");
+
+        int tel = ((MyApplication)getApplication()).getUser().getUserId();
+        params.addBodyParameter("userId",String.valueOf(tel));
         x.http().post(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 System.out.println("1000000"+result);
                 Gson gson=new Gson();
-                User_jt been=gson.fromJson(result,User_jt.class);
+                user_jt been=gson.fromJson(result,user_jt.class);
                 System.out.println(been+"7897899789789789");
                 userinfo.addAll(been.friendAgrees);
                 adapter.notifyDataSetChanged();

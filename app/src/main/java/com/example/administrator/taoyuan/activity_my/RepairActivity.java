@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -39,6 +40,7 @@ public class RepairActivity extends AppCompatActivity {
     private IndicatorViewPager indicatorViewPager;
     List<BaseFragment> lists=new ArrayList<BaseFragment>();
     private RelativeLayout rl_back;
+    private ProgressBar progressBar;
 
 
     @Override
@@ -50,6 +52,7 @@ public class RepairActivity extends AppCompatActivity {
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.moretab_viewPager);
         rl_back = ((RelativeLayout) findViewById(R.id.rl_back));
+//        progressBar = ((ProgressBar) findViewById(R.id.progressBar));
         ScrollIndicatorView scrollIndicatorView = (ScrollIndicatorView) findViewById(R.id.moretab_indicator);
 
         float unSelectSize = 12;

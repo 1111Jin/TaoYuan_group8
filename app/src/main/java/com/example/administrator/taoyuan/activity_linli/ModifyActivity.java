@@ -63,7 +63,7 @@ public class ModifyActivity extends AppCompatActivity implements View.OnTouchLis
     private static final int PHOTO_REQUEST = 1;
     private static final int CAMERA_REQUEST = 2;
     private static final int PHOTO_CLIP = 3;
-
+    String url;
     Activity activity;
     public Button save;
 
@@ -95,6 +95,7 @@ public class ModifyActivity extends AppCompatActivity implements View.OnTouchLis
         title.setText(activity.getActivityTitle());
         content.setText(activity.getActivityContent());
         xUtilsImageUtils.display(photo, HttpUtils.localhost_su+activity.getActivityImg(),false);
+        url=activity.getActivityImg();
         beg.setText(dateToString(activity.getBeginTime()));
         end.setText(dateToString(activity.getEndTime()));
         nums.setText(activity.getJoinNums()+"");
@@ -174,8 +175,9 @@ public class ModifyActivity extends AppCompatActivity implements View.OnTouchLis
         Timestamp create = new Timestamp(System.currentTimeMillis());
         Integer acNum = Integer.parseInt(nums.getText()+"");
         String acAd = address.getText()+"";
-        String Imgurl="upload/"+file.getName();
-
+//        String Imgurl="upload/"+file.getName();
+        String Imgurl=url;
+        Log.i(TAG, "要传递的图片url"+Imgurl);
         activity = new Activity(acId,userId,acTitle,acContent,Imgurl,acBeg,create,acEnd,acNum,acAdd);
         Log.i(TAG, "getData: 要传过去的修改的活动信息："+activity);
     }
@@ -230,7 +232,8 @@ public class ModifyActivity extends AppCompatActivity implements View.OnTouchLis
         RequestParams params = new RequestParams(HttpUtils.localhost_su+"uploadimg");
         params.setMultipart(true);
         params.addBodyParameter("file", file);
-        System.out.println(file.getName());
+        url=file.getName();
+        System.out.println(url);
         x.http().post(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {

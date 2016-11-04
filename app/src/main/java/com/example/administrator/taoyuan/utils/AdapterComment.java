@@ -24,6 +24,8 @@ import java.util.List;
 public class AdapterComment extends BaseAdapter {
 
     Context context;
+
+
     List<Comment> data;
 
 

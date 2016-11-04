@@ -220,6 +220,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
         String name = tvBt.getText().toString();
         String pro =tvContent1.getText().toString();
         String Imgurl="upload/"+file.getName();
+        System.out.println("传上去的图片的url"+Imgurl);
         Timestamp beg = Timestamp.valueOf((tvBegin.getText().toString())+":00");
 //        Timestamp ed = DateUtil.stringToDate(tvEnd.getText().toString());
         Timestamp ed = Timestamp.valueOf((tvEnd.getText().toString())+":00");

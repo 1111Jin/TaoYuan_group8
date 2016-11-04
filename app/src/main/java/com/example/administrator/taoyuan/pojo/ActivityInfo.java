@@ -1,11 +1,13 @@
 package com.example.administrator.taoyuan.pojo;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * Created by mawuyang on 2016-10-24.
  */
-public class ActivityInfo {
+public class ActivityInfo implements Serializable{
 
 //    public List<Activity> activityList;
 //
@@ -20,6 +22,8 @@ public class ActivityInfo {
         public Timestamp createTime;
         public Integer joinNums;
         public String status;
+        private User user;
+        private List<Comment> list;
 
         @Override
         public String toString() {
