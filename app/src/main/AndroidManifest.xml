@@ -127,7 +127,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity_home.HuodongTuijian" />
-        <activity android:name=".activity_my.Instill"></activity>
+        <activity android:name=".activity_my.Instill" />
+        <activity android:name=".activity_linli.HelpJoin"></activity>
     </application>
 
 </manifest>

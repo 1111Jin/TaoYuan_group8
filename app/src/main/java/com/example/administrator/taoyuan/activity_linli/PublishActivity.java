@@ -133,6 +133,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                         ivPhoto.setImageBitmap(photo);
                         uploadImage();
                     }
+
                 }
                 break;
             case PHOTO_REQUEST:

@@ -1,18 +1,22 @@
 package com.example.administrator.taoyuan.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.administrator.taoyuan.R;
+import com.example.administrator.taoyuan.activity_linli.HelpInfo;
 import com.example.administrator.taoyuan.pojo.ActivityInfo;
-import com.example.administrator.taoyuan.pojo.HelpInfo;
+
+import com.example.administrator.taoyuan.pojo.Help;
 import com.example.administrator.taoyuan.pojo.ListUserBean;
 import com.example.administrator.taoyuan.utils.CommonAdapter;
 import com.example.administrator.taoyuan.utils.HttpUtils;
@@ -26,6 +30,7 @@ import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -37,8 +42,8 @@ import java.util.List;
 public class HelpByJoinFragment extends BaseFragment {
     private ListView lv_list;
     private Integer userId;
-    List<HelpInfo> aclist = new ArrayList<HelpInfo>();
-    CommonAdapter<HelpInfo> adapter;
+    List<Help> aclist = new ArrayList<Help>();
+    CommonAdapter<Help> adapter;
     private ListUserBean.User user;
 
     @Nullable
@@ -92,18 +97,28 @@ public class HelpByJoinFragment extends BaseFragment {
             }
         });
 
+        lv_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), HelpInfo.class);
+                intent.putExtra("HelpInfo",aclist.get(position));
+//                intent.putExtra("user",(Serializable) helpList.get(position).getUser());
+                intent.putExtra("comment",(Serializable) aclist.get(position).getComment());
+                startActivity(intent);
+            }
+        });
+
     }
 
     public void getActivityList(){
-        RequestParams params = new RequestParams(HttpUtils.localhost + "/getjoinhelp?userId=" + userId);
-        System.out.println(params);
+        RequestParams params = new RequestParams(HttpUtils.localhost_su + "/gethelpjoinme?userId=" + userId);
+        System.out.println("123123"+params);
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 System.out.println(result);
-                Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm")
-                        .create();
-                Type type=new TypeToken<List<HelpInfo>>(){}.getType();
+                Gson gson = new Gson();
+                Type type=new TypeToken<List<Help>>(){}.getType();
                 aclist=gson.fromJson(result,type);
 
 //                Type t1=new TypeToken<List<HelpInfo>>(){}.getType();
@@ -113,9 +128,9 @@ public class HelpByJoinFragment extends BaseFragment {
 //                System.out.println(aclist.get(0));
 //
                 if (adapter == null) {
-                    adapter = new CommonAdapter<HelpInfo>(getActivity(), aclist, R.layout.help_list_view_item) {
+                    adapter = new CommonAdapter<Help>(getActivity(), aclist, R.layout.help_list_view_item) {
                         @Override
-                        public void convert(ViewHolder viewHolder, HelpInfo activity, int position) {
+                        public void convert(ViewHolder viewHolder, Help activity, int position) {
                             //设置item中控件的取值
                             Log.i("123123", "convert: " + position);
 
@@ -148,7 +163,7 @@ public class HelpByJoinFragment extends BaseFragment {
         });
     }
 
-    public void initItemView(ViewHolder viewHolder, HelpInfo activity, int position) {
+    public void initItemView(ViewHolder viewHolder, Help activity, int position) {
 
         final ImageView iv_img = ((ImageView) viewHolder.getViewById(R.id.iv_tou));
         final TextView tv_username = ((TextView) viewHolder.getViewById(R.id.tv_username));
@@ -159,40 +174,42 @@ public class HelpByJoinFragment extends BaseFragment {
 
 
 
-        tv_time.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(activity.helpTime));
-        tv_title.setText(activity.helpTitle);
-        x.image().bind(iv_help,HttpUtils.localhost+activity.helpImg);
-        RequestParams re1=new RequestParams(HttpUtils.localhost+"/my?userId="+ activity.userId);
-        x.http().get(re1, new Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-                System.out.println("||||||"+result);
-                Gson gson=new Gson();
-
-                ListUserBean bean=gson.fromJson(result, ListUserBean.class);
-                user = bean.userList.get(0);
-                System.out.println(user.userHead);
-                String imgurl = "/head" + user.userHead;
-                System.out.println(imgurl);
-                xUtilsImageUtils.display(iv_img, HttpUtils.localhost+imgurl,true);
-                tv_username.setText(user.userName);
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-
-            }
-
-            @Override
-            public void onFinished() {
-
-            }
-        });
+        tv_time.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(activity.getHelpTime()));
+        tv_title.setText(activity.getHelpTitle());
+        x.image().bind(iv_help,HttpUtils.localhost_su+activity.getHelpImg());
+        xUtilsImageUtils.display(iv_img, HttpUtils.localhost_su+activity.getUser().getPhoto(),true);
+        tv_username.setText(activity.getUser().getUserName());
+//        RequestParams re1=new RequestParams(HttpUtils.localhost+"/my?userId="+ activity.getUserId());
+//        x.http().get(re1, new Callback.CommonCallback<String>() {
+//            @Override
+//            public void onSuccess(String result) {
+//                System.out.println("||||||"+result);
+//                Gson gson=new Gson();
+//
+//                ListUserBean bean=gson.fromJson(result, ListUserBean.class);
+//                user = bean.userList.get(0);
+//                System.out.println(user.userHead);
+//                String imgurl = "/head" + user.userHead;
+//                System.out.println(imgurl);
+//                xUtilsImageUtils.display(iv_img, HttpUtils.localhost+imgurl,true);
+//                tv_username.setText(user.userName);
+//            }
+//
+//            @Override
+//            public void onError(Throwable ex, boolean isOnCallback) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(CancelledException cex) {
+//
+//            }
+//
+//            @Override
+//            public void onFinished() {
+//
+//            }
+//        });
 
 
     }

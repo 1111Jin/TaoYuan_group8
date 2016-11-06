@@ -190,7 +190,7 @@ public class ActivityInfo extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(ActivityInfo.this, UserInfo.class);
-                intent.putExtra("userInfo",(Parcelable) user);
+                intent.putExtra("userInfo",(Parcelable) users.get(position));
                 startActivity(intent);
             }
         } );

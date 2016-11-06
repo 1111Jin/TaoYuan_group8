@@ -1,10 +1,10 @@
 package com.example.administrator.taoyuan.pojo;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+		import android.os.Parcel;
+		import android.os.Parcelable;
 
-import java.io.Serializable;
-import java.sql.Timestamp;
+		import java.io.Serializable;
+		import java.sql.Timestamp;
 
 public class Comment implements Serializable {
 	private Integer id;

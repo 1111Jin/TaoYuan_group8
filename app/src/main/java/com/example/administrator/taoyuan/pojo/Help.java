@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 public class Help implements Parcelable {
 	private Integer helpId;
@@ -17,6 +18,7 @@ public class Help implements Parcelable {
 	private Integer sendIntegral;
 	private String helpAddress;
 	private User user;
+	private List<Comment> comment;
 	public Help(){}
 	
 	public Help(Integer userId, String helpTitle, String helpContent,
@@ -48,8 +50,27 @@ public class Help implements Parcelable {
 		this.needNums = needNums;
 		this.sendIntegral = sendIntegral;
 	}
-	
-	
+
+	public Help(Integer userId, String helpTitle, String helpContent, String helpImg, Timestamp helpTime, Timestamp createTime, Integer needNums, Integer sendIntegral, String helpAddress) {
+		this.userId = userId;
+		this.helpTitle = helpTitle;
+		this.helpContent = helpContent;
+		this.helpImg = helpImg;
+		this.helpTime = helpTime;
+		this.createTime = createTime;
+		this.needNums = needNums;
+		this.sendIntegral = sendIntegral;
+		this.helpAddress = helpAddress;
+	}
+
+	public List<Comment> getComment() {
+		return comment;
+	}
+
+	public void setComment(List<Comment> comment) {
+		this.comment = comment;
+	}
+
 	public User getUser() {
 		return user;
 	}
@@ -167,4 +188,21 @@ public class Help implements Parcelable {
 			return new Help[size];
 		}
 	};
+
+	@Override
+	public String toString() {
+		return "Help{" +
+				"helpId=" + helpId +
+				", userId=" + userId +
+				", helpTitle='" + helpTitle + '\'' +
+				", helpContent='" + helpContent + '\'' +
+				", helpImg='" + helpImg + '\'' +
+				", helpTime=" + helpTime +
+				", createTime=" + createTime +
+				", needNums=" + needNums +
+				", sendIntegral=" + sendIntegral +
+				", helpAddress='" + helpAddress + '\'' +
+				", user=" + user +
+				'}';
+	}
 }

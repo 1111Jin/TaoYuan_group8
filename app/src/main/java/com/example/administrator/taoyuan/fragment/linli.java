@@ -72,18 +72,20 @@ public class linli extends Fragment implements ViewPager.OnPageChangeListener,Vi
         Fragment fragment1 = new linli_help_fragment();
         fragmentList.add(fragment1);
         fragmentList.add(fragment2);
-        initEvent();
-
         initLineImage();
+
+        initEvent();
         return view;
 
     }
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-//        initEvent();
-        super.onActivityCreated(savedInstanceState);
 
-    }
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//
+//
+//    }
+
     private void initView() {
         viewPager = ((ViewPager) view.findViewById(R.id.viewpager));
         tab1 = ((TextView) view.findViewById(R.id.tv_tab1));
