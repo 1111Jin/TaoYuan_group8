@@ -20,7 +20,8 @@ import com.example.administrator.taoyuan.R;
 import com.example.administrator.taoyuan.activity_life.LifeXiangqing;
 import com.example.administrator.taoyuan.activity_life.fabu;
 import com.example.administrator.taoyuan.pojo.ListInfo;
-import com.example.administrator.taoyuan.pojo.ListLifeInfo;
+
+import com.example.administrator.taoyuan.pojo.ListLifeInfo_y;
 import com.example.administrator.taoyuan.utils.HttpUtils;
 import com.example.administrator.taoyuan.utils.RefreshListView;
 import com.example.administrator.taoyuan.utils.xUtilsImageUtils;
@@ -42,7 +43,7 @@ public class lifeHot extends Life implements RefreshListView.OnRefreshUploadChan
 
     private RefreshListView lv_lifeinfo;
     BaseAdapter adapter;
-    List<ListLifeInfo.LifeInfo> lifelist= new ArrayList<ListLifeInfo.LifeInfo>();
+    List<ListLifeInfo_y.LifeInfo> lifelist= new ArrayList<ListLifeInfo_y.LifeInfo>();
     private  ListView lv_dongtai1;
     ListInfo listinfo;
     public static final Integer REQUSETCODE=1;
@@ -80,22 +81,6 @@ public class lifeHot extends Life implements RefreshListView.OnRefreshUploadChan
 
     public void initEvent() {
 
-        lv_lifeinfo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //跳转
-                Log.i("点击事件", "onItemClick: " + position);
-
-                Intent intent = new Intent(getActivity(), LifeXiangqing.class);
-
-                //点击item的信息
-                intent.putExtra("lifeinfo", lifelist.get(position-1));
-
-                startActivityForResult(intent, 1);
-
-            }
-        });
-
         lv_lifeinfo.setOnRefreshUploadChangeListener(this);
 
 
@@ -132,7 +117,7 @@ public class lifeHot extends Life implements RefreshListView.OnRefreshUploadChan
                 TextView tv_name= ((TextView) view1.findViewById(R.id.tv_name));
 
 
-                ListLifeInfo.LifeInfo dongtai=lifelist.get(position);
+                ListLifeInfo_y.LifeInfo dongtai=lifelist.get(position);
                 try {
                     tv_title.setText(URLDecoder.decode(dongtai.userName,"utf-8"));
                     tv_name.setText(URLDecoder.decode(dongtai.content,"utf-8"));
@@ -165,7 +150,7 @@ public class lifeHot extends Life implements RefreshListView.OnRefreshUploadChan
 //                }.getType();
 //                List<ListLifeInfo.LifeInfo> bean = new ArrayList<ListLifeInfo.LifeInfo>();
 
-                ListLifeInfo bean = gson.fromJson(result, ListLifeInfo.class);
+                ListLifeInfo_y bean = gson.fromJson(result, ListLifeInfo_y.class);
 
 
 //                if (flag11) {

@@ -7,25 +7,25 @@
     <com.example.administrator.taoyuan.utils.TitleBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/agree_biao"
+        android:id="@+id/agree_biao_return"
         t:leftText="返回"
         t:titleStr="新朋友">
-    <Button
-        android:id="@+id/addFriend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:background="@color/none"
-        android:text="添加"
-        android:textSize="20sp"
-        />
+    <!--<Button-->
+        <!--android:id="@+id/addFriend"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:background="@color/none"-->
+        <!--android:text="添加"-->
+        <!--android:textSize="20sp"-->
+        <!--/>-->
     </com.example.administrator.taoyuan.utils.TitleBar>
 
     <ListView
         android:id="@+id/lv_friend_agree"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_below="@id/agree_biao">
+        android:layout_below="@id/agree_biao_return">
 
     </ListView>
 </RelativeLayout>

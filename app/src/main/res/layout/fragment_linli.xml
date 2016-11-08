@@ -9,11 +9,11 @@
     <com.example.administrator.taoyuan.utils.TitleBar
         android:id="@+id/lin_title"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:layout_alignParentTop="true"
         android:background="@color/title"
         ti:showLeft="false"
-        ti:titleStr="邻里">
+        ti:titleStr="邻 里">
        <Button
            android:id="@+id/bt_publish"
            android:layout_width="26dp"

@@ -195,6 +195,37 @@ public class HelpInfo extends AppCompatActivity implements View.OnClickListener 
 
     private void initData() {
 
+        /**
+         * 获得个人信息
+         */
+
+        RequestParams re=new RequestParams(HttpUtils.localhost_su+"queryuser");
+        re.addBodyParameter("userId",String.valueOf(((MyApplication)getApplication()).getUser().getUserId()));
+        System.out.println(re);
+        x.http().post(re, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                System.out.println("__________________________________________________"+result);
+                Gson gson = new Gson();
+                Type type = new TypeToken<User>(){}.getType();
+                user1 = gson.fromJson(result,type);
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                System.out.println(ex.toString()+"9999999");
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+            }
+        });
+
 
         /**
          * 获取传过来的互帮、评论信息，赋值
@@ -202,15 +233,18 @@ public class HelpInfo extends AppCompatActivity implements View.OnClickListener 
         Intent intent = getIntent();
         help = intent.getParcelableExtra("HelpInfo");
         data=(List<Comment>) intent.getSerializableExtra("comment");
-        Log.i("HelpInfo", "initData: ------>" + data);
+        Log.i("HelpInfo", "initData: ------>" + help);
         if (help != null) {
-            xUtilsImageUtils.display(ivTou, HttpUtils.localhost_su + help.getUser().getPhoto(), true);
+            xUtilsImageUtils.display(ivTou, HttpUtils.localhost_su + help.getUser().getPhoto(),
+                    true);
+            tvUsername.setText(help.getUser().getUserName());
+            tvTime2.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(help.getCreateTime()));
             tvHlContent.setText(help.getHelpContent());
-            tvHlTime.setText(help.getCreateTime() + "");
+            tvHlTime.setText(help.getHelpTime() + "");
             tvHlAddress.setText(help.getHelpAddress());
             tvHlNum.setText(help.getNeedNums().toString());
             tvHlIntegral.setText(help.getSendIntegral().toString());
-            integral.setText(help.getUser().getIntegral().toString());
+            integral.setText(help.getSendIntegral().toString());
             xUtilsImageUtils.display(ivHelpP, HttpUtils.localhost_su + help.getHelpImg(), false);
         }
         /**
@@ -223,6 +257,23 @@ public class HelpInfo extends AppCompatActivity implements View.OnClickListener 
             flag=true;
         }
 
+        getJoinUser();
+
+//        gradview();
+        /**
+         * 评论信息
+         */
+
+        adapterComment = new AdapterComment(getApplicationContext(),data);
+        // 为评论列表设置适配器
+        list.setAdapter(adapterComment);
+        adapterComment.notifyDataSetChanged();
+        adapterComment.notifyDataSetInvalidated();
+        setListViewHeightBasedOnChildren(list);
+
+    }
+
+    public void getJoinUser(){
         /**
          * 获取参与人，判断是否参与
          */
@@ -237,22 +288,31 @@ public class HelpInfo extends AppCompatActivity implements View.OnClickListener 
                 Type type = new TypeToken<List<User>>() {
                 }.getType();
                 userList = gson.fromJson(result, type);
+                Log.i(TAG, "onSuccess: "+userList);
                 tvHelpNums.setText(String.valueOf(userList.size()+"人报名"));
                 Boolean flag = false;
                 for (int i = 0; i < userList.size(); i++) {
+                    Log.i(TAG, "onSuccess: 000000"+userList.get(i).getUserId());
                     if (userList.get(i).getUserId().equals(((MyApplication) getApplication()).getUser().getUserId())) {
                         flag = true;
                         break;
                     }
                 }
                 if (flag) {
-                    btHelp.setBackgroundResource(R.color.text_clo);
+//                    btHelp.setBackgroundResource(R.color.text_clo);
                     pull.setVisibility(View.VISIBLE);
 //                    btHelp.setText("已报名！");
                     btHelp.setEnabled(false);
                     btHelp.setVisibility(View.GONE);
+                }else{
+                    btHelp.setEnabled(true);
                 }
 
+                if(help.getNeedNums().equals(userList.size())){
+                    btHelp.setBackgroundResource(R.color.text_clo);
+                }
+
+                gradview();
             }
 
             @Override
@@ -271,25 +331,13 @@ public class HelpInfo extends AppCompatActivity implements View.OnClickListener 
             }
         });
 //        Log.i(TAG, "initData: ---"+userList.get(0));
-
-        gradview();
-        /**
-         * 评论信息
-         */
-
-        adapterComment = new AdapterComment(getApplicationContext(),data);
-        // 为评论列表设置适配器
-        list.setAdapter(adapterComment);
-        adapterComment.notifyDataSetChanged();
-        adapterComment.notifyDataSetInvalidated();
-        setListViewHeightBasedOnChildren(list);
-
     }
 
     public void gradview(){
         /**
          * 显示参与人
          */
+
         gridview.setAdapter(new BaseAdapter() {
             public ImageView img;
 
@@ -313,7 +361,14 @@ public class HelpInfo extends AppCompatActivity implements View.OnClickListener 
                 View view = View.inflate(HelpInfo.this, R.layout.img_view, null);
                 user = userList.get(position);
                 Log.i(TAG, "getView: "+user);
+                //如果：参与人的userId与默认的userId相同，就表示我已经参与了这个活动；
+                if (user.getUserId().equals(((MyApplication) getApplication()).getUser().getUserId())) {
+                    Log.i(TAG, "getView: 打印用户的id为：" + user.getUserId());
+                    pull.setVisibility(View.VISIBLE);
+                    btHelp.setVisibility(View.GONE);
+                }
                 img = ((ImageView) view.findViewById(R.id.item_gridview));
+                System.out.println("-=-=-=-==-=-====="+user.getPhoto());
                 xUtilsImageUtils.display(img, HttpUtils.localhost_su + user.getPhoto(), true);
                 return view;
             }
@@ -450,6 +505,8 @@ public class HelpInfo extends AppCompatActivity implements View.OnClickListener 
                         @Override
                         public void onSuccess(String result) {
                             Log.i(TAG, "onSuccess: 删除参与用户："+result);
+                            getJoinUser();
+
                         }
 
                         @Override
@@ -473,7 +530,7 @@ public class HelpInfo extends AppCompatActivity implements View.OnClickListener 
                         }
                     });
                     btHelp.setVisibility(View.VISIBLE);
-                    end.setVisibility(View.GONE);
+                    pull.setVisibility(View.GONE);
                 }else if(position==1){
                     popupWindow.dismiss();
                 }
@@ -542,36 +599,7 @@ public class HelpInfo extends AppCompatActivity implements View.OnClickListener 
 
     //发送评论；
     public void sendComment() {
-        /**
-         * 获得个人信息
-         */
 
-        RequestParams re=new RequestParams(HttpUtils.localhost_su+"queryuser");
-        re.addBodyParameter("userId",String.valueOf(((MyApplication)getApplication()).getUser().getUserId()));
-        System.out.println(re);
-        x.http().post(re, new Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-                System.out.println("__________________________________________________"+result);
-                Gson gson = new Gson();
-                Type type = new TypeToken<User>(){}.getType();
-                user1 = gson.fromJson(result,type);
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-                System.out.println(ex.toString());
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-
-            }
-
-            @Override
-            public void onFinished() {
-            }
-        });
         if (comment_content.getText().toString().equals("")) {
             Toast.makeText(getApplicationContext(), "评论不能为空！", Toast.LENGTH_SHORT).show();
         } else {
@@ -589,33 +617,7 @@ public class HelpInfo extends AppCompatActivity implements View.OnClickListener 
             comment_content.setText("");
 
 //            Toast.makeText(getApplicationContext(), "评论成功！", Toast.LENGTH_SHORT).show();
-            RequestParams params = new RequestParams(HttpUtils.localhost_su + "inserthelpcomment");
-            params.addBodyParameter("helpId", String.valueOf(help.getHelpId()));
-            params.addBodyParameter("userId", String.valueOf(((MyApplication) getApplication()).getUser().getUserId()));
-            params.addBodyParameter("time", String.valueOf(new Timestamp(System.currentTimeMillis())));
-            params.addBodyParameter("content", comment.getContent());
-            x.http().get(params, new Callback.CommonCallback<String>() {
-                @Override
-                public void onSuccess(String result) {
 
-
-                }
-
-                @Override
-                public void onError(Throwable ex, boolean isOnCallback) {
-
-                }
-
-                @Override
-                public void onCancelled(CancelledException cex) {
-
-                }
-
-                @Override
-                public void onFinished() {
-
-                }
-            });
 
         }
     }
@@ -686,6 +688,36 @@ public class HelpInfo extends AppCompatActivity implements View.OnClickListener 
         public void addComment(Comment comment) {
             data.add(comment);
             System.out.println(".........." + data.size());
+
+            RequestParams params = new RequestParams(HttpUtils.localhost_su + "inserthelpcomment");
+            params.addBodyParameter("helpId", String.valueOf(help.getHelpId()));
+            params.addBodyParameter("userId", String.valueOf(((MyApplication) getApplication()).getUser().getUserId()));
+            params.addBodyParameter("time", String.valueOf(new Timestamp(System.currentTimeMillis())));
+            params.addBodyParameter("content", comment.getContent());
+            System.out.println("要传递过去插入留言表的数据："+params);
+            x.http().get(params, new Callback.CommonCallback<String>() {
+                @Override
+                public void onSuccess(String result) {
+
+
+                }
+
+                @Override
+                public void onError(Throwable ex, boolean isOnCallback) {
+
+                }
+
+                @Override
+                public void onCancelled(CancelledException cex) {
+
+                }
+
+                @Override
+                public void onFinished() {
+
+                }
+            });
+
             notifyDataSetChanged();
             notifyDataSetInvalidated();
         }
