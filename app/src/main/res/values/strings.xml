@@ -12,4 +12,8 @@
     <string name="hide_down">隐藏</string>
     <string name="comment_content">输入评论内容</string>
     <string name="send">发送</string>
+    <string name="accountName_empty">账号不能为空</string>
+    <string name="password_empty">密码不能为空</string>
+    <string name="qr_register">桃园注册</string>
+    <string name="register_tip">提示 \n带所有表格均为必填项</string>
 </resources>

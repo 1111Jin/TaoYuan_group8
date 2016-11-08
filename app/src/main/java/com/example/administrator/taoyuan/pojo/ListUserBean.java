@@ -25,6 +25,88 @@ public class ListUserBean implements Parcelable {
         public Integer integral;
         public Integer friendId;
 
+        public User(){}
+
+        public Integer getUserId() {
+            return userId;
+        }
+
+        public void setUserId(Integer userId) {
+            this.userId = userId;
+        }
+
+        public String getUserName() {
+            return userName;
+        }
+
+        public void setUserName(String userName) {
+            this.userName = userName;
+        }
+
+        public String getUserTel() {
+            return userTel;
+        }
+
+        public void setUserTel(String userTel) {
+            this.userTel = userTel;
+        }
+
+        public String getUserHead() {
+            return userHead;
+        }
+
+        public void setUserHead(String userHead) {
+            this.userHead = userHead;
+        }
+
+        public String getUserProfiles() {
+            return userProfiles;
+        }
+
+        public void setUserProfiles(String userProfiles) {
+            this.userProfiles = userProfiles;
+        }
+
+        public Boolean getUserSex() {
+            return userSex;
+        }
+
+        public void setUserSex(Boolean userSex) {
+            this.userSex = userSex;
+        }
+
+        public String getUserAddress() {
+            return userAddress;
+        }
+
+        public void setUserAddress(String userAddress) {
+            this.userAddress = userAddress;
+        }
+
+        public String getUserPsd() {
+            return userPsd;
+        }
+
+        public void setUserPsd(String userPsd) {
+            this.userPsd = userPsd;
+        }
+
+        public Integer getIntegral() {
+            return integral;
+        }
+
+        public void setIntegral(Integer integral) {
+            this.integral = integral;
+        }
+
+        public Integer getFriendId() {
+            return friendId;
+        }
+
+        public void setFriendId(Integer friendId) {
+            this.friendId = friendId;
+        }
+
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
