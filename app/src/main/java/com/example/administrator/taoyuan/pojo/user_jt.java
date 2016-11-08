@@ -37,6 +37,16 @@ public class user_jt implements Parcelable {
         private String loginName;
 
 
+        public friend_agree(int userId, String userName, String userHead, String userTel, String userAddress, boolean userSex, String userProfiles, int send_integral) {
+            this.userId = userId;
+            this.userName = userName;
+            this.userHead = userHead;
+            this.userTel = userTel;
+            this.userAddress = userAddress;
+            this.userSex = userSex;
+            this.userProfiles = userProfiles;
+            this.send_integral = send_integral;
+        }
 
         public friend_agree(Date userBirthday, String userProfiles,
                             boolean userSex, String userAddress, String userTel,
@@ -171,6 +181,11 @@ public class user_jt implements Parcelable {
         public friend_agree() {
         }
 
+        public friend_agree(int userId, String userName) {
+            this.userId = userId;
+            this.userName = userName;
+        }
+
         protected friend_agree(Parcel in) {
             this.userId = in.readInt();
             this.userName = in.readString();
@@ -184,6 +199,7 @@ public class user_jt implements Parcelable {
             this.loginPsd = in.readString();
             this.userZhanghao = in.readString();
             this.loginName = in.readString();
+
         }
 
         public static final Creator<friend_agree> CREATOR = new Creator<friend_agree>() {
