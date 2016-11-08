@@ -61,7 +61,7 @@ public class RepairActivity extends AppCompatActivity {
 
         scrollIndicatorView.setScrollBar(new ColorBar(this, 0xFF2196F3, 4));
 
-        viewPager.setOffscreenPageLimit(2);
+        viewPager.setOffscreenPageLimit(6);
         indicatorViewPager = new IndicatorViewPager(scrollIndicatorView, viewPager);
         indicatorViewPager.setAdapter(new MyAdapter(getSupportFragmentManager()));
 

@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.administrator.taoyuan.R;
+import com.example.administrator.taoyuan.activity_home.RefreshableView;
 import com.example.administrator.taoyuan.activity_linli.HelpInfo;
 import com.example.administrator.taoyuan.pojo.Help;
 import com.example.administrator.taoyuan.pojo.ListUserBean;
@@ -47,12 +48,29 @@ public class HelpByMeFragment extends BaseFragment {
     List<Help> aclist = new ArrayList<Help>();
     CommonAdapter<Help> adapter;
     private ListUserBean.User user;
+    RefreshableView refreshableView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v=inflater.inflate(R.layout.fragment_all_repair,null);
         lv_list = ((ListView) v.findViewById(R.id.lv_repair_listview));
+        refreshableView = ((RefreshableView) v.findViewById(R.id.refreshable_view));
+
+        refreshableView.setOnRefreshListener(new RefreshableView.PullToRefreshListener(){
+
+            @Override
+            public void onRefresh() {
+                aclist.clear();
+                try {
+                    Thread.sleep(3000);
+                    getActivityList();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                refreshableView.finishRefreshing();
+            }
+        },0);
         Bundle bundle = getArguments();
         if(bundle!=null){
             userId=bundle.getInt("userId");

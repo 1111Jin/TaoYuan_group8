@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.administrator.taoyuan.application.MyApplication;
-import com.example.administrator.taoyuan.pojo.User_jt;
+import com.example.administrator.taoyuan.pojo.user_jt;
 
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
@@ -61,7 +61,7 @@ public abstract class CommonAdapter<T> extends BaseAdapter {
     //取出控件，赋值
     public abstract void  convert(ViewHolder viewHolder,T t,int position);
 
-    public void changeState(final Button agree, final List<User_jt.friend_agree> userinfo, final int position, final int userId){
+    public void changeState(final Button agree, final List<user_jt.friend_agree> userinfo, final int position, final int userId){
         agree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

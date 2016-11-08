@@ -11,5 +11,5 @@ public class HttpUtils {
    // public static final String localhost_jt="http://10.50.236.183:8080/Life/";
     public static final String localhost_jt="http://10.40.5.45:8080/Life/";
     public static final String userName="金拓吃屎";
-    public static final Integer userId=5;
+    public static Integer userId=5;
 }

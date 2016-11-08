@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.example.administrator.taoyuan.R;
 import com.example.administrator.taoyuan.application.MyApplication;
-import com.example.administrator.taoyuan.pojo.User_jt;
+import com.example.administrator.taoyuan.pojo.user_jt;
 import com.example.administrator.taoyuan.utils.CommonAdapter;
 import com.example.administrator.taoyuan.utils.HttpUtils;
 import com.example.administrator.taoyuan.utils.TitleBar;
@@ -37,10 +37,10 @@ public class AddFriend_agree extends AppCompatActivity {
     @InjectView(R.id.lv_friend_agree)
     ListView lvFriendAgree;
     private ListView lv_agree;
-    CommonAdapter<User_jt.friend_agree> adapter;
-    private List<User_jt.friend_agree> userinfo = new ArrayList<User_jt.friend_agree>();
+    CommonAdapter<user_jt.friend_agree> adapter;
+    private List<user_jt.friend_agree> userinfo = new ArrayList<user_jt.friend_agree>();
     private Button agree;
-    User_jt.friend_agree userJt;
+    user_jt.friend_agree userJt;
     private static final String TAG = "Agreefriend";
 
     @Override
@@ -71,9 +71,9 @@ public class AddFriend_agree extends AppCompatActivity {
     }
 
     private void initData() {
-        adapter = new CommonAdapter<User_jt.friend_agree>(AddFriend_agree.this, userinfo, R.layout.addfriend_agree_item) {
+        adapter = new CommonAdapter<user_jt.friend_agree>(AddFriend_agree.this, userinfo, R.layout.addfriend_agree_item) {
             @Override
-            public void convert(ViewHolder viewHolder, User_jt.friend_agree friend_agree, final int position) {
+            public void convert(ViewHolder viewHolder, user_jt.friend_agree friend_agree, final int position) {
 
                 userJt = userinfo.get(position);
                 ImageButton ib_head = viewHolder.getViewById(R.id.ib_head);
@@ -104,7 +104,7 @@ public class AddFriend_agree extends AppCompatActivity {
             public void onSuccess(String result) {
                 System.out.println("1000000" + result);
                 Gson gson = new Gson();
-                User_jt been = gson.fromJson(result, User_jt.class);
+                user_jt been = gson.fromJson(result, user_jt.class);
                 System.out.println(been + "7897899789789789");
                 userinfo.addAll(been.friendAgrees);
                 adapter.notifyDataSetChanged();

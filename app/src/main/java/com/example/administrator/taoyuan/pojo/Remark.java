@@ -12,11 +12,11 @@ public class Remark {
     public Integer remarkId;
     public  String remarkContent;
 
-    public User_jt.friend_agree user1;
+    public user_jt.friend_agree user1;
     public Boolean isEnd;
     public Integer fatherRemarkId;
     public Integer dynamicId;
-    public User_jt.friend_agree fatherUser;
+    public user_jt.friend_agree fatherUser;
 
     public Remark(Integer remarkId, String remarkContent, Integer fatherRemarkId) {
         this.remarkId = remarkId;
@@ -34,19 +34,19 @@ public class Remark {
         this.dynamicId = dynamicId;
     }
 
-    public User_jt.friend_agree getUser() {
+    public user_jt.friend_agree getUser() {
         return user1;
     }
 
-    public void setUser(User_jt.friend_agree user) {
+    public void setUser(user_jt.friend_agree user) {
         this.user1 = user;
     }
 
-    public User_jt.friend_agree getFatherUser() {
+    public user_jt.friend_agree getFatherUser() {
         return fatherUser;
     }
 
-    public void setFatherUser(User_jt.friend_agree fatherUser) {
+    public void setFatherUser(user_jt.friend_agree fatherUser) {
         this.fatherUser = fatherUser;
     }
 
@@ -61,21 +61,21 @@ public class Remark {
     public Remark(){
     }
 
-    public Remark(User_jt.friend_agree user, String remarkContent,  User_jt.friend_agree fatherUser) {
+    public Remark(user_jt.friend_agree user, String remarkContent,  user_jt.friend_agree fatherUser) {
         this.user1 = user;
         this.remarkContent = remarkContent;
 
         this.fatherUser = fatherUser;
     }
 
-    public Remark(User_jt.friend_agree user, String remarkContent) {
+    public Remark(user_jt.friend_agree user, String remarkContent) {
         this.user1 = user;
 
         this.remarkContent = remarkContent;
     }
 
     public Remark(Integer remarkId, String remarkContent,
-                  User_jt.friend_agree user, Boolean isEnd, Integer fatherRemarkId, Integer dynamicId, User_jt.friend_agree fatherUser) {
+                  user_jt.friend_agree user, Boolean isEnd, Integer fatherRemarkId, Integer dynamicId, user_jt.friend_agree fatherUser) {
         super();
         this.remarkId = remarkId;
         this.remarkContent = remarkContent;
@@ -90,7 +90,7 @@ public class Remark {
 
 
     public Remark(Integer remarkId, String remarkContent,
-                  User_jt.friend_agree user, Boolean isEnd,Integer dynamicId) {
+                  user_jt.friend_agree user, Boolean isEnd,Integer dynamicId) {
         super();
         this.remarkId = remarkId;
         this.remarkContent = remarkContent;

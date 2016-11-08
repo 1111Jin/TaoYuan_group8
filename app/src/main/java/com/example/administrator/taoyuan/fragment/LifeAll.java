@@ -23,7 +23,7 @@ import com.example.administrator.taoyuan.pojo.LifeInfo;
 import com.example.administrator.taoyuan.pojo.ListInfo;
 import com.example.administrator.taoyuan.pojo.ListLifeInfo;
 import com.example.administrator.taoyuan.pojo.Remark;
-import com.example.administrator.taoyuan.pojo.User_jt;
+import com.example.administrator.taoyuan.pojo.user_jt;
 import com.example.administrator.taoyuan.utils.CommentAdapter_pinglun;
 import com.example.administrator.taoyuan.utils.CommonAdapter;
 import com.example.administrator.taoyuan.utils.HttpUtils;
@@ -60,7 +60,7 @@ public class LifeAll extends Life implements RefreshListView.OnRefreshUploadChan
     int pageNo=1;
     int pageSize=7;
     boolean flag11 = false;
-    User_jt.friend_agree user;
+    user_jt.friend_agree user;
 
     ViewHolder viewHolder;
     private ImageButton ib_share;
@@ -332,8 +332,8 @@ public class LifeAll extends Life implements RefreshListView.OnRefreshUploadChan
     }
 
     public void replyComment(){
-        User_jt.friend_agree fatheruser= lifelist.get(commentPosition).getRemarks().get(replayPosition-1).getUser();
-        User_jt.friend_agree user=new User_jt.friend_agree(5,"小强");
+        user_jt.friend_agree fatheruser= lifelist.get(commentPosition).getRemarks().get(replayPosition-1).getUser();
+        user_jt.friend_agree user=new user_jt.friend_agree(5,"小强");
         String remarkContent= mCommentEdittext.getText().toString().trim();
         long remarkTime = System.currentTimeMillis();
         Date timestamp=new Date(remarkTime);
@@ -378,9 +378,9 @@ public class LifeAll extends Life implements RefreshListView.OnRefreshUploadChan
 
     public void publishComment(){
         if (replayPosition+1!=0) {
-            User_jt.friend_agree fatheruser = lifelist.get(commentPosition + 1).getRemarks().get(replayPosition + 1).getUser();
+            user_jt.friend_agree fatheruser = lifelist.get(commentPosition + 1).getRemarks().get(replayPosition + 1).getUser();
         }
-        User_jt.friend_agree user=new User_jt.friend_agree(5,"小强");
+        user_jt.friend_agree user=new user_jt.friend_agree(5,"小强");
         String remarkContent= mCommentEdittext.getText().toString().trim();
 
         r1= new Remark(user,remarkContent);
