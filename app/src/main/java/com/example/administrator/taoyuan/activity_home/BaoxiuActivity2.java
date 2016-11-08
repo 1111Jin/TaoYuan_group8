@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 
 import com.example.administrator.taoyuan.R;
 import com.example.administrator.taoyuan.activity_my.RepairActivity;
+import com.example.administrator.taoyuan.application.MyApplication;
 import com.example.administrator.taoyuan.pojo.Leixing;
 import com.example.administrator.taoyuan.pojo.RepairBean;
 import com.google.gson.Gson;
@@ -116,45 +118,30 @@ public class BaoxiuActivity2 extends Activity {
                 startActivity(intent);
                 break;
             case R.id.et2:
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
                 view = View.inflate(this, R.layout.date_time_dialog, null);
-                final DatePicker datePicker = (DatePicker) view.findViewById(R.id.date_picker);
-                final TimePicker timePicker = (TimePicker) view.findViewById(R.id.time_picker);
+                final DatePicker datePicker = (DatePicker)view.findViewById(R.id.date_picker);
+                final TimePicker timePicker = ((TimePicker)view.findViewById(R.id.time_picker));
                 builder.setView(view);
 
                 Calendar cal = Calendar.getInstance();
-                int day = cal.get(Calendar.DAY_OF_MONTH)+1/3;
-                int month=cal.get(Calendar.MONTH);
-                cal.setTime(new Date());
-                //设置当天为最小值
-                datePicker.setMinDate(cal.getTimeInMillis()-1000);
-                //设置最大值是７天
-                cal.set(Calendar.DAY_OF_MONTH, day + 6);
-                cal.set(Calendar.MONTH,month+0);
-                datePicker.setMaxDate(cal.getTimeInMillis());
-                datePicker.init(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH), null);
+                cal.setTimeInMillis(System.currentTimeMillis());
+                datePicker.init(cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH),null);
+
                 timePicker.setIs24HourView(true);
-                timePicker.setHour(cal.get(Calendar.HOUR_OF_DAY)+8);
-                timePicker.setMinute(cal.get(Calendar.MINUTE));
-                final int inType = et2.getInputType();
-                et2.setInputType(InputType.TYPE_NULL);
-                et2.setInputType(inType);
-                et2.setSelection(et2.getText().length());
-
-                builder.setTitle("选取时间");
-                builder.setPositiveButton("确  定", new DialogInterface.OnClickListener() {
-
+                timePicker.setCurrentHour(cal.get(Calendar.MINUTE));
+                timePicker.setCurrentMinute(Calendar.MINUTE);
+                builder.setTitle("选取起始时间");
+                builder.setPositiveButton("确 定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
                         StringBuffer sb = new StringBuffer();
-                        sb.append(String.format("%d-%02d-%02d",
-                                datePicker.getYear(),
-                                datePicker.getMonth() + 1,
-                                datePicker.getDayOfMonth()));
+                        sb.append(String.format("%d-%02d-%02d",datePicker.getYear(),datePicker.getMonth()+1,datePicker.getDayOfMonth()));
                         sb.append(" ");
-                        sb.append(timePicker.getHour())
-                                .append(":").append(timePicker.getMinute()).append(":").append(00);
+                        Integer hour=timePicker.getCurrentHour();
+                        sb.append((hour<10?"0"+hour:hour+"")).append(":").append(timePicker.getCurrentMinute()).append(":").append("00");
+                        //sb.append(timePicker.getCurrentHour()).append(":").append(timePicker.getCurrentMinute());
+
                         et2.setText(sb);
                         dialog.cancel();
                     }
@@ -191,7 +178,9 @@ public class BaoxiuActivity2 extends Activity {
         String repairDate = et2.getText().toString();
         String repairName = et.getText().toString();
         String repairTel = et1.getText().toString();
-        RepairBean rb = new RepairBean(repairTitle, repairType, repairContent, repairImg, repairAddress, repairDate, repairName, repairTel);
+        String weixiu="null";
+        String userId= String.valueOf((((MyApplication) getApplication()).getUser().getUserId()));
+        RepairBean rb = new RepairBean(repairTitle, repairType, repairContent, repairImg, repairAddress, repairDate, repairName, repairTel,userId,weixiu);
         Gson gson = new Gson();
         String repairgson = gson.toJson(rb);
         params.addBodyParameter("repairList", repairgson);
@@ -223,13 +212,36 @@ public class BaoxiuActivity2 extends Activity {
 
     @OnClick(R.id.bt7)
     public void onClick() {
+        String number=et1.getText().toString();
+        boolean judge = isMobile(number);
         if (et2.getText().toString().equals("")||et2.getText().toString().equals("请选择预约时间")){
             Toast toast=Toast.makeText(BaoxiuActivity2.this,"请选择预约时间",Toast.LENGTH_LONG);
+            toast.show();
+        }else if(judge==false) {
+            Toast toast = Toast.makeText(BaoxiuActivity2.this, "手机号不合法，请重新输入", Toast.LENGTH_SHORT);
+            toast.show();
+        }else if (et3.getText().toString().equals("")||et3.getText().toString().equals("请输入地址")) {
+            Toast toast = Toast.makeText(BaoxiuActivity2.this, "地址不能为空", Toast.LENGTH_SHORT);
             toast.show();
         }else {
             baoXiu();
         }
 
+    }
+    public static boolean isMobile(String number) {
+    /*
+    移动：134、135、136、137、138、139、150、151、157(TD)、158、159、187、188
+    联通：130、131、132、152、155、156、185、186
+    电信：133、153、180、189、（1349卫通）
+    总结起来就是第一位必定为1，第二位必定为3或5或8，其他位置的可以为0-9
+    */
+        String num = "[1][358]\\d{9}";//"[1]"代表第1位为数字1，"[358]"代表第二位可以为3、5、8中的一个，"\\d{9}"代表后面是可以是0～9的数字，有9位。
+        if (TextUtils.isEmpty(number)) {
+            return false;
+        } else {
+            //matches():字符串是否在给定的正则表达式匹配
+            return number.matches(num);
+        }
     }
 
 }

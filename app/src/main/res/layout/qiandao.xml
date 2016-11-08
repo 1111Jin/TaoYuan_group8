@@ -31,9 +31,10 @@
     <GridView
         android:id="@+id/gdDate"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="360dp"
         android:numColumns="7"
-        android:background="#FFFACD">
+        android:background="@drawable/qiandao"
+        >
     </GridView>
     <View
         android:layout_marginTop="5dp"
@@ -44,7 +45,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="点击日期签到可获得积分额"
+        android:text="双击日期签到可获得积分额"
         android:textSize="18sp"
         android:textColor="@color/red"/>
     <View

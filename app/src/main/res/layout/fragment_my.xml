@@ -16,13 +16,13 @@
         tt:titleStr="我的"
              />
 
-        <Button
+        <ImageView
             android:id="@+id/btn_msg"
-            android:layout_width="30dp"
+            android:layout_width="80dp"
             android:layout_height="35dp"
             android:layout_alignParentRight="true"
-            android:background="@drawable/msg"
-            android:layout_marginRight="20dp"
+            android:src="@drawable/msg"
+            android:scaleType="centerInside"
             android:layout_marginTop="6dp"
             />
       </RelativeLayout>
@@ -159,16 +159,6 @@
                 android:layout_height="3px"
                 android:background="#C0C5C7"/>
 
-            <Button
-                android:id="@+id/btn_myintegral"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="关于积分"
-                android:textColor="@color/black"
-
-                android:background="#fff"
-                android:textSize="20sp"/>
             <View android:layout_width="match_parent"
                 android:layout_alignParentBottom="true"
                 android:layout_height="3px"

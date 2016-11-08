@@ -15,8 +15,10 @@ import java.util.Date;
         public String repairDate;
         public  String repairName;
         public String repairTel;
+        public  String userId;
+        public  String  weixiu;
 
-    public RepairBean(String repairTitle, String repairType, String repairContent, String repairImg, String repairAddress, String repairDate, String repairName, String repairTel) {
+    public RepairBean(String repairTitle, String repairType, String repairContent, String repairImg, String repairAddress, String repairDate, String repairName, String repairTel, String userId, String weixiu) {
         this.repairTitle = repairTitle;
         this.repairType = repairType;
         this.repairContent = repairContent;
@@ -25,7 +27,7 @@ import java.util.Date;
         this.repairDate = repairDate;
         this.repairName = repairName;
         this.repairTel = repairTel;
+        this.userId = userId;
+        this.weixiu = weixiu;
     }
-
-
 }

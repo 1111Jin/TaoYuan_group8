@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.example.administrator.taoyuan.R;
 import com.example.administrator.taoyuan.activity_linli.ActivityInfo;
 import com.example.administrator.taoyuan.pojo.Activity;
+import com.example.administrator.taoyuan.pojo.Comment;
 import com.example.administrator.taoyuan.utils.HttpUtils;
 import com.example.administrator.taoyuan.utils.xUtilsImageUtils;
 import com.google.gson.Gson;
@@ -24,6 +25,7 @@ import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,7 +70,9 @@ public class HuodongTuijian extends AppCompatActivity {
                 //从Fragment跳转到非嵌套的Activity页面
                 Intent intent = new Intent(HuodongTuijian.this, ActivityInfo.class);
                 //带参传值；
+                List<Comment> coList  = activityList.get(position).getList();
                 intent.putExtra("ActivityInfo", activityList.get(position));
+                intent.putExtra("comment",(Serializable) coList);
                 Log.i("222", "商品信息：=======" + activityList.get(position));
                 //获取响应码，开启一个Activity；
 //                startActivityForResult(intent,REQUESTCODE);

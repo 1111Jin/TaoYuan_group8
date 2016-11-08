@@ -14,73 +14,85 @@
         android:text="请选择报修项目"
         android:textSize="18sp"
         android:textColor="@color/text_clo"/>
+    <LinearLayout
+        android:layout_below="@id/tv"
+        android:layout_marginTop="15dp"
+        android:id="@+id/ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
     <Button
         android:id="@+id/bt1"
         android:layout_below="@id/tv"
-        android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:text="管道疏通"
-        android:layout_marginLeft="10dp"
         android:textSize="18sp"
+        android:layout_weight="1"
         android:textColor="@color/text_clo"
         android:background="@drawable/button_baoxiuleixing_selector"/>
     <Button
         android:id="@+id/bt2"
         android:layout_below="@id/tv"
-        android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_toRightOf="@id/bt1"
         android:layout_marginLeft="5dp"
         android:text="水电维修"
+        android:layout_weight="1"
         android:textSize="18sp"
         android:textColor="@color/text_clo"
         android:background="@drawable/button_baoxiuleixing_selector"/>
     <Button
         android:id="@+id/bt3"
         android:layout_below="@id/tv"
-        android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_toRightOf="@id/bt2"
         android:layout_marginLeft="5dp"
         android:text="房屋维修"
+        android:layout_weight="1"
         android:textSize="18sp"
         android:textColor="@color/text_clo"
         android:background="@drawable/button_baoxiuleixing_selector"/>
     <Button
         android:id="@+id/bt4"
         android:layout_below="@id/tv"
-        android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
+        android:layout_weight="1"
         android:layout_toRightOf="@id/bt3"
         android:layout_marginLeft="5dp"
         android:text="开锁/换锁"
         android:textSize="18sp"
         android:textColor="@color/text_clo"
         android:background="@drawable/button_baoxiuleixing_selector"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll1"
+        android:layout_below="@id/ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="45">
     <Button
         android:id="@+id/bt5"
-        android:layout_below="@id/bt1"
         android:layout_marginTop="15dp"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:layout_marginLeft="10dp"
+        android:layout_weight="1"
         android:text="线路维修"
         android:textSize="18sp"
         android:textColor="@color/text_clo"
         android:background="@drawable/button_baoxiuleixing_selector"/>
+    </LinearLayout>
    <EditText
        android:id="@+id/et"
        android:layout_width="370dp"
        android:layout_height="200dp"
-       android:layout_below="@id/bt5"
+       android:layout_below="@id/ll1"
        android:layout_marginTop="20dp"
        android:background="@android:drawable/edit_text"
        android:gravity="top"
-       android:layout_alignLeft="@id/bt1"
        android:textSize="16sp"
        android:hint="请描述您的报修项目"
        android:textColor="#a9b7a7"/>

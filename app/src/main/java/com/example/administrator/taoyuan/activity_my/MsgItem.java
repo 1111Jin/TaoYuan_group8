@@ -15,6 +15,7 @@ public class MsgItem extends AppCompatActivity {
     private TitleBar tt;
     private TextView title;
     private TextView content;
+    private TextView time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +24,7 @@ public class MsgItem extends AppCompatActivity {
 
         tt = ((TitleBar) findViewById(R.id.titleBar));
         title = ((TextView) findViewById(R.id.tv_title));
+        time = ((TextView) findViewById(R.id.tv_time));
         content = ((TextView) findViewById(R.id.tv_content));
 
         tt.setLeft(new View.OnClickListener() {
@@ -36,5 +38,6 @@ public class MsgItem extends AppCompatActivity {
         MsgBean msg = intent.getParcelableExtra("msg");
         title.setText(msg.getTitle());
         content.setText(msg.getMsg());
+        time.setText(msg.getTime()+"");
     }
 }

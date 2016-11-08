@@ -11,10 +11,10 @@
     tt:leftText="返回"
 
     />
-    <ListView
+    <com.baoyz.swipemenulistview.SwipeMenuListView
         android:id="@+id/lv_msg"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </ListView>
+        android:layout_height="wrap_content"
+        android:background="@color/cream_colored">
+    </com.baoyz.swipemenulistview.SwipeMenuListView>
 </LinearLayout>

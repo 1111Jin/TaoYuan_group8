@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.example.administrator.taoyuan.activity_home.Netutil;
 import com.example.administrator.taoyuan.activity_my.TextActivity;
 import com.example.administrator.taoyuan.utils.HttpUtils;
 
@@ -47,9 +48,10 @@ public class Reciver extends BroadcastReceiver {
             Log.d(TAG, "[MyReceiver] 接收到推送下来的通知的ID: " + notifactionId);
             String title = bundle.getString(JPushInterface.EXTRA_NOTIFICATION_TITLE);
             String content = bundle.getString(JPushInterface.EXTRA_ALERT);
+            String message=bundle.getString(JPushInterface.EXTRA_MESSAGE);
             String userId = String.valueOf(HttpUtils.userId);
             System.out.println("需要传过去的Id"+userId);
-            RequestParams requestParams=new RequestParams(HttpUtils.localhost+"setmsg");
+            RequestParams requestParams=new RequestParams(Netutil.url+"setMsg");
             requestParams.addBodyParameter("title",title);
             requestParams.addBodyParameter("message",content);
             requestParams.addBodyParameter("userId",userId);

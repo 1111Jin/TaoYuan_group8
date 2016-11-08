@@ -188,7 +188,7 @@ public class Baoxiuleixing_gerenzhuzha_Fragment extends Fragment {
                 mResults = data.getStringArrayListExtra(PhotoPickerActivity.KEY_SELECTED_PHOTOS);
                 assert mResults != null;
                 for (int i = 0; i < mResults.size(); i++) {
-                    bitmap = BitmapUtils.decodeSampledBitmapFromFd(mResults.get(i), 480, 600);
+                    bitmap =BitmapUtils.decodeSampledBitmapFromFd(mResults.get(i), 480, 600);
                     temp = mResults.get(i).replaceAll("\\\\", "/").split("/");
                 }
                 for (int j = 0; j < temp.length; j++) {

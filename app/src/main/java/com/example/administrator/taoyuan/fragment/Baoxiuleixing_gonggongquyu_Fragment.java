@@ -230,7 +230,9 @@ public class Baoxiuleixing_gonggongquyu_Fragment extends Fragment {
         String repairDate =time;
         String repairName = null;
         String repairTel ="0";
-        RepairBean rb = new RepairBean(repairTitle, repairType, repairContent, repairImg, repairAddress, repairDate, repairName, repairTel);
+        String userId="0";
+        String weixiu="null";
+        RepairBean rb = new RepairBean(repairTitle, repairType, repairContent, repairImg, repairAddress, repairDate, repairName, repairTel,userId,weixiu);
         Gson gson = new Gson();
         String repairgson = gson.toJson(rb);
         params.addBodyParameter("repairList", repairgson);

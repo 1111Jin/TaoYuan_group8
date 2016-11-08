@@ -14,12 +14,14 @@ public class MsgBean implements Parcelable {
     public String title;
     public String msg;
     public Timestamp time;
+    public  String flag;
 
-    public MsgBean(Integer id, String title, String msg, Timestamp time) {
+    public MsgBean(Integer id, String title, String msg, Timestamp time,String flag) {
         this.id = id;
         this.title = title;
         this.msg = msg;
         this.time = time;
+        this.flag=flag;
     }
 
     public Integer getId() {
@@ -54,6 +56,14 @@ public class MsgBean implements Parcelable {
         this.time = time;
     }
 
+    public String getFlag() {
+        return flag;
+    }
+
+    public void setFlag(String flag) {
+        this.flag = flag;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -65,6 +75,7 @@ public class MsgBean implements Parcelable {
         dest.writeString(this.title);
         dest.writeString(this.msg);
         dest.writeSerializable(this.time);
+        dest.writeSerializable(this.flag);
     }
 
     protected MsgBean(Parcel in) {
@@ -72,6 +83,7 @@ public class MsgBean implements Parcelable {
         this.title = in.readString();
         this.msg = in.readString();
         this.time = (Timestamp) in.readSerializable();
+        this.flag = in.readString();
     }
 
     public static final Parcelable.Creator<MsgBean> CREATOR = new Parcelable.Creator<MsgBean>() {
@@ -85,4 +97,15 @@ public class MsgBean implements Parcelable {
             return new MsgBean[size];
         }
     };
+
+    @Override
+    public String toString() {
+        return "MsgBean{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", msg='" + msg + '\'' +
+                ", time=" + time +
+                ", flag='" + flag + '\'' +
+                '}';
+    }
 }

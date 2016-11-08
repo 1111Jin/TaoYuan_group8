@@ -75,7 +75,7 @@ private Context context;
         }
         Picasso.with(context).load(gonggaoList.get(position).getGonggaoImg()).networkPolicy(NetworkPolicy.NO_CACHE)
                 .memoryPolicy(MemoryPolicy.NO_CACHE);
-        Picasso.with(context).load(gonggaoList.get(position).getGonggaoImg()).placeholder(R.drawable.load).error(R.mipmap.ic_launcher).into(holder.igv);
+        Picasso.with(context).load(Netutil.url+"image/"+gonggaoList.get(position).getGonggaoImg()+".png").placeholder(R.drawable.load).error(R.drawable.error).into(holder.igv);
         holder.tv.setText(gonggaoList.get(position).gonggaoTitle);
         holder.tv3.setText(gonggaoList.get(position).getGonggaofabiaoTime());
         return convertView;

@@ -25,13 +25,14 @@ import com.example.administrator.taoyuan.R;
 import com.example.administrator.taoyuan.activity_home.BaoxiuActivity1;
 import com.example.administrator.taoyuan.activity_home.GonggaoActivity;
 import com.example.administrator.taoyuan.activity_home.GonggaoXiangqing;
-import com.example.administrator.taoyuan.activity_home.HorizontalListView;
 import com.example.administrator.taoyuan.activity_home.HuodongTuijian;
 import com.example.administrator.taoyuan.activity_home.Netutil;
 import com.example.administrator.taoyuan.activity_home.QianActivity;
 import com.example.administrator.taoyuan.activity_home.TellphoneActivity;
+import com.example.administrator.taoyuan.activity_home.JifenActivity;
 import com.example.administrator.taoyuan.activity_linli.ActivityInfo;
 import com.example.administrator.taoyuan.pojo.Activity;
+import com.example.administrator.taoyuan.pojo.Comment;
 import com.example.administrator.taoyuan.pojo.GongGaoBean;
 import com.example.administrator.taoyuan.utils.HttpUtils;
 import com.example.administrator.taoyuan.utils.xUtilsImageUtils;
@@ -46,6 +47,7 @@ import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -54,8 +56,7 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
-
-import static com.example.administrator.taoyuan.utils.DateUtil.dateToString1;
+import cn.jpush.android.api.JPushInterface;
 
 
 /**
@@ -76,8 +77,6 @@ public class home extends Fragment {
     TextView tvWybx;
     @InjectView(R.id.tv_wygg)
     TextView tvWygg;
-    @InjectView(R.id.tv_xxtz)
-    TextView tvXxtz;
     @InjectView(R.id.linearLayout1)
     LinearLayout linearLayout1;
     @InjectView(R.id.v1)
@@ -104,6 +103,8 @@ public class home extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(getActivity());
         view1 = inflater.inflate(R.layout.fragment_home, null);
         ButterKnife.inject(this, view1);
         getGonggao();
@@ -113,8 +114,9 @@ public class home extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), ActivityInfo.class);
                 //带参传值；
+                List<Comment> coList  = activityList.get(position).getList();
                 intent.putExtra("ActivityInfo", activityList.get(position));
-                Log.i("222", "商品信息：=======" + activityList.get(position));
+                intent.putExtra("comment",(Serializable) coList);
                 startActivity(intent);
             }
         });
@@ -128,7 +130,7 @@ public class home extends Fragment {
         ButterKnife.reset(this);
     }
 
-    @OnClick({R.id.iv_lianxidianhua, R.id.textView2, R.id.tv_wybx, R.id.tv_wygg, R.id.tv_xxtz, R.id.tv12})
+    @OnClick({R.id.iv_lianxidianhua, R.id.textView2, R.id.tv_wybx, R.id.tv_wygg, R.id.tv_jjxq, R.id.tv12})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_lianxidianhua:
@@ -147,7 +149,9 @@ public class home extends Fragment {
                 Intent intent3 = new Intent(getActivity(), GonggaoActivity.class);
                 startActivity(intent3);
                 break;
-            case R.id.tv_xxtz:
+            case R.id.tv_jjxq:
+                Intent intent5=new Intent(getActivity(), JifenActivity.class);
+                startActivity(intent5);
                 break;
             case R.id.tv12:
                 Intent intent4 = new Intent(getActivity(), HuodongTuijian.class);
@@ -191,8 +195,8 @@ public class home extends Fragment {
                             GongGaoBean.GongGao gongGao = gongGaoBean.new GongGao(gonggaoList.get(gonggaoList.size() - 6 + position).gonggaoId, gonggaoList.get(gonggaoList.size() - 6 + position).getGonggaoContent(),
                                     gonggaoList.get(gonggaoList.size() - 6 + position).gonggaoImg, gonggaoList.get(gonggaoList.size() - 6 + position).gonggaofabiaoTime, gonggaoList.get(gonggaoList.size() - 6 + position).gonggaoendTime,
                                     gonggaoList.get(gonggaoList.size() - 6 + position).gonggaoAddress, gonggaoList.get(gonggaoList.size() - 6 + position).gonggaoTitle);
-                            bundle.putSerializable("gonggaolist", gongGao);
-                            bundle.putString("flag", "2");
+                            bundle.putSerializable("gonggaoList", gongGao);
+                            bundle.putString("flag","1");
                             Intent intent = new Intent(getActivity(), GonggaoXiangqing.class);
                             intent.putExtras(bundle);
                             startActivity(intent);
@@ -315,4 +319,5 @@ public class home extends Fragment {
             }
         });
     }
+
 }

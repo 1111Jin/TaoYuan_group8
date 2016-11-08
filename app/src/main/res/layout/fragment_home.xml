@@ -82,7 +82,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:textSize="24sp"
+            android:textSize="18sp"
             android:textColor="@color/text_clo"
             android:text="报修"
             />
@@ -99,7 +99,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:textSize="24sp"
+            android:textSize="18sp"
             android:textColor="@color/text_clo"
             android:text="公告"
             />
@@ -111,15 +111,14 @@
             />
         <TextView
             android:gravity="center"
-            android:layout_marginRight="10dp"
-            android:id="@+id/tv_xxtz"
-            android:drawableTop="@drawable/xxtz"
+            android:id="@+id/tv_jjxq"
+            android:drawableTop="@drawable/jfxq"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:textSize="24sp"
+            android:textSize="18sp"
             android:textColor="@color/text_clo"
-            android:text="消息"
+            android:text="积分"
             />
         <View
             style="@style/md_line"
@@ -146,7 +145,7 @@
             android:id="@+id/tv12"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:textSize="25sp"
+            android:textSize="20sp"
             android:textColor="@color/text_clo"
             android:gravity="center_vertical"
             android:text="活动推荐"

@@ -12,12 +12,15 @@ public class JifenBean {
     public class JiFen{
     private String jiFen;
     private String  tiShu;
-    public JiFen(String jiFen, String tiShu) {
-        super();
-        this.jiFen = jiFen;
-        this.tiShu = tiShu;
-    }
-    public String getJiFen() {
+        private  String alljiFen;
+
+        public JiFen(String jiFen, String tiShu, String alljiFen) {
+            this.jiFen = jiFen;
+            this.tiShu = tiShu;
+            this.alljiFen = alljiFen;
+        }
+
+        public String getJiFen() {
         return jiFen;
     }
     public void setJiFen(String jiFen) {
@@ -30,8 +33,15 @@ public class JifenBean {
         this.tiShu = tiShu;
     }
 
+        public String getAlljiFen() {
+            return alljiFen;
+        }
 
-    @Override
+        public void setAlljiFen(String alljiFen) {
+            this.alljiFen = alljiFen;
+        }
+
+        @Override
     public String toString() {
         return "JifenBean{" +
                 "jiFen=" + jiFen +

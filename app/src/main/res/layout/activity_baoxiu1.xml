@@ -30,7 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:text="报修记录"
-        android:textColor="#EE0000"
+        android:textColor="@color/common_bg"
         android:textSize="18sp"
         android:layout_alignParentRight="true"
         android:gravity="center"
