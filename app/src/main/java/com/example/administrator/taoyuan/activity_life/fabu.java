@@ -1,12 +1,8 @@
 package com.example.administrator.taoyuan.activity_life;
 
-import android.content.ContentResolver;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -18,30 +14,25 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.administrator.taoyuan.R;
-import com.example.administrator.taoyuan.fragment.Life;
 import com.example.administrator.taoyuan.pojo.ListLifeInfo;
 import com.example.administrator.taoyuan.utils.HttpUtils;
+import com.example.administrator.taoyuan.utils.TitleBar;
 import com.google.gson.Gson;
 
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.UUID;
-
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -49,41 +40,30 @@ import butterknife.OnClick;
 
 public class fabu extends AppCompatActivity {
 
-    @InjectView(R.id.btn_fabu)
-    Button btnFabu;
+
     @InjectView(R.id.btn_fabu1)
     Button btnFabu1;
-    @InjectView(R.id.ss)
-    RelativeLayout ss;
-    @InjectView(R.id.leixing)
-    TextView leixing;
-    @InjectView(R.id.ll_leixing)
-    LinearLayout llLeixing;
-    @InjectView(R.id.biaoti)
-    TextView biaoti;
-    @InjectView(R.id.tv_biaoti)
-    EditText tvBiaoti;
-    @InjectView(R.id.neirong)
-    TextView neirong;
+    @InjectView(R.id.huati_title)
+    TitleBar huatiTitle;
+    @InjectView(R.id.tv_huati_zhengwen)
+    TextView tvHuatiZhengwen;
     @InjectView(R.id.neirong_c)
     EditText neirongC;
-    @InjectView(R.id.tupian)
-    TextView tupian;
+    @InjectView(R.id.rl_huati_rl2)
+    RelativeLayout rlHuatiRl2;
+    @InjectView(R.id.tv_huati_photo)
+    TextView tvHuatiPhoto;
     @InjectView(R.id.tupian_1)
     ImageView tupian1;
-    @InjectView(R.id.editText)
-    TextView editText;
-
-
     private ArrayList<ListLifeInfo.LifeInfo> lifelist = new ArrayList<ListLifeInfo.LifeInfo>();
     Bitmap bm;
-    String items[]={"相册选择","拍照"};
+    String items[] = {"相册选择", "拍照"};
 
-    public static final int SELECT_PIC=11;
-    public static final int TAKE_PHOTO=12;
-    public static final int CROP=13;
+    public static final int SELECT_PIC = 11;
+    public static final int TAKE_PHOTO = 12;
+    public static final int CROP = 13;
 
-    private File file ;
+    private File file;
     private Uri imageUri;
     private ImageView mImageView;
     private RelativeLayout rl_save;
@@ -98,10 +78,10 @@ public class fabu extends AppCompatActivity {
 
 
         //判断sd卡是否存在，存在
-        if(Environment.getExternalStorageState().equals( Environment.MEDIA_MOUNTED) ){
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             //目录，文件名Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
-            file=new File(Environment.getExternalStorageDirectory(),getPhotoFileName());
-            imageUri= Uri.fromFile(file);
+            file = new File(Environment.getExternalStorageDirectory(), getPhotoFileName());
+            imageUri = Uri.fromFile(file);
 
 
         }
@@ -111,9 +91,8 @@ public class fabu extends AppCompatActivity {
     }
 
 
-
     private void initEvent() {
-        btnFabu.setOnClickListener(new View.OnClickListener() {
+        huatiTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -121,18 +100,19 @@ public class fabu extends AppCompatActivity {
             }
         });
     }
+
     @OnClick(R.id.tupian_1)
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tupian_1:
                 //修改头像
-                new AlertDialog.Builder(this).setTitle("选择").setItems(items,new DialogInterface.OnClickListener() {
+                new AlertDialog.Builder(this).setTitle("选择").setItems(items, new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // TODO Auto-generated method stub
 
-                        switch(which){
+                        switch (which) {
                             case 0:
 
                                 //相册选择
@@ -150,7 +130,7 @@ public class fabu extends AppCompatActivity {
                                 Intent intent2 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
                                 intent2.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
-                                startActivityForResult(intent2,TAKE_PHOTO);
+                                startActivityForResult(intent2, TAKE_PHOTO);
 
                                 break;
                         }
@@ -170,8 +150,7 @@ public class fabu extends AppCompatActivity {
     }
 
 
-
-    public void crop(Uri uri){
+    public void crop(Uri uri) {
         //  intent.setType("image/*");
         //裁剪
         Intent intent = new Intent("com.android.camera.action.CROP");
@@ -193,7 +172,7 @@ public class fabu extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         //
-        switch (requestCode){
+        switch (requestCode) {
             case SELECT_PIC:
                 //相册选择
                 if (data != null) {
@@ -224,7 +203,7 @@ public class fabu extends AppCompatActivity {
 
 
     //显示图片，上传服务器
-    public void showImage(Bitmap bitmap){
+    public void showImage(Bitmap bitmap) {
         tupian1.setImageBitmap(bitmap);//iv显示图片
         saveImage(bitmap);//保存文件
 //        uploadImage();//上传服务器
@@ -232,16 +211,15 @@ public class fabu extends AppCompatActivity {
     }
 
     //将bitmap保存在文件中
-    public void saveImage(Bitmap bitmap){
-        FileOutputStream fos=null;
+    public void saveImage(Bitmap bitmap) {
+        FileOutputStream fos = null;
         try {
-            fos=new FileOutputStream(file);
+            fos = new FileOutputStream(file);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        bitmap.compress(Bitmap.CompressFormat.PNG,100,fos);
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
     }
-
 
 
     @OnClick(R.id.btn_fabu1)
@@ -281,9 +259,9 @@ public class fabu extends AppCompatActivity {
 
             }
         });
+
+        finish();
     }
 
 
-
-
-    }
+}
