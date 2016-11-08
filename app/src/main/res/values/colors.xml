@@ -43,6 +43,8 @@
     <color name="title">#ff5619</color>
 
     <color name="bg">#f2f2f2</color>
+    <color name="button_selected">#ff419de4</color>
+    <color name="button_unselected">#ff54acea</color>
 </resources>
 
 

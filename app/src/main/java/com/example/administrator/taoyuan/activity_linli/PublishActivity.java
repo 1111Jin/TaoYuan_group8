@@ -248,6 +248,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
         String acInfo = gson.toJson(activity);
         System.out.println("要传递过去的数据："+acInfo);
         request.addBodyParameter("acInfo",acInfo);
+        System.out.println("----"+request);
         //传递数据；
         x.http().post(request, new Callback.CommonCallback<String>() {
             @Override

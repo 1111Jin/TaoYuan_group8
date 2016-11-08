@@ -26,6 +26,7 @@ import com.example.administrator.taoyuan.activity_my.ModifyMyActivity;
 import com.example.administrator.taoyuan.activity_my.MyIntegral;
 import com.example.administrator.taoyuan.activity_my.RepairActivity;
 import com.example.administrator.taoyuan.activity_my.TextActivity;
+import com.example.administrator.taoyuan.application.MyApplication;
 import com.example.administrator.taoyuan.pojo.ListUserBean;
 import com.example.administrator.taoyuan.utils.HttpUtils;
 import com.example.administrator.taoyuan.utils.xUtilsImageUtils;
@@ -104,7 +105,7 @@ public class my extends Fragment {
 
     public void initData() {
 
-        RequestParams requestParams = new RequestParams(HttpUtils.localhost + "/my?userId=" + HttpUtils.userId);
+        RequestParams requestParams = new RequestParams(HttpUtils.localhost + "/my?userId=" + ((MyApplication)getActivity().getApplication()).getUser().getUserId());
 
         x.http().get(requestParams, new Callback.CommonCallback<String>() {
             @Override
@@ -224,6 +225,7 @@ public class my extends Fragment {
 
         }
     }
+
 
 
 }

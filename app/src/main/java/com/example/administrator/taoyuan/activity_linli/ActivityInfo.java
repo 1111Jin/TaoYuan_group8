@@ -15,6 +15,9 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
+import android.view.animation.Transformation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -62,7 +65,7 @@ import static com.example.administrator.taoyuan.utils.DateUtil.dateToString1;
 /**
  * Created by Administrator on 2016/10/17.
  */
-public class ActivityInfo extends AppCompatActivity implements View.OnClickListener{
+public class ActivityInfo extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "ActivityInfo";
     private Integer num = -1;
     @InjectView(R.id.iv_ac_image)
@@ -127,11 +130,13 @@ public class ActivityInfo extends AppCompatActivity implements View.OnClickListe
     private AdapterComment adapterComment;
     int pageNo = 1;
     int pageSize = 3;
+    int maxLine = 5;//textView设置最大显示行数；
 
     List<Comment> comList = new ArrayList<>();
     public TextView name;
     public TextView content;
     private String items[] = {"删除", "取消"};
+    public ImageView bot;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -141,15 +146,8 @@ public class ActivityInfo extends AppCompatActivity implements View.OnClickListe
         initView();
         initData();
         initEvent();
-        if (activity.getUser().getUserId()==((MyApplication)getApplication()).getUser().getUserId()){
-            //右上角按钮显示；
-            pull.setVisibility(View.VISIBLE);
-            //参与按钮消失；
-            btAcJoin.setVisibility(View.GONE);
-
-        }
-
     }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -177,7 +175,7 @@ public class ActivityInfo extends AppCompatActivity implements View.OnClickListe
     }
 
     //设置监听事件；
-    public void setListener(){
+    public void setListener() {
         say.setOnClickListener(this);
         hide_down.setOnClickListener(this);
         comment_send.setOnClickListener(this);
@@ -190,10 +188,10 @@ public class ActivityInfo extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(ActivityInfo.this, UserInfo.class);
-                intent.putExtra("userInfo",(Parcelable) users.get(position));
+                intent.putExtra("userInfo", (Parcelable) users.get(position));
                 startActivity(intent);
             }
-        } );
+        });
 
         list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -201,9 +199,9 @@ public class ActivityInfo extends AppCompatActivity implements View.OnClickListe
 
                 final Integer userId = data.get(position).getUserId();
                 final Integer comId = data.get(position).getId();
-                Log.i(TAG, "onItemLongClick: +++++"+comId);
+                Log.i(TAG, "onItemLongClick: +++++" + comId);
 
-                if (data.get(position).getUserId().equals(((MyApplication)getApplication()).getUser().getUserId())){
+                if (data.get(position).getUserId().equals(((MyApplication) getApplication()).getUser().getUserId())) {
 
                     new AlertDialog.Builder(ActivityInfo.this).setItems(items, new DialogInterface.OnClickListener() {
                         @Override
@@ -219,8 +217,8 @@ public class ActivityInfo extends AppCompatActivity implements View.OnClickListe
                             }
                         }
                     }).show();
-                }else{
-                    Toast.makeText(ActivityInfo.this,"无法操作",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(ActivityInfo.this, "无法操作", Toast.LENGTH_SHORT).show();
                 }
                 return false;
             }
@@ -231,102 +229,79 @@ public class ActivityInfo extends AppCompatActivity implements View.OnClickListe
     //获取数据；
     public void initData() {
         Intent intent = getIntent();
-
         activity = intent.getParcelableExtra("ActivityInfo");
-        data=(List<Comment>) intent.getSerializableExtra("comment");
-        Log.i(TAG, "initData: _+_+++"+data);
-        //将活动id传递给服务端，通过服务端的方法获得相应的用户信息；
-        RequestParams requestParams = new RequestParams(HttpUtils.localhost_su + "queryac");
-        Integer acId = activity.getActivityId();
-        Log.i(TAG, "onItemClick: --------->传递id：" + acId);
-        requestParams.addBodyParameter("acId", String.valueOf(acId));
-        Log.i(TAG, "initData: "+requestParams);
-        x.http().post(requestParams, new Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-                Log.i(TAG, "onSuccess: result是=====>>：" + result);
-                Gson gson = new Gson();
-                Type type = new TypeToken<List<User>>() {
-                }.getType();
-                //获取传递过来的参与人员的信息；
-                users = gson.fromJson(result, type);
-                //参与的人数；
-                num = users.size();
-                tvAcNum.setText("需要人数："+activity.getJoinNums()+"");
-                tvAcBmNums.setText(num+"人报名");
-                Log.i("info1111", "onSuccess: jjjj"+tvAcBmNums.getText());
-//                if (user.getUserId()==((MyApplication)getApplication()).getUser().getUserId()){
-//                    pull.setVisibility(View.VISIBLE);
-//                    btAcJoin.setVisibility(View.GONE);
-//                }
-                if ( users.size()==activity.getJoinNums()){
-                    end.setVisibility(View.VISIBLE);
-                    pull.setVisibility(View.VISIBLE);
-                    btAcJoin.setVisibility(View.GONE);
-                }
-                Log.i(TAG, "onSuccess: 根据活动id返还回来的参与人的信息：" + users);
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-
-            }
-
-            @Override
-            public void onFinished() {
-
-
-            }
-        });
-
+        data = (List<Comment>) intent.getSerializableExtra("comment");
+        Log.i(TAG, "initData: _+_+++" + data);
         Log.i("ActivityInfo", "initData: ------>" + activity);
         //本页面显示的活动信息；
         if (activity != null) {
             tvAcTitle.setText(activity.getActivityTitle());
             tvAcName.setText(activity.getUser().getUserName());
-            tvAcAcpro.setText(activity.getActivityContent());
+            tvAcAcpro.setText(activity.getActivityContent());//设置文本内容；
             tvAcAddress.setText(activity.getActivityAddress());
             tvAcTime3.setText(dateToString1(activity.getBeginTime()) + " -- " + dateToString1(activity.getEndTime()));
             xUtilsImageUtils.display(ivAcImage, HttpUtils.localhost_su + activity.getActivityImg());
             Log.i(TAG, "initData: QQQQQQQQQQQQQQ" + data);
         }
         /**
+         * 判断是否为发布人；
+         */
+        if (activity.getUser().getUserId().equals(((MyApplication) getApplication()).getUser().getUserId())) {
+            //右上角按钮显示；
+            pull.setVisibility(View.VISIBLE);
+            //参与按钮消失；
+            btAcJoin.setVisibility(View.GONE);
+            end.setVisibility(View.GONE);
+
+        }
+
+        /**
+         * 获取参与活动的用户信息；
+         */
+        getJoinUserById(activity.getActivityId());
+        /**
          * 获得用户信息
          */
 
-        RequestParams re=new RequestParams(HttpUtils.localhost_su+"queryuser");
-        re.addBodyParameter("userId",String.valueOf(((MyApplication)getApplication()).getUser().getUserId()));
-        System.out.println(re);
-        x.http().post(re, new Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-                System.out.println("__________________________________________________"+result);
-                Gson gson = new Gson();
-                Type type = new TypeToken<User>(){}.getType();
-                user1 = gson.fromJson(result,type);
-            }
+//        RequestParams re = new RequestParams(HttpUtils.localhost_su + "queryuser");
+//        re.addBodyParameter("userId", String.valueOf(((MyApplication) getApplication()).getUser().getUserId()));
+//        System.out.println(re);
+//        x.http().post(re, new Callback.CommonCallback<String>() {
+//            @Override
+//            public void onSuccess(String result) {
+//                System.out.println("__________________________________________________" + result);
+//                Gson gson = new Gson();
+//                Type type = new TypeToken<User>() {
+//                }.getType();
+//                user1 = gson.fromJson(result, type);
+//            }
+//
+//            @Override
+//            public void onError(Throwable ex, boolean isOnCallback) {
+//                System.out.println(ex.toString());
+//            }
+//
+//            @Override
+//            public void onCancelled(CancelledException cex) {
+//
+//            }
+//
+//            @Override
+//            public void onFinished() {
+//            }
+//        });
 
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-                System.out.println(ex.toString());
-            }
+        gridview();
 
-            @Override
-            public void onCancelled(CancelledException cex) {
+        adapterComment = new AdapterComment(getApplicationContext(), data);
+        // 为评论列表设置适配器
+        list.setAdapter(adapterComment);
+        adapterComment.notifyDataSetChanged();
+        adapterComment.notifyDataSetInvalidated();
+        setListViewHeightBasedOnChildren(list);
+    }
 
-            }
-
-            @Override
-            public void onFinished() {
-            }
-        });
-
-
+    public void gridview() {
         //评论信息；
         gridview.setAdapter(new BaseAdapter() {
             public ImageView img;
@@ -350,10 +325,10 @@ public class ActivityInfo extends AppCompatActivity implements View.OnClickListe
             public View getView(int position, View convertView, ViewGroup parent) {
                 View view = View.inflate(ActivityInfo.this, R.layout.img_view, null);
                 user = users.get(position);
-                Log.i(TAG, "getView: "+user);
+                Log.i(TAG, "getView: " + user);
                 //如果：参与人的userId与默认的userId相同，就表示我已经参与了这个活动；
-                if (user.getUserId()==((MyApplication)getApplication()).getUser().getUserId()){
-                    Log.i(TAG, "getView: 打印用户的id为："+user.getUserId());
+                if (user.getUserId().equals(((MyApplication) getApplication()).getUser().getUserId())) {
+                    Log.i(TAG, "getView: 打印用户的id为：" + user.getUserId());
                     pull.setVisibility(View.VISIBLE);
                     btAcJoin.setVisibility(View.GONE);
                 }
@@ -362,25 +337,18 @@ public class ActivityInfo extends AppCompatActivity implements View.OnClickListe
                 return view;
             }
         });
-        adapterComment = new AdapterComment(getApplicationContext(),data);
-        // 为评论列表设置适配器
-        list.setAdapter(adapterComment);
-        adapterComment.notifyDataSetChanged();
-        adapterComment.notifyDataSetInvalidated();
-        setListViewHeightBasedOnChildren(list);
     }
 
-
     //取消报名、取消  参与人
-    public void initPopupWindow(View v){
+    public void initPopupWindow(View v) {
         //content
-        View view=LayoutInflater.from(this).inflate(R.layout.publish_choose,null);
-        final PopupWindow popupWindow=new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        View view = LayoutInflater.from(this).inflate(R.layout.publish_choose, null);
+        final PopupWindow popupWindow = new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
         //listview设置数据源
-        ListView lv= (ListView) view.findViewById(R.id.lv_publish);
+        ListView lv = (ListView) view.findViewById(R.id.lv_publish);
 
-        ArrayAdapter arrayAdapter=new ArrayAdapter(this,R.layout.publish_choose_item,new String[]{"取消报名","取 消"});
+        ArrayAdapter arrayAdapter = new ArrayAdapter(this, R.layout.publish_choose_item, new String[]{"取消报名", "取 消"});
         lv.setAdapter(arrayAdapter);
 
         //popupwiondow外面点击，popupwindow消失
@@ -394,14 +362,15 @@ public class ActivityInfo extends AppCompatActivity implements View.OnClickListe
                 //关闭popupwidow
                 popupWindow.dismiss();
                 //排序
-                if(position==0){
-                    RequestParams params = new RequestParams(HttpUtils.localhost_su+"deleteacjoin");
+                if (position == 0) {
+                    RequestParams params = new RequestParams(HttpUtils.localhost_su + "deleteacjoin");
                     params.addBodyParameter("acId", String.valueOf(activity.getActivityId()));
-                    params.addBodyParameter("userId", String.valueOf(((MyApplication)getApplication()).getUser().getUserId()));
+                    params.addBodyParameter("userId", String.valueOf(((MyApplication) getApplication()).getUser().getUserId()));
                     x.http().post(params, new Callback.CacheCallback<String>() {
                         @Override
                         public void onSuccess(String result) {
-                            Log.i(TAG, "onSuccess: 删除参与用户："+result);
+                            Log.i(TAG, "onSuccess: 删除参与用户：" + result);
+                            getJoinUserById(activity.getActivityId());
                         }
 
                         @Override
@@ -424,24 +393,26 @@ public class ActivityInfo extends AppCompatActivity implements View.OnClickListe
                             return false;
                         }
                     });
-                    btAcJoin.setVisibility(View.VISIBLE);
-                    end.setVisibility(View.GONE);
-                }else if(position==1){
+
+//                    btAcJoin.setVisibility(View.VISIBLE);
+//                    end.setVisibility(View.GONE);
+                } else if (position == 1) {
                     popupWindow.dismiss();
                 }
             }
         });
     }
+
     //修改活动、取消活动、取消,发布人；
-    public void showPopupWindow(View v){
+    public void showPopupWindow(View v) {
         //content
-        View view=LayoutInflater.from(this).inflate(R.layout.publish_choose,null);
-        final PopupWindow popupWindow=new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        View view = LayoutInflater.from(this).inflate(R.layout.publish_choose, null);
+        final PopupWindow popupWindow = new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
         //listview设置数据源
-        ListView lv= (ListView) view.findViewById(R.id.lv_publish);
+        ListView lv = (ListView) view.findViewById(R.id.lv_publish);
 
-        ArrayAdapter arrayAdapter=new ArrayAdapter(this,R.layout.publish_choose_item,new String[]{"修改活动","取消活动","取 消"});
+        ArrayAdapter arrayAdapter = new ArrayAdapter(this, R.layout.publish_choose_item, new String[]{"修改活动", "取消活动", "取 消"});
         lv.setAdapter(arrayAdapter);
 
         //popupwiondow外面点击，popupwindow消失
@@ -458,13 +429,13 @@ public class ActivityInfo extends AppCompatActivity implements View.OnClickListe
                 //关闭popupwidow
                 popupWindow.dismiss();
                 //排序
-                if(position==0){
-                    Intent intent = new Intent(ActivityInfo.this,ModifyActivity.class);
-                    intent.putExtra("acInfo",activity);
-                    startActivityForResult(intent,0);
+                if (position == 0) {
+                    Intent intent = new Intent(ActivityInfo.this, ModifyActivity.class);
+                    intent.putExtra("acInfo", activity);
+                    startActivityForResult(intent, 0);
 
-                }else if(position==1){
-                    RequestParams params = new RequestParams(HttpUtils.localhost_su+"deleteactivity");
+                } else if (position == 1) {
+                    RequestParams params = new RequestParams(HttpUtils.localhost_su + "deleteactivity");
                     params.addBodyParameter("acId", String.valueOf(activity.getActivityId()));
                     x.http().post(params, new Callback.CommonCallback<String>() {
                         @Override
@@ -488,14 +459,14 @@ public class ActivityInfo extends AppCompatActivity implements View.OnClickListe
                         }
                     });
                     finish();
-                }else if(position==2){
+                } else if (position == 2) {
                     popupWindow.dismiss();
                 }
             }
         });
     }
 
-    @OnClick({R.id.bt_ac_join,R.id.pull,R.id.ac_con_title})
+    @OnClick({R.id.bt_ac_join, R.id.pull, R.id.ac_con_title})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_ac_join:
@@ -503,11 +474,12 @@ public class ActivityInfo extends AppCompatActivity implements View.OnClickListe
                 Bundle bundle = new Bundle();
                 bundle.putInt("acId", activity.getActivityId());
                 intent.putExtras(bundle);
-                startActivity(intent);
+//                startActivity(intent);
+                startActivityForResult(intent, 0);
                 Log.i(TAG, "onClick: +++++++>传递到下一个页面的id" + activity.getActivityId());
                 break;
             case R.id.pull:
-                if (activity.getUser().getUserId() == ((MyApplication) getApplication()).getUser().getUserId()) {
+                if (activity.getUser().getUserId().equals(((MyApplication) getApplication()).getUser().getUserId())) {
                     //判断：如果活动里面的用户id跟默认的用户地id一样，就表示这个活动是我自己发布的，我就可以让报名的按钮隐藏，
                     pull.setVisibility(View.VISIBLE);
                     btAcJoin.setVisibility(View.GONE);
@@ -515,7 +487,9 @@ public class ActivityInfo extends AppCompatActivity implements View.OnClickListe
                 } else {
                     pull.setVisibility(View.VISIBLE);
                     initPopupWindow(v);
+
                 }
+
                 break;
             case R.id.ac_con_title:
                 finish();
@@ -595,6 +569,7 @@ public class ActivityInfo extends AppCompatActivity implements View.OnClickListe
 
         }
     }
+
     /**
      * 内部类，自定义的适配器；
      */
@@ -603,7 +578,7 @@ public class ActivityInfo extends AppCompatActivity implements View.OnClickListe
         Context context;
         List<Comment> data;
 
-        public AdapterComment(Context c, List<Comment> data){
+        public AdapterComment(Context c, List<Comment> data) {
             this.context = c;
             this.data = data;
         }
@@ -625,7 +600,7 @@ public class ActivityInfo extends AppCompatActivity implements View.OnClickListe
 
         @Override
         public View getView(int position, View convertView, ViewGroup viewGroup) {
-            System.out.println("+"+position);
+            System.out.println("+" + position);
             ViewHolder holder = null;
             // 重用convertView
             if (convertView == null) {
@@ -635,18 +610,18 @@ public class ActivityInfo extends AppCompatActivity implements View.OnClickListe
                 holder.comment_name = (TextView) convertView.findViewById(R.id.comment_name);
                 holder.comment_content = (TextView) convertView.findViewById(R.id.comment_content);
                 holder.comment_time = ((TextView) convertView.findViewById(R.id.comment_time));
-                Log.i(TAG, "onItemClick: 留言的用户id：-----"+data.get(position).getUserId());
-                Log.i(TAG, "onItemClick: 默认的用户id:------"+((MyApplication)getApplication()).getUser().getUserId());
+                Log.i(TAG, "onItemClick: 留言的用户id：-----" + data.get(position).getUserId());
+                Log.i(TAG, "onItemClick: 默认的用户id:------" + ((MyApplication) getApplication()).getUser().getUserId());
                 convertView.setTag(holder);
             } else
-                System.out.println("++++"+data.size());
+                System.out.println("++++" + data.size());
             Log.i("评论人的Id", "getView: " + data.get(position).getUserId());
             Log.i("评论人的NAme", "getView: " + data.get(position).getUser().getUserName());
             holder = (ViewHolder) convertView.getTag();
             holder.comment_content.setText(data.get(position).getContent());
             holder.comment_time.setText(new SimpleDateFormat("MM-dd HH:mm").format(data.get(position).getCreate()));
             x.image().bind(holder.comment_photo, HttpUtils.localhost_su + data.get(position).getUser().getPhoto());
-            holder.comment_name.setText(data.get(position).getUser().getUserName()+":");
+            holder.comment_name.setText(data.get(position).getUser().getUserName() + ":");
 
 
             return convertView;
@@ -655,6 +630,7 @@ public class ActivityInfo extends AppCompatActivity implements View.OnClickListe
 
         /**
          * 添加一条评论,刷新列表
+         *
          * @param comment
          */
         public void addComment(Comment comment) {
@@ -667,7 +643,7 @@ public class ActivityInfo extends AppCompatActivity implements View.OnClickListe
         /**
          * 静态类，便于GC回收
          */
-        public class ViewHolder{
+        public class ViewHolder {
             ImageView comment_photo;
             TextView comment_name;
             TextView comment_content;
@@ -695,7 +671,7 @@ public class ActivityInfo extends AppCompatActivity implements View.OnClickListe
         }
 
         ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight+ (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
         // listView.getDividerHeight()获取子项间分隔符占用的高度
         // params.height最后得到整个ListView完整显示需要的高度
         listView.setLayoutParams(params);
@@ -703,52 +679,53 @@ public class ActivityInfo extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (resultCode){
+        switch (resultCode) {
             case 0:
                 System.out.println("回来了");
-                RequestParams requestParams=new RequestParams(HttpUtils.localhost_su+"/queryacbyid");
-                requestParams.addBodyParameter("acId",String.valueOf(activity.getActivityId()));
-                x.http().get(requestParams, new Callback.CommonCallback<String>() {
-                    @Override
-                    public void onSuccess(String result) {
-                        System.out.println(result);
-                        Gson gson=new Gson();
-                        activity = gson.fromJson(result,Activity.class);
-                        if (activity != null) {
-                            tvAcTitle.setText(activity.getActivityTitle());
-                            tvAcName.setText(activity.getUser().getUserName());
-                            tvAcAcpro.setText(activity.getActivityContent());
-                            tvAcAddress.setText(activity.getActivityAddress());
-                            tvAcNum.setText("需要人数："+activity.getJoinNums()+"");
-                            getJoinUserById(activity.getActivityId());
-                            tvAcTime3.setText(dateToString1(activity.getBeginTime()) + " -- " + dateToString1(activity.getEndTime()));
-                            xUtilsImageUtils.display(ivAcImage, HttpUtils.localhost_su + activity.getActivityImg());
-
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable ex, boolean isOnCallback) {
-                        System.out.println("错误：："+ex.toString());
-                    }
-
-                    @Override
-                    public void onCancelled(CancelledException cex) {
-
-                    }
-
-                    @Override
-                    public void onFinished() {
-
-                    }
-                });
-                RequestParams re=new RequestParams(HttpUtils.localhost+"tstag");
-                String tag=String.valueOf(activity.getActivityId());
+//                RequestParams requestParams=new RequestParams(HttpUtils.localhost_su+"/queryacbyid");
+//                requestParams.addBodyParameter("acId",String.valueOf(activity.getActivityId()));
+//                x.http().get(requestParams, new Callback.CommonCallback<String>() {
+//                    @Override
+//                    public void onSuccess(String result) {
+//                        System.out.println(result);
+//                        Gson gson=new Gson();
+//                        activity = gson.fromJson(result,Activity.class);
+//                        if (activity != null) {
+//                            tvAcTitle.setText(activity.getActivityTitle());
+//                            tvAcName.setText(activity.getUser().getUserName());
+//                            tvAcAcpro.setText(activity.getActivityContent());
+//                            tvAcAddress.setText(activity.getActivityAddress());
+//                            tvAcNum.setText("需要人数："+activity.getJoinNums()+"");
+//                            getJoinUserById(activity.getActivityId());
+//                            tvAcTime3.setText(dateToString1(activity.getBeginTime()) + " -- " + dateToString1(activity.getEndTime()));
+//                            xUtilsImageUtils.display(ivAcImage, HttpUtils.localhost_su + activity.getActivityImg());
+//
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable ex, boolean isOnCallback) {
+//                        System.out.println("错误：："+ex.toString());
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(CancelledException cex) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onFinished() {
+//
+//                    }
+//                });
+                getJoinUserById(activity.getActivityId());
+                RequestParams re = new RequestParams(HttpUtils.localhost + "tstag");
+                String tag = String.valueOf(activity.getActivityId());
                 String title = "您参加的活动更新了";
-                String content = "有wyMa发布的活动："+activity.getActivityContent()+"有新的变化！";
-                re.addBodyParameter("tag",tag);
-                re.addBodyParameter("title",title);
-                re.addBodyParameter("content",content);
+                String content = "有wyMa发布的活动：" + activity.getActivityContent() + "有新的变化！";
+                re.addBodyParameter("tag", tag);
+                re.addBodyParameter("title", title);
+                re.addBodyParameter("content", content);
                 x.http().get(re, new Callback.CommonCallback<String>() {
                     @Override
                     public void onSuccess(String result) {
@@ -774,12 +751,10 @@ public class ActivityInfo extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public void getJoinUserById(Integer acId){
+    public void getJoinUserById(Integer acId) {
         RequestParams requestParams = new RequestParams(HttpUtils.localhost_su + "queryac");
-
-
         requestParams.addBodyParameter("acId", String.valueOf(acId));
-        Log.i(TAG, "initData: "+requestParams);
+        Log.i(TAG, "initData: " + requestParams);
         x.http().post(requestParams, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
@@ -791,14 +766,30 @@ public class ActivityInfo extends AppCompatActivity implements View.OnClickListe
                 users = gson.fromJson(result, type);
                 //参与的人数；
                 num = users.size();
-                tvAcNum.setText("需要人数："+activity.getJoinNums()+"");
-                tvAcBmNums.setText(num+"人报名");
-                Log.i("info1111", "onSuccess: jjjj"+tvAcBmNums.getText());
-                if (user.getUserId()==((MyApplication)getApplication()).getUser().getUserId()|| users.size()==activity.getJoinNums()){
-//                    end.setVisibility(View.VISIBLE);
-                    pull.setVisibility(View.VISIBLE);
-                    btAcJoin.setVisibility(View.GONE);
+                tvAcNum.setText("需要人数：" + activity.getJoinNums() + "");
+                tvAcBmNums.setText(num + "人报名");
+                Log.i("info1111", "onSuccess: jjjj" + tvAcBmNums.getText());
+                for (int i = 0; i < users.size(); i++) {
+                    if (users.get(i).getUserId().equals(((MyApplication) getApplication()).getUser().getUserId())) {
+                        pull.setVisibility(View.VISIBLE);
+                        btAcJoin.setVisibility(View.GONE);
+                    }
+                    if (users.size() == activity.getJoinNums()) {
+                        end.setVisibility(View.VISIBLE);
+                        pull.setVisibility(View.VISIBLE);
+                        btAcJoin.setVisibility(View.GONE);
+                    }
                 }
+//                if (user.getUserId().equals(((MyApplication)getApplication()).getUser().getUserId())|| users.size()==activity.getJoinNums()){
+//                    pull.setVisibility(View.VISIBLE);
+//                    btAcJoin.setVisibility(View.GONE);
+//                }
+//                if (users.size() == activity.getJoinNums()) {
+//                    end.setVisibility(View.VISIBLE);
+//                    pull.setVisibility(View.VISIBLE);
+//                    btAcJoin.setVisibility(View.GONE);
+//                }
+                gridview();
                 Log.i(TAG, "onSuccess: 根据活动id返还回来的参与人的信息：" + users);
             }
 
@@ -823,15 +814,16 @@ public class ActivityInfo extends AppCompatActivity implements View.OnClickListe
     /**
      * 根据留言表里的id删除留言表里面的数据；
      * 前提是这条留言是自己发布的
+     *
      * @param userId
      * @param acmId
      */
     private void delete(Integer userId, Integer acmId) {
-        RequestParams parms = new RequestParams(HttpUtils.localhost_su+"deletecom");
+        RequestParams parms = new RequestParams(HttpUtils.localhost_su + "deletecom");
         parms.addBodyParameter("userId", String.valueOf(userId));
-        Log.i(TAG, "delete: chuanguoqude  userId::"+String.valueOf(userId));
+        Log.i(TAG, "delete: chuanguoqude  userId::" + String.valueOf(userId));
         parms.addBodyParameter("id", String.valueOf(acmId));
-        Log.i(TAG, "delete: chuanguoqude  acmId::"+String.valueOf(acmId));
+        Log.i(TAG, "delete: chuanguoqude  acmId::" + String.valueOf(acmId));
         x.http().post(parms, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
@@ -840,7 +832,7 @@ public class ActivityInfo extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Log.i(TAG, "onError: 删除comment出错了："+ex);
+                Log.i(TAG, "onError: 删除comment出错了：" + ex);
             }
 
             @Override
@@ -854,4 +846,5 @@ public class ActivityInfo extends AppCompatActivity implements View.OnClickListe
             }
         });
     }
+    
 }

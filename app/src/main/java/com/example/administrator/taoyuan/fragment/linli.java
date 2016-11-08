@@ -30,6 +30,7 @@ import com.example.administrator.taoyuan.R;
 import com.example.administrator.taoyuan.activity_linli.MyAnimations;
 import com.example.administrator.taoyuan.activity_linli.PublishActivity;
 import com.example.administrator.taoyuan.activity_linli.PublishHelp;
+import com.example.administrator.taoyuan.application.MyApplication;
 import com.example.administrator.taoyuan.utils.MyFragmentPagerAdapter;
 
 import java.util.ArrayList;

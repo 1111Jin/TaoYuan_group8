@@ -110,8 +110,10 @@ public class TextActivity extends Activity {
         lv_msg.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                System.out.println("11231");
                 Intent intent = new Intent(getApplicationContext(),MsgItem.class);
                 intent.putExtra("msg",msglist.get(position));
+                System.out.println("12312312");
                 startActivityForResult(intent,1);
             }
         });
