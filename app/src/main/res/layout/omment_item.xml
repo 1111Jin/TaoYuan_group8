@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_marginTop="6dp"
+            android:id="@+id/comment_photo"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/people"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="3dp"/>
+        <TextView
+            android:layout_toRightOf="@id/comment_photo"
+            android:layout_alignBottom="@id/comment_photo"
+            android:id="@+id/comment_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="昵称："
+            android:textColor="#00f"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:layout_toRightOf="@id/comment_name"
+            android:layout_alignBottom="@id/comment_photo"
+            android:id="@+id/comment_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:text="评论的内容"
+            android:textSize="15sp" />
+        <TextView
+            android:id="@+id/comment_time"
+            android:layout_marginTop="6dp"
+            android:layout_below="@id/comment_name"
+            android:layout_alignLeft="@id/comment_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:text="time"/>
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/delete_com"
+            android:layout_marginRight="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignBottom="@id/comment_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:text="删 除"/>
+    </RelativeLayout>
+
+</LinearLayout>

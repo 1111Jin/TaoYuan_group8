@@ -29,6 +29,7 @@ import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.net.URLDecoder;
 import java.util.ArrayList;
@@ -50,8 +51,14 @@ public class linli_help_fragment extends linli{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
        View view = inflater.inflate(R.layout.linli_activity_listview,null);
         lv_help = ((ListView)view.findViewById(R.id.ac_listview));
-        initdata();
+
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        initdata();
     }
 
     @Override
@@ -66,6 +73,8 @@ public class linli_help_fragment extends linli{
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(),HelpInfo.class);
                 intent.putExtra("HelpInfo",helpList.get(position));
+//                intent.putExtra("user",(Serializable) helpList.get(position).getUser());
+                intent.putExtra("comment",(Serializable) helpList.get(position).getComment());
                 startActivity(intent);
 
             }
@@ -141,8 +150,9 @@ public class linli_help_fragment extends linli{
                 helpList = gson.fromJson(result,type);
 
 
-                Log.i("linli_help_fragment", "onSuccess: help接收数据对象：=====>"+helpList);
-                helpList.addAll(helpList);
+                Log.i("linli_help_fragment", "onSuccess: help接收数据对象：=====>"+helpList.get(0).getComment());
+//                helpList.clear();
+//                helpList.addAll(helpList);
 
                 adapter.notifyDataSetChanged();
             }

@@ -3,6 +3,8 @@ package com.example.administrator.taoyuan.pojo;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.List;
+
 public class AcJoin implements Parcelable {
 
 	private Integer joinId;
@@ -10,6 +12,8 @@ public class AcJoin implements Parcelable {
 	private Integer userId;
 	private String userTel;
 	private String selfPro;
+	private Activity activity;
+	private List<Comment> comment;
 	
 	public AcJoin(){}
 	
@@ -20,8 +24,40 @@ public class AcJoin implements Parcelable {
 		this.userTel = userTel;
 		this.selfPro = selfPro;
 	}
-	
-	
+
+	public AcJoin(Integer activityId, Integer userId, String userTel, String selfPro, Activity activity) {
+		this.activityId = activityId;
+		this.userId = userId;
+		this.userTel = userTel;
+		this.selfPro = selfPro;
+		this.activity = activity;
+	}
+
+	public AcJoin(Integer activityId, Integer userId, String userTel, String selfPro, Activity activity, List<Comment> comments) {
+		this.activityId = activityId;
+		this.userId = userId;
+		this.userTel = userTel;
+		this.selfPro = selfPro;
+		this.activity = activity;
+		this.comment = comments;
+	}
+
+	public List<Comment> getComments() {
+		return comment;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comment = comments;
+	}
+
+	public Activity getActivity() {
+		return activity;
+	}
+
+	public void setActivity(Activity activity) {
+		this.activity = activity;
+	}
+
 	public String getSelfPro() {
 		return selfPro;
 	}

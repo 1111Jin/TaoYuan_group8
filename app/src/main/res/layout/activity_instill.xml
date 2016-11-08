@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tt="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.administrator.taoyuan.activity_my.Instill">
+<com.example.administrator.taoyuan.utils.TitleBar
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tt:leftText="返回"
+    tt:titleStr="设置"
+    android:id="@+id/t_ins"
+    />
+    <View android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="3px"
+        android:layout_marginTop="10dp"
+        android:background="#C0C5C7"/>
+    <RelativeLayout
+        android:id="@+id/rl_management"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="账号管理"
+            android:textSize="18sp"
+
+            android:padding="10dp"
+
+            />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/b"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/iv_editinfo"
+                android:layout_marginRight="10dp"
+                />
+
+        <ImageView
+
+            android:id="@+id/iv_head"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_toLeftOf="@id/b"
+            android:layout_marginRight="20dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/mine_gray"/>
+
+    </RelativeLayout>
+    <View android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="3px"
+        android:background="#C0C5C7"/>
+    <RelativeLayout
+        android:id="@+id/rl_jpush"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="消息推送"
+            android:textSize="18sp"
+            android:padding="10dp"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/iv_editinfo"
+            android:layout_marginRight="10dp"
+
+            />
+
+    </RelativeLayout>
+    <View android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="3px"
+        android:background="#C0C5C7"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="通用"
+            android:textSize="18sp"
+            android:padding="10dp"
+
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/iv_editinfo"
+            android:layout_marginRight="10dp"
+
+            />
+    </RelativeLayout>
+    <View android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="3px"
+        android:background="#C0C5C7"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="关于桃园"
+            android:textSize="18sp"
+            android:padding="10dp"
+
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/iv_editinfo"
+            android:layout_marginRight="10dp"
+
+            />
+    </RelativeLayout>
+    <View android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="3px"
+        android:background="#C0C5C7"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="退出"
+            android:textSize="18sp"
+            android:padding="10dp"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/iv_editinfo"
+            android:layout_marginRight="10dp"
+
+            />
+    </RelativeLayout>
+    <View android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="3px"
+        android:background="#C0C5C7"/>
+
+</LinearLayout>

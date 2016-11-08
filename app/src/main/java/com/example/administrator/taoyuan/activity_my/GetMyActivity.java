@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.administrator.taoyuan.R;
+import com.example.administrator.taoyuan.application.MyApplication;
 import com.example.administrator.taoyuan.fragment.ActivityByAttendFragment;
 import com.example.administrator.taoyuan.fragment.ActivityByMeFragment;
 import com.example.administrator.taoyuan.pojo.ListUserBean;
@@ -40,7 +41,7 @@ public class GetMyActivity extends AppCompatActivity {
     List<Fragment> list = new ArrayList<Fragment>();
     private IndicatorViewPager indicatorViewPager;
     private TitleBar titleBar;
-    private Integer userId1 = HttpUtils.userId;
+    Integer userId1 ;
     ListUserBean.User user;
 //    private FragmentManager manager;
 //    private FragmentTransaction transaction;
@@ -50,6 +51,7 @@ public class GetMyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_my);
+        userId1=((MyApplication)getApplication()).getUser().getUserId();
 //        manager=getFragmentManager();
         initData();
         initView();
@@ -126,7 +128,7 @@ public class GetMyActivity extends AppCompatActivity {
                 convertView = inflate.inflate(R.layout.tab_fragment, container, false);
             }
             TextView textView = (TextView) convertView;
-            if (userId1.equals(HttpUtils.userId)) {
+            if (userId1.equals(((MyApplication)getApplication()).getUser().getUserId())) {
                 textView.setText(names[position % names.length]);
             }else{
                 TextView titlestr = ((TextView) titleBar.findViewById(R.id.title));

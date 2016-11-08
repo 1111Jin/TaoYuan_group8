@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    tools:context="com.example.administrator.taoyuan.activity_linli.HelpJoin"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#e2cac6c6"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/title"
+        >
+        <RelativeLayout
+            android:id="@+id/rl_back_fri"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/all_order_goback"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:padding="12dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/nav_back"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="返回"
+                android:textSize="20sp"
+                android:textColor="@android:color/black"
+                android:layout_toRightOf="@id/all_order_goback"
+                android:layout_centerInParent="true"/>
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="详细信息"
+            android:textSize="20sp"
+            android:textColor="@android:color/black"/>
+
+
+    </RelativeLayout>
+
+
+
+    <View android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="5px"
+        android:background="#C0C5C7"/>
+
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#eeeeee"
+        android:layout_below="@id/rl_back_fri">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#e2cac6c6"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/rl_modify_My"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:background="@drawable/bc">
+
+
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:id="@+id/iv_fri_head"
+                    android:src="@drawable/mine_gray"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="40dp"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_fri_name"
+                    android:text="用户名"
+                    android:textSize="34sp"
+                    android:textColor="@color/black"
+                    android:layout_below="@+id/iv_fri_head"
+                    android:layout_marginTop="30dp"
+                    android:gravity="center"
+                    />
+
+
+            </RelativeLayout>
+
+
+
+            <RelativeLayout
+                android:id="@+id/rl_fri_sex"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="30dp"
+                android:background="#ffffff"
+
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="性别"
+                    android:layout_marginLeft="30dp"
+                    android:textSize="20sp"
+                    android:textColor="@color/black"/>
+
+
+                <TextView
+                    android:id="@+id/tv_fri_sex"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:text="性别"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:padding="6dp"
+                    android:textColor="@color/text_clo"
+
+                    />
+
+
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/rl_fri_tel"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+
+                android:background="#ffffff"
+
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="电话号码"
+                    android:layout_marginLeft="30dp"
+                    android:textSize="20sp"
+                    android:textColor="@color/black"/>
+
+
+                <TextView
+                    android:id="@+id/tv_fri_tel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="电话号码"
+                    android:textSize="15sp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:padding="6dp"
+                    android:textColor="@color/text_clo"
+
+                    />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/rl_fri_address"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+
+                android:background="#ffffff"
+
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="家庭住址"
+                    android:layout_marginLeft="30dp"
+                    android:textSize="20sp"
+                    android:textColor="@color/black"/>
+
+
+                <TextView
+                    android:id="@+id/tv_fri_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="地址"
+                    android:textSize="15sp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:padding="6dp"
+                    android:textColor="@color/text_clo"
+
+                    />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_fri_profiles"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="#ffffff"
+
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="个性签名"
+                    android:layout_marginLeft="30dp"
+                    android:textSize="20sp"
+                    android:textColor="@color/black"/>
+
+
+                <TextView
+                    android:id="@+id/tv_fri_progiles"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="无"
+                    android:textSize="15sp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:padding="6dp"
+                    android:textColor="@color/text_clo"
+
+                    />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/rl_fri_life"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:background="#ffffff"
+
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="他的动态"
+                    android:layout_marginLeft="30dp"
+                    android:textSize="20sp"
+                    android:textColor="@color/black"/>
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:padding="6dp"
+                    android:src="@drawable/iv_editinfo"/>
+
+                />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/rl_fri_activity"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+
+                android:background="#ffffff"
+
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="他的活动"
+                    android:layout_marginLeft="30dp"
+                    android:textSize="20sp"
+                    android:textColor="@color/black"/>
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:padding="6dp"
+                    android:src="@drawable/iv_editinfo"/>
+
+                />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/rl_fri_help"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+
+                android:background="#ffffff"
+
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="他的互帮"
+                    android:layout_marginLeft="30dp"
+                    android:textSize="20sp"
+                    android:textColor="@color/black"/>
+
+
+                <ImageView
+                    android:id="@+id/iv_to_myName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:padding="6dp"
+                    android:src="@drawable/iv_editinfo"/>
+
+                />
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/btn_help_true"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/shape_red"
+                android:layout_margin="20dp"
+                android:text="同意"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:textColor="@color/black">
+
+
+            </Button>
+            <Button
+                android:id="@+id/btn_help_false"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/shape_red"
+                android:layout_margin="20dp"
+                android:text="不同意"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:textColor="@color/black"
+
+
+                />
+
+
+        </LinearLayout>
+
+
+
+
+    </ScrollView>
+
+</LinearLayout>

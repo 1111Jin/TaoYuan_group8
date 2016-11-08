@@ -3,9 +3,10 @@ package com.example.administrator.taoyuan.pojo;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class User implements Parcelable {
+public class User implements Parcelable ,Serializable{
 	private Integer userId;
 	private String userName;
 	private String sex;
@@ -16,7 +17,8 @@ public class User implements Parcelable {
 	private Timestamp birthday;
 	private String tel;
 	private String address;
-	
+
+	public User(){}
 	public User(Integer userId){
 		this.userId = userId;
 	}
@@ -89,6 +91,13 @@ public class User implements Parcelable {
 		this.address = address;
 	}
 
+	public String getUserProfiles() {
+		return userProfiles;
+	}
+
+	public void setUserProfiles(String userProfiles) {
+		this.userProfiles = userProfiles;
+	}
 
 	@Override
 	public int describeContents() {

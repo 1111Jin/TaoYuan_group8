@@ -34,13 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="2016-10-01"/>
-        //加关注
-        <ImageView
-            android:id="@+id/iv_guanzhu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/jiaguanzhu"/>
+
     </RelativeLayout>
 
     <TextView

@@ -46,7 +46,7 @@
         android:layout_marginTop="20dp"
         android:paddingLeft="10dp"
         android:layout_marginBottom="10dp"
-        android:hint="可以填写自我介绍"/>
+        android:hint="互帮的理由"/>
     <Button
         android:id="@+id/joinhelp_hand"
         android:layout_below="@id/help_self"

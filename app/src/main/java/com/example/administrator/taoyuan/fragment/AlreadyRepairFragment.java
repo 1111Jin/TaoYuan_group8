@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.administrator.taoyuan.R;
@@ -37,12 +38,14 @@ public class AlreadyRepairFragment extends BaseFragment {
     private ListView lv_repair_lstview;
     List<ReListActivityBean.Repair> repairlist = new ArrayList<ReListActivityBean.Repair>();
     CommonAdapter<ReListActivityBean.Repair> adapter;
+    private ProgressBar progressBar;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v=inflater.inflate(R.layout.fragment_all_repair,null);
         lv_repair_lstview = ((ListView) v.findViewById(R.id.lv_repair_listview));
+        progressBar = ((ProgressBar) v.findViewById(R.id.progressBar));
         getUserList();
         return v;
     }
@@ -63,6 +66,7 @@ public class AlreadyRepairFragment extends BaseFragment {
     }
 
     public void getUserList() {
+        progressBar.setVisibility(View.VISIBLE);
         RequestParams params = new RequestParams(HttpUtils.localhost + "/getallrepair?userId=" + HttpUtils.userId);
         params.addBodyParameter("repairState","已维修");
         System.out.println(params);
@@ -114,7 +118,7 @@ public class AlreadyRepairFragment extends BaseFragment {
     }
 
     public void initItemView(ViewHolder viewHolder, ReListActivityBean.Repair repair, int position) {
-
+        progressBar.setVisibility(View.GONE);
         TextView tv_repair_type = ((TextView) viewHolder.getViewById(R.id.item_repair_type));
         TextView tv_repair_state = ((TextView) viewHolder.getViewById(R.id.tv_repair_state));
         TextView tv_repair_address = ((TextView) viewHolder.getViewById(R.id.tv_repair_address));

@@ -30,7 +30,7 @@
     <application
         android:name=".application.MyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/kenan"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -43,6 +43,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <receiver
             android:name=".Reciver"
             android:enabled="true"
@@ -96,6 +97,13 @@
         <activity android:name=".activity_my.IntegralUse" />
         <activity android:name=".activity_home.GonggaoActivity" />
         <activity android:name=".activity_home.GonggaoXiangqing" />
+        <activity android:name=".activity_my.TextActivity" />
+        <activity android:name=".activity_my.MsgItem" />
+        <activity android:name=".activity_my.LiveActivity" />
+        <activity android:name=".activity_life.AddFriend_agree" />
+        <activity android:name=".activity_life.LifeToFriend" />
+        <activity android:name=".activity_linli.UserInfo" />
+        <activity android:name=".activity_linli.ModifyActivity" />
         <activity
             android:name="com.mob.tools.MobUIShell"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -118,7 +126,9 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity_home.HuodongTuijian"></activity>
+        <activity android:name=".activity_home.HuodongTuijian" />
+        <activity android:name=".activity_my.Instill" />
+        <activity android:name=".activity_linli.HelpJoin"></activity>
     </application>
 
 </manifest>

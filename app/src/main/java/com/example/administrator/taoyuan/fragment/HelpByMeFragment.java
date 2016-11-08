@@ -1,20 +1,21 @@
 package com.example.administrator.taoyuan.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.administrator.taoyuan.R;
-import com.example.administrator.taoyuan.pojo.ActivityInfo;
-import com.example.administrator.taoyuan.pojo.HelpInfo;
+import com.example.administrator.taoyuan.activity_linli.HelpInfo;
+import com.example.administrator.taoyuan.pojo.Help;
 import com.example.administrator.taoyuan.pojo.ListUserBean;
-import com.example.administrator.taoyuan.pojo.User;
 import com.example.administrator.taoyuan.utils.CommonAdapter;
 import com.example.administrator.taoyuan.utils.HttpUtils;
 import com.example.administrator.taoyuan.utils.ViewHolder;
@@ -28,6 +29,7 @@ import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -42,8 +44,8 @@ public class HelpByMeFragment extends BaseFragment {
 
     private ListView lv_list;
     private Integer userId;
-    List<HelpInfo> aclist = new ArrayList<HelpInfo>();
-    CommonAdapter<HelpInfo> adapter;
+    List<Help> aclist = new ArrayList<Help>();
+    CommonAdapter<Help> adapter;
     private ListUserBean.User user;
 
     @Nullable
@@ -55,6 +57,7 @@ public class HelpByMeFragment extends BaseFragment {
         if(bundle!=null){
             userId=bundle.getInt("userId");
         }
+//        System.out.println("传过来的Id"+userId);
         getActivityList();
         return v;
     }
@@ -71,7 +74,7 @@ public class HelpByMeFragment extends BaseFragment {
 
     @Override
     public void initEvent() {
-        RequestParams re=new RequestParams(HttpUtils.localhost+"/my?userId="+ HttpUtils.userId);
+        RequestParams re=new RequestParams(HttpUtils.localhost+"/my?userId="+ userId);
         x.http().get(re, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
@@ -97,19 +100,29 @@ public class HelpByMeFragment extends BaseFragment {
             }
         });
 
+        lv_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), HelpInfo.class);
+                intent.putExtra("HelpInfo",aclist.get(position));
+//                intent.putExtra("user",(Serializable) helpList.get(position).getUser());
+                intent.putExtra("comment",(Serializable) aclist.get(position).getComment());
+                startActivity(intent);
+            }
+        });
+
     }
 
     public void getActivityList(){
-        RequestParams params = new RequestParams(HttpUtils.localhost + "/gethelpbyid?userId=" + userId);
+        RequestParams params = new RequestParams(HttpUtils.localhost_su + "/gethelpme?userId=" + userId);
 //        params.addBodyParameter("repairState","已派员");
         System.out.println(params);
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 System.out.println(result);
-                Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm")
-                        .create();
-                Type type=new TypeToken<List<HelpInfo>>(){}.getType();
+                Gson gson = new Gson();
+                Type type = new TypeToken<List<Help>>(){}.getType();
                 aclist=gson.fromJson(result,type);
 
 //                Type t1=new TypeToken<List<HelpInfo>>(){}.getType();
@@ -119,9 +132,9 @@ public class HelpByMeFragment extends BaseFragment {
 //                System.out.println(aclist.get(0));
 //
                 if (adapter == null) {
-                    adapter = new CommonAdapter<HelpInfo>(getActivity(), aclist, R.layout.help_list_view_item) {
+                    adapter = new CommonAdapter<Help>(getActivity(), aclist, R.layout.help_list_view_item) {
                         @Override
-                        public void convert(ViewHolder viewHolder, HelpInfo activity, int position) {
+                        public void convert(ViewHolder viewHolder, Help activity, int position) {
                             //设置item中控件的取值
                             Log.i("123123", "convert: " + position);
 
@@ -153,19 +166,19 @@ public class HelpByMeFragment extends BaseFragment {
         });
     }
 
-    public void initItemView(ViewHolder viewHolder, HelpInfo activity, int position) {
+    public void initItemView(ViewHolder viewHolder, Help activity, int position) {
         ImageView iv_img = ((ImageView) viewHolder.getViewById(R.id.iv_tou));
         TextView tv_username = ((TextView) viewHolder.getViewById(R.id.tv_username));
         TextView tv_title = ((TextView) viewHolder.getViewById(R.id.tv_help_title));
-//        ImageView iv_help = ((ImageView) viewHolder.getViewById(R.id.tv_help_title));
+        ImageView iv_help = ((ImageView) viewHolder.getViewById(R.id.iv_hl_img));
         TextView tv_time = ((TextView) viewHolder.getViewById(R.id.tv_time2));
 
 
         xUtilsImageUtils.display(iv_img, HttpUtils.localhost+"/head"+user.userHead,true);
         tv_username.setText(user.userName);
-        tv_time.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(activity.helpTime));
-        tv_title.setText(activity.helpTitle);
-//        x.image().bind(iv_help,HttpUtils.localhost+activity.helpImg);
+        tv_time.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(activity.getHelpTime()));
+        tv_title.setText(activity.getHelpTitle());
+        x.image().bind(iv_help,HttpUtils.localhost_su+activity.getHelpImg());
 
     }
 }

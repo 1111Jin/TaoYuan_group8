@@ -133,6 +133,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                         ivPhoto.setImageBitmap(photo);
                         uploadImage();
                     }
+
                 }
                 break;
             case PHOTO_REQUEST:
@@ -220,6 +221,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
         String name = tvBt.getText().toString();
         String pro =tvContent1.getText().toString();
         String Imgurl="upload/"+file.getName();
+        System.out.println("传上去的图片的url"+Imgurl);
         Timestamp beg = Timestamp.valueOf((tvBegin.getText().toString())+":00");
 //        Timestamp ed = DateUtil.stringToDate(tvEnd.getText().toString());
         Timestamp ed = Timestamp.valueOf((tvEnd.getText().toString())+":00");
@@ -246,6 +248,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
         String acInfo = gson.toJson(activity);
         System.out.println("要传递过去的数据："+acInfo);
         request.addBodyParameter("acInfo",acInfo);
+        System.out.println("----"+request);
         //传递数据；
         x.http().post(request, new Callback.CommonCallback<String>() {
             @Override

@@ -20,11 +20,13 @@ import com.example.administrator.taoyuan.R;
 import com.example.administrator.taoyuan.activity_my.GetAllUserActivity;
 import com.example.administrator.taoyuan.activity_my.GetMyActivity;
 import com.example.administrator.taoyuan.activity_my.GetMyHelp;
+import com.example.administrator.taoyuan.activity_my.Instill;
 import com.example.administrator.taoyuan.activity_my.LiveActivity;
 import com.example.administrator.taoyuan.activity_my.ModifyMyActivity;
 import com.example.administrator.taoyuan.activity_my.MyIntegral;
 import com.example.administrator.taoyuan.activity_my.RepairActivity;
 import com.example.administrator.taoyuan.activity_my.TextActivity;
+import com.example.administrator.taoyuan.application.MyApplication;
 import com.example.administrator.taoyuan.pojo.ListUserBean;
 import com.example.administrator.taoyuan.utils.HttpUtils;
 import com.example.administrator.taoyuan.utils.xUtilsImageUtils;
@@ -103,7 +105,7 @@ public class my extends Fragment {
 
     public void initData() {
 
-        RequestParams requestParams = new RequestParams(HttpUtils.localhost + "/my?userId=" + HttpUtils.userId);
+        RequestParams requestParams = new RequestParams(HttpUtils.localhost + "/my?userId=" + ((MyApplication)getActivity().getApplication()).getUser().getUserId());
 
         x.http().get(requestParams, new Callback.CommonCallback<String>() {
             @Override
@@ -183,17 +185,21 @@ public class my extends Fragment {
                 break;
             //设置
             case R.id.btn_myinstill:
-
+                Intent intent5 = new Intent(getActivity(),Instill.class);
+                bm = ((BitmapDrawable) (ivMymsg).getDrawable()).getBitmap();
+                intent5.putExtra("user", list.get(0));
+                intent5.putExtra("head", bm);
+                startActivity(intent5);
                 break;
             case R.id.btn_myintegral:
                 Intent intent6=new Intent(getActivity(),MyIntegral.class);
                 intent6.putExtra("integral",list.get(0).integral);
-
-//                System.out.println(list.get(0).integral);
                 startActivityForResult(intent6,6);
                 break;
             case R.id.btn_mydongtai:
                 Intent intent7= new Intent(getActivity(),LiveActivity.class);
+
+                startActivity(intent7);
 
                 break;
 
@@ -219,6 +225,7 @@ public class my extends Fragment {
 
         }
     }
+
 
 
 }
