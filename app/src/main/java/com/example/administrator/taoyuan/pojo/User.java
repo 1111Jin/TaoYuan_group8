@@ -17,7 +17,8 @@ public class User implements Parcelable ,Serializable{
 	private Timestamp birthday;
 	private String tel;
 	private String address;
-	
+
+	public User(){}
 	public User(Integer userId){
 		this.userId = userId;
 	}

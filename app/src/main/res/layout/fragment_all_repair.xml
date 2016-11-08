@@ -3,22 +3,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#EEEEEE" >
-    <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/progressBar"
+
+    <com.example.administrator.taoyuan.activity_home.RefreshableView
+        android:layout_below="@id/rl"
+        android:id="@+id/refreshable_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+        <ListView
+            android:id="@+id/lv_repair_listview"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:cacheColorHint="#ffffffff"
+            android:divider="@null"
+            android:clickable="true"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
+
+
+    </com.example.administrator.taoyuan.activity_home.RefreshableView>
+
+    <TextView
+        android:id="@+id/moren"
+        android:padding="10dp"
         android:visibility="gone"
-        android:layout_gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="您还没有发布活动"
+        android:textSize="16sp"
+        android:gravity="center"
         />
 
-    <ListView
-        android:id="@+id/lv_repair_listview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:cacheColorHint="#ffffffff"
-        android:divider="@null"
-        android:clickable="true"
-        android:layout_gravity="center" />
+
 
 
 </FrameLayout>

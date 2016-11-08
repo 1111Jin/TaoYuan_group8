@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.example.administrator.taoyuan.LoginActivity;
 import com.example.administrator.taoyuan.R;
 import com.example.administrator.taoyuan.pojo.ListUserBean;
 import com.example.administrator.taoyuan.utils.TitleBar;
@@ -19,6 +20,7 @@ public class Instill extends AppCompatActivity {
     ListUserBean.User user;
     Bitmap bm;
     private TitleBar title;
+    private RelativeLayout exits;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,7 @@ public class Instill extends AppCompatActivity {
         rl_management = ((RelativeLayout) findViewById(R.id.rl_management));
         iv_head = ((ImageView) findViewById(R.id.iv_head));
         title = ((TitleBar) findViewById(R.id.t_ins));
+        exits = ((RelativeLayout) findViewById(R.id.exits));
     }
 
     public void initData(){
@@ -49,6 +52,15 @@ public class Instill extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        exits.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getApplicationContext(),LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             }
         });
     }

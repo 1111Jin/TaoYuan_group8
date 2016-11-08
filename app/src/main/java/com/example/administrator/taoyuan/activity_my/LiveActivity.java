@@ -51,7 +51,7 @@ public class LiveActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor1;
     ViewHolder viewHolder;
-    private Integer userId1 = HttpUtils.userId;
+    private Integer userId1 = ((MyApplication)getApplication()).getUser().getUserId();
     ListUserBean.User user;
 
     @Override
@@ -76,7 +76,7 @@ public class LiveActivity extends AppCompatActivity {
     }
 
     public void initData() {
-        if (!userId1.equals(HttpUtils.userId)) {
+        if (!userId1.equals(((MyApplication)getApplication()).getUser().getUserId())) {
             TextView titlestr = ((TextView) tt_live.findViewById(R.id.title));
             titlestr.setText("他的动态");
 

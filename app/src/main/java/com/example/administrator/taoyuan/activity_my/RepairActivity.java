@@ -61,7 +61,7 @@ public class RepairActivity extends AppCompatActivity {
 
         scrollIndicatorView.setScrollBar(new ColorBar(this, 0xFF2196F3, 4));
 
-        viewPager.setOffscreenPageLimit(6);
+        viewPager.setOffscreenPageLimit(2);
         indicatorViewPager = new IndicatorViewPager(scrollIndicatorView, viewPager);
         indicatorViewPager.setAdapter(new MyAdapter(getSupportFragmentManager()));
 
@@ -79,11 +79,11 @@ public class RepairActivity extends AppCompatActivity {
         lists.add(new UnPersonnalFragment());
         lists.add(new PersonnnalFragment());
         lists.add(new AlreadyRepairFragment());
-        lists.add(new UnRemarkFragment());
+
     }
 
     public  class MyAdapter extends IndicatorViewPager.IndicatorFragmentPagerAdapter {
-        private String[] versions = {"全部","未受理", "未派员", "已派员", "已维修", "待评价"};
+        private String[] versions = {"全部","未受理", "未派员", "已派员", "已维修"};
 
         public MyAdapter(FragmentManager fragmentManager) {
             super(fragmentManager);

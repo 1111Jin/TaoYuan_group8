@@ -12,6 +12,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.administrator.taoyuan.R;
+import com.example.administrator.taoyuan.activity_home.RefreshableView;
+import com.example.administrator.taoyuan.application.MyApplication;
 import com.example.administrator.taoyuan.pojo.ReListActivityBean;
 import com.example.administrator.taoyuan.utils.CommonAdapter;
 import com.example.administrator.taoyuan.utils.HttpUtils;
@@ -39,13 +41,29 @@ public class AlreadyRepairFragment extends BaseFragment {
     List<ReListActivityBean.Repair> repairlist = new ArrayList<ReListActivityBean.Repair>();
     CommonAdapter<ReListActivityBean.Repair> adapter;
     private ProgressBar progressBar;
+    RefreshableView refreshableView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v=inflater.inflate(R.layout.fragment_all_repair,null);
         lv_repair_lstview = ((ListView) v.findViewById(R.id.lv_repair_listview));
-        progressBar = ((ProgressBar) v.findViewById(R.id.progressBar));
+        refreshableView = ((RefreshableView) v.findViewById(R.id.refreshable_view));
+
+        refreshableView.setOnRefreshListener(new RefreshableView.PullToRefreshListener(){
+
+            @Override
+            public void onRefresh() {
+                repairlist.clear();
+                try {
+                    Thread.sleep(3000);
+                    getUserList();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                refreshableView.finishRefreshing();
+            }
+        },0);
         getUserList();
         return v;
     }
@@ -66,8 +84,8 @@ public class AlreadyRepairFragment extends BaseFragment {
     }
 
     public void getUserList() {
-        progressBar.setVisibility(View.VISIBLE);
-        RequestParams params = new RequestParams(HttpUtils.localhost + "/getallrepair?userId=" + HttpUtils.userId);
+//        progressBar.setVisibility(View.VISIBLE);
+        RequestParams params = new RequestParams(HttpUtils.localhost + "/getallrepair?userId=" + ((MyApplication)getActivity().getApplication()).getUser().getUserId());
         params.addBodyParameter("repairState","已维修");
         System.out.println(params);
         x.http().get(params, new Callback.CommonCallback<String>() {
@@ -118,7 +136,7 @@ public class AlreadyRepairFragment extends BaseFragment {
     }
 
     public void initItemView(ViewHolder viewHolder, ReListActivityBean.Repair repair, int position) {
-        progressBar.setVisibility(View.GONE);
+//        progressBar.setVisibility(View.GONE);
         TextView tv_repair_type = ((TextView) viewHolder.getViewById(R.id.item_repair_type));
         TextView tv_repair_state = ((TextView) viewHolder.getViewById(R.id.tv_repair_state));
         TextView tv_repair_address = ((TextView) viewHolder.getViewById(R.id.tv_repair_address));

@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.administrator.taoyuan.R;
+import com.example.administrator.taoyuan.application.MyApplication;
 import com.example.administrator.taoyuan.pojo.ListUserBean;
 import com.example.administrator.taoyuan.pojo.MsgBean;
 import com.example.administrator.taoyuan.utils.HttpUtils;
@@ -110,8 +111,10 @@ public class TextActivity extends Activity {
         lv_msg.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                System.out.println("11231");
                 Intent intent = new Intent(getApplicationContext(),MsgItem.class);
                 intent.putExtra("msg",msglist.get(position));
+                System.out.println("12312312");
                 startActivityForResult(intent,1);
             }
         });
@@ -120,7 +123,7 @@ public class TextActivity extends Activity {
 
 
     public void getMsg(){
-        RequestParams requestParams=new RequestParams(HttpUtils.localhost+"getmsg?userId="+HttpUtils.userId);
+        RequestParams requestParams=new RequestParams(HttpUtils.localhost+"getmsg?userId="+((MyApplication)getApplication()).getUser().getUserId());
 //        requestParams.addBodyParameter("userId",H);
         x.http().get(requestParams, new Callback.CommonCallback<String>() {
             @Override

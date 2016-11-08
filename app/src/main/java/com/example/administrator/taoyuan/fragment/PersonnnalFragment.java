@@ -1,17 +1,22 @@
 package com.example.administrator.taoyuan.fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.administrator.taoyuan.R;
+import com.example.administrator.taoyuan.activity_home.RefreshableView;
+import com.example.administrator.taoyuan.application.MyApplication;
 import com.example.administrator.taoyuan.pojo.ReListActivityBean;
 import com.example.administrator.taoyuan.utils.CommonAdapter;
 import com.example.administrator.taoyuan.utils.HttpUtils;
@@ -40,12 +45,35 @@ public class PersonnnalFragment extends BaseFragment {
     CommonAdapter<ReListActivityBean.Repair> adapter;
     private ProgressBar progressBar;
 
+    Handler handler=new Handler();
+    Boolean flag11=false;
+    RefreshableView refreshableView;
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         View view=inflater.inflate(R.layout.fragment_all_repair,null);
         lv_repair_listview = ((ListView) view.findViewById(R.id.lv_repair_listview));
-        progressBar = ((ProgressBar) view.findViewById(R.id.progressBar));
+        refreshableView = ((RefreshableView) view.findViewById(R.id.refreshable_view));
+
+        refreshableView.setOnRefreshListener(new RefreshableView.PullToRefreshListener(){
+
+            @Override
+            public void onRefresh() {
+                repairlist.clear();
+                try {
+                    Thread.sleep(3000);
+                    getUserList();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                refreshableView.finishRefreshing();
+            }
+        },0);
+
+
         getUserList();
         return view;
     }
@@ -63,11 +91,14 @@ public class PersonnnalFragment extends BaseFragment {
     @Override
     public void initEvent() {
 
+
+
+
     }
 
     public void getUserList() {
-        progressBar.setVisibility(View.VISIBLE);
-        RequestParams params = new RequestParams(HttpUtils.localhost + "/getallrepair?userId=" + HttpUtils.userId);
+
+        RequestParams params = new RequestParams(HttpUtils.localhost + "/getallrepair?userId=" + ((MyApplication)getActivity().getApplication()).getUser().getUserId());
         params.addBodyParameter("repairState","已派员");
         System.out.println(params);
         x.http().get(params, new Callback.CommonCallback<String>() {
@@ -117,8 +148,11 @@ public class PersonnnalFragment extends BaseFragment {
 
     }
 
-    public void initItemView(ViewHolder viewHolder, ReListActivityBean.Repair repair, int position) {
-        progressBar.setVisibility(View.GONE);
+    public void initItemView(ViewHolder viewHolder, final ReListActivityBean.Repair repair, int position) {
+
+//        progressBar.setVisibility(View.GONE);
+        final Button btn_sure = ((Button) viewHolder.getViewById(R.id.btn_sure));
+        btn_sure.setVisibility(View.VISIBLE);
         TextView tv_repair_type = ((TextView) viewHolder.getViewById(R.id.item_repair_type));
         TextView tv_repair_state = ((TextView) viewHolder.getViewById(R.id.tv_repair_state));
         TextView tv_repair_address = ((TextView) viewHolder.getViewById(R.id.tv_repair_address));
@@ -127,6 +161,7 @@ public class PersonnnalFragment extends BaseFragment {
         TextView tv_repair_title = ((TextView) viewHolder.getViewById(R.id.tv_repair_title));
         ImageView iv_repair_img = ((ImageView) viewHolder.getViewById(R.id.iv_repair_img));
         TextView tv_repair_content = ((TextView) viewHolder.getViewById(R.id.tv_repair_content));
+
 
         Log.i("UnpersonnalFragment", "initItemView: " + repair.repairType);
         x.image().bind(iv_repair_img,HttpUtils.localhost+repair.repairImg);
@@ -138,6 +173,39 @@ public class PersonnnalFragment extends BaseFragment {
         tv_repair_title.setText(repair.repairTitle);
         tv_repair_content.setText(repair.repairContent);
 
+
+        btn_sure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(),"yi bao xiu ",Toast.LENGTH_SHORT).show();
+                RequestParams re=new RequestParams();
+                re.addBodyParameter("repairId",String.valueOf(repair.repairId));
+                re.addBodyParameter("userId",String.valueOf(((MyApplication)getActivity().getApplication()).getUser().getUserId()));
+                x.http().get(re, new Callback.CommonCallback<String>() {
+                    @Override
+                    public void onSuccess(String result) {
+                        btn_sure.setVisibility(View.GONE);
+
+                        getUserList();
+                    }
+
+                    @Override
+                    public void onError(Throwable ex, boolean isOnCallback) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(CancelledException cex) {
+
+                    }
+
+                    @Override
+                    public void onFinished() {
+
+                    }
+                });
+            }
+        });
     }
 
 
@@ -146,5 +214,6 @@ public class PersonnnalFragment extends BaseFragment {
         super.onDestroyView();
         ButterKnife.reset(this);
     }
+
 
 }
