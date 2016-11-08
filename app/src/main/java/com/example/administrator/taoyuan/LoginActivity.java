@@ -3,9 +3,16 @@ package com.example.administrator.taoyuan;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+<<<<<<< HEAD
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+=======
+import android.os.Handler;
+import android.os.Message;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+>>>>>>> origin/master
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -23,6 +30,12 @@ import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+<<<<<<< HEAD
+=======
+import java.util.HashMap;
+import java.util.Map;
+
+>>>>>>> origin/master
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Handler mHandler;

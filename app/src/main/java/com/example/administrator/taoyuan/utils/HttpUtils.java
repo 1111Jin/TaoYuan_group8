@@ -7,8 +7,8 @@ public class HttpUtils {
 
 
     public static final String localhost = "http://10.40.5.55:8080/ty/";
-    public static final String localhost_su = "http://10.40.5.23:8080/ty/";
-    //    public static final String localhost_su = "http://10.53.229.175:8080/ty/";
+        public static final String localhost_su = "http://10.40.5.55:8080/ty2/";
+//    public static final String localhost_su = "http://10.53.229.175:8080/ty/";
     // public static final String localhost_jt="http://10.50.155.232:8080/Life/";
     public static final String localhost_jt = "http://10.40.5.45:8080/Life/";
     public static final String userName = "金拓吃屎";

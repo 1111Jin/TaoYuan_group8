@@ -131,7 +131,7 @@ public class PublishHelp extends AppCompatActivity implements View.OnTouchListen
                 String helpstr = gson.toJson(help);
                 requestParams.addBodyParameter("help",helpstr);
                 Log.i(TAG, "onClick: "+requestParams);
-                x.http().get(requestParams, new Callback.CommonCallback<String>() {
+                x.http().post(requestParams, new Callback.CommonCallback<String>() {
                     @Override
                     public void onSuccess(String result) {
                         Log.i(TAG, "onSuccess: "+result);

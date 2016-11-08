@@ -61,6 +61,7 @@ public class JoinHelp extends AppCompatActivity {
         HelpJoin helpJoin = new HelpJoin(userId,helpId,userTel,selfPro);
         Gson gson = new Gson();
         String helpJoinstr = gson.toJson(helpJoin);
+        System.out.println(helpJoinstr);
         RequestParams requestParams=new RequestParams(HttpUtils.localhost_su+"inserthljoinservlet");
         requestParams.addBodyParameter("hlJoin",helpJoinstr);
         x.http().get(requestParams, new Callback.CommonCallback<String>() {

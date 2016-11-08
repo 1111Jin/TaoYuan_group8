@@ -8,6 +8,10 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+<<<<<<< HEAD
+=======
+import com.example.administrator.taoyuan.pojo.ListLifeInfo;
+>>>>>>> origin/master
 import com.example.administrator.taoyuan.pojo.ListUserBean;
 import com.example.administrator.taoyuan.utils.HttpUtils;
 import com.google.gson.Gson;
