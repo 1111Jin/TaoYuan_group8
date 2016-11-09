@@ -15,7 +15,7 @@ import android.widget.Toast;
 import com.example.administrator.taoyuan.R;
 import com.example.administrator.taoyuan.activity_my.GetMyActivity;
 import com.example.administrator.taoyuan.activity_my.GetMyHelp;
-import com.example.administrator.taoyuan.application.MyApplication;
+import com.example.administrator.taoyuan.pojo.ListLifeInfo;
 import com.example.administrator.taoyuan.pojo.ListUserBean;
 import com.example.administrator.taoyuan.utils.HttpUtils;
 import com.example.administrator.taoyuan.utils.xUtilsImageUtils;
@@ -45,7 +45,8 @@ public class LifeToFriend extends AppCompatActivity {
         private RelativeLayout rl_help;
         private ProgressBar progressBar;
         private BaseAdapter adapter;
-
+       ArrayList<ListLifeInfo.LifeInfo> listinfo;
+    Integer userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +61,10 @@ public class LifeToFriend extends AppCompatActivity {
         }
 
     private void initView(){
+        Intent intent= getIntent();
+        userId= intent.getIntExtra("lifeinfo",0);
+
+
 
         iv_fri_head = ((ImageView) findViewById(R.id.iv_fri_head));
         tv_fri_name = ((TextView) findViewById(R.id.tv_fri_name));
@@ -80,7 +85,7 @@ public class LifeToFriend extends AppCompatActivity {
 
     private void initData(){
 
-        RequestParams params=new RequestParams(HttpUtils.localhost+"/getmyfriend?userId="+ HttpUtils.userId);
+        RequestParams params=new RequestParams(HttpUtils.localhost+"/my?userId="+userId);
         Log.i(TAG, "initData: "+params);
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
@@ -103,43 +108,12 @@ public class LifeToFriend extends AppCompatActivity {
              @Override
              public void onClick(View v) {
                  RequestParams params = new RequestParams(HttpUtils.localhost_jt + "ApplyAgreeServlet");
-                 params.addBodyParameter("userId", String.valueOf(((MyApplication)getApplication()).getUser().getUserId()));
+                 params.addBodyParameter("userId", String.valueOf(user.userId));
                  params.addBodyParameter("friendTel",user.userTel);
                  x.http().post(params, new Callback.CommonCallback<String>() {
                      @Override
                      public void onSuccess(String result) {
-                        RequestParams re = new RequestParams(HttpUtils.localhost+"tsAlias");
-                         String alias = String.valueOf(user.userId);
-                         String title = "添加好友通知";
-                         String content = "您有新的添加您为好友的通知！";
-                         re.addBodyParameter("alias",alias);
-                         re.addBodyParameter("title",title);
-                         re.addBodyParameter("content",content);
-//                         Log.i(TAG, "onSuccess: "+re);
-                         
-                         x.http().get(re, new CommonCallback<String>() {
-                             @Override
-                             public void onSuccess(String result) {
-                                 Toast.makeText(getApplicationContext(),"好友请求已发送",Toast.LENGTH_SHORT).show();
-                                 btn_delete.setEnabled(false);
-                                 btn_delete.setBackgroundResource(R.color.text_clo);
-                             }
 
-                             @Override
-                             public void onError(Throwable ex, boolean isOnCallback) {
-
-                             }
-
-                             @Override
-                             public void onCancelled(CancelledException cex) {
-
-                             }
-
-                             @Override
-                             public void onFinished() {
-
-                             }
-                         });
                      }
 
                      @Override

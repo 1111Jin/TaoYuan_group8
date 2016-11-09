@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.administrator.taoyuan.R;
 import com.example.administrator.taoyuan.activity_life.AddFriend_agree;
+import com.example.administrator.taoyuan.application.MyApplication;
 import com.example.administrator.taoyuan.pojo.ListUserBean;
 import com.example.administrator.taoyuan.utils.HttpUtils;
 import com.example.administrator.taoyuan.utils.xUtilsImageUtils;
@@ -38,6 +39,7 @@ public class GetAllUserActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private RelativeLayout rl_back_my;
     private Button add_friend;
+    private TextView moren;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +66,7 @@ public class GetAllUserActivity extends AppCompatActivity {
         progressBar = ((ProgressBar) findViewById(R.id.progressBar));
         rl_back_my = ((RelativeLayout) findViewById(R.id.rl_back_my));
         add_friend = ((Button) findViewById(R.id.add_friend));
+        moren = ((TextView) findViewById(R.id.moren));
     }
 
 
@@ -137,13 +140,19 @@ public class GetAllUserActivity extends AppCompatActivity {
     public void getUserList() {
         progressBar.setVisibility(View.VISIBLE);
 
-        RequestParams params=new RequestParams(HttpUtils.localhost+"/getmyfriend?userId="+ HttpUtils.userId);
+        RequestParams params=new RequestParams(HttpUtils.localhost+"/getmyfriend?userId="+ ((MyApplication)getApplication()).getUser().getUserId());
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
 
+                System.out.println("******"+result);
+
+
                 Gson gson=new Gson();
                 ListUserBean bean=gson.fromJson(result,ListUserBean.class);
+                if (bean.userList.size()==0){
+                    moren.setVisibility(View.VISIBLE);
+                }
                 userList.addAll(bean.userList);
                 Log.i(TAG, "onSuccess: "+result);
                 adapter.notifyDataSetChanged();

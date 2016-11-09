@@ -60,15 +60,15 @@
             android:textSize="24sp"
             style="@style/radiotab"
             />
-        <RadioButton
-            android:id="@+id/rb_huati"
-            android:text="话题"
-            android:textColor="#000"
-            android:layout_height="40dp"
-            android:background="#fa8f68"
-            android:textSize="24sp"
-            style="@style/radiotab"
-            />
+        <!--<RadioButton-->
+            <!--android:id="@+id/rb_huati"-->
+            <!--android:text="话题"-->
+            <!--android:textColor="#000"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:background="#fa8f68"-->
+            <!--android:textSize="24sp"-->
+            <!--style="@style/radiotab"-->
+            <!--/>-->
 
     </RadioGroup>
     <ImageView

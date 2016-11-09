@@ -59,6 +59,16 @@
         android:visibility="gone"
         android:layout_gravity="center_horizontal"
         />
+    <TextView
+        android:id="@+id/moren"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="您还没有添加好友！"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:paddingTop="10dp"
+        android:visibility="gone"
+        />
 
     <ListView
         android:layout_width="match_parent"

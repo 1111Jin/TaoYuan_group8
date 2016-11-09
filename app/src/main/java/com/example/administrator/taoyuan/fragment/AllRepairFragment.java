@@ -14,10 +14,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.administrator.taoyuan.R;
+import com.example.administrator.taoyuan.activity_home.RefreshableView;
 import com.example.administrator.taoyuan.activity_my.GetItemRepair;
+import com.example.administrator.taoyuan.application.MyApplication;
 import com.example.administrator.taoyuan.pojo.ReListActivityBean;
 import com.example.administrator.taoyuan.utils.CommonAdapter;
 import com.example.administrator.taoyuan.utils.HttpUtils;
+import com.example.administrator.taoyuan.utils.RefreshListView;
 import com.example.administrator.taoyuan.utils.ViewHolder;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -43,7 +46,7 @@ public class AllRepairFragment extends BaseFragment {
 
     private static final String TAG = "********";
     private ListView lv_repair;
-    private ProgressBar progressBar;
+    RefreshableView refreshableView;
 
 
     @Nullable
@@ -52,8 +55,22 @@ public class AllRepairFragment extends BaseFragment {
 
         View view = inflater.inflate(R.layout.fragment_all_repair, null);
         lv_repair = ((ListView) view.findViewById(R.id.lv_repair_listview));
-        progressBar = ((ProgressBar) view.findViewById(R.id.progressBar));
-//        Log.i(TAG, "onCreateView: ssssssss");
+        refreshableView = ((RefreshableView) view.findViewById(R.id.refreshable_view));
+
+        refreshableView.setOnRefreshListener(new RefreshableView.PullToRefreshListener(){
+
+            @Override
+            public void onRefresh() {
+                repairlist.clear();
+                try {
+                    Thread.sleep(3000);
+                    getUserList();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                refreshableView.finishRefreshing();
+            }
+        },0);
         getUserList();
 
 
@@ -62,12 +79,16 @@ public class AllRepairFragment extends BaseFragment {
     }
 
     public void getUserList() {
-        progressBar.setVisibility(View.VISIBLE);
-        RequestParams params = new RequestParams(HttpUtils.localhost + "/getallrepair?userId=" + HttpUtils.userId);
+
+        RequestParams params = new RequestParams(HttpUtils.localhost + "/getallrepair?userId=" + ((MyApplication)getActivity().getApplication()).getUser().getUserId());
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 System.out.println("1??"+result);
+                if(result.equals(null)){
+
+
+                }
                 Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm")
                         .create();
                 Type type = new TypeToken<List<ReListActivityBean.Repair>>(){}.getType();
@@ -77,7 +98,6 @@ public class AllRepairFragment extends BaseFragment {
 //                        .create();
 //                ReListActivityBean bean=gson.fromJson(result,ReListActivityBean.class);
                 repairlist.clear();
-//                Log.i(TAG, "onSuccess: "+new SimpleDateFormat("yyy-MM-dd HH:mm").format(bean.get(0).repairData));
                 repairlist.addAll(bean);
 
                 if (adapter == null) {
@@ -116,7 +136,6 @@ public class AllRepairFragment extends BaseFragment {
     }
 
     public void initItemView(ViewHolder viewHolder, ReListActivityBean.Repair repair, int position) {
-        progressBar.setVisibility(View.GONE);
         TextView tv_repair_type = ((TextView) viewHolder.getViewById(R.id.item_repair_type));
         TextView tv_repair_state = ((TextView) viewHolder.getViewById(R.id.tv_repair_state));
         TextView tv_repair_address = ((TextView) viewHolder.getViewById(R.id.tv_repair_address));

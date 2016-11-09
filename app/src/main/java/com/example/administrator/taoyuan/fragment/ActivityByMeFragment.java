@@ -14,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.administrator.taoyuan.R;
+import com.example.administrator.taoyuan.activity_home.RefreshableView;
 import com.example.administrator.taoyuan.pojo.Activity;
 import com.example.administrator.taoyuan.pojo.ActivityInfo;
 import com.example.administrator.taoyuan.pojo.Comment;
@@ -46,14 +47,29 @@ public class ActivityByMeFragment extends BaseFragment {
     List<Activity> aclist = new ArrayList<Activity>();
     CommonAdapter<Activity> adapter;
     private Integer userId;
-    private ProgressBar progressBar;
+    RefreshableView refreshableView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_all_repair,null);
         listview = ((ListView) view.findViewById(R.id.lv_repair_listview));
-        progressBar = ((ProgressBar) view.findViewById(R.id.progressBar));
+        refreshableView = ((RefreshableView) view.findViewById(R.id.refreshable_view));
+
+        refreshableView.setOnRefreshListener(new RefreshableView.PullToRefreshListener(){
+
+            @Override
+            public void onRefresh() {
+                aclist.clear();
+                try {
+                    Thread.sleep(3000);
+                    getActivityList();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                refreshableView.finishRefreshing();
+            }
+        },0);
         Bundle bundle = getArguments();//从activity传过来的Bundle
         if(bundle!=null){
             userId=bundle.getInt("userId");
@@ -74,40 +90,6 @@ public class ActivityByMeFragment extends BaseFragment {
                 Intent intent = new Intent(getActivity(), com.example.administrator.taoyuan.activity_linli.ActivityInfo.class);
                 //带参传值；
                 List<Comment> coList  = aclist.get(position).getList();
-//                RequestParams requestParams=new RequestParams(HttpUtils.localhost_su+"/queryacbyid");
-//                requestParams.addBodyParameter("acId",String.valueOf(aclist.get(position).getActivityId()));
-//                x.http().get(requestParams, new Callback.CommonCallback<String>() {
-//                    @Override
-//                    public void onSuccess(String result) {
-//                        System.out.println(result);
-//                        Gson gson=new Gson();
-//                        activity = gson.fromJson(result,Activity.class);
-//                        if (activity != null) {
-//                            tvAcTitle.setText(activity.getActivityTitle());
-//                            tvAcName.setText(activity.getUser().getUserName());
-//                            tvAcAcpro.setText(activity.getActivityContent());
-//                            tvAcAddress.setText(activity.getActivityAddress());
-//                            tvAcTime3.setText(dateToString1(activity.getBeginTime()) + " -- " + dateToString1(activity.getEndTime()));
-//                            xUtilsImageUtils.display(ivAcImage, HttpUtils.localhost_su + activity.getActivityImg());
-//
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable ex, boolean isOnCallback) {
-//                        System.out.println("错误：："+ex.toString());
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(CancelledException cex) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onFinished() {
-//
-//                    }
-//                });
                 intent.putExtra("ActivityInfo", aclist.get(position));
                 intent.putExtra("comment",(Serializable) coList);
                 Log.i("222","商品信息：======="+aclist.get(position));
@@ -131,7 +113,7 @@ public class ActivityByMeFragment extends BaseFragment {
 
 
     public void getActivityList(){
-        progressBar.setVisibility(View.VISIBLE);
+
         RequestParams params = new RequestParams(HttpUtils.localhost_su + "/getAcById?userId=" +userId);
 //        params.addBodyParameter("repairState","已派员");
         System.out.println(params);
@@ -188,7 +170,6 @@ public class ActivityByMeFragment extends BaseFragment {
     }
 
     public void initItemView(ViewHolder viewHolder, Activity activity, int position) {
-        progressBar.setVisibility(View.GONE);
         ImageView iv_img = ((ImageView) viewHolder.getViewById(R.id.iv_people));
         TextView tv_title = ((TextView) viewHolder.getViewById(R.id.tv_title));
         TextView tv_createTime = ((TextView) viewHolder.getViewById(R.id.tv_time));

@@ -3,9 +3,10 @@ package com.example.administrator.taoyuan;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -22,6 +23,10 @@ import com.google.gson.Gson;
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Handler mHandler;
@@ -155,7 +160,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         Gson gson = new Gson();
                         User user = gson.fromJson(result, User.class);
                         ((MyApplication) getApplication()).setUser(user);
-
+                        HttpUtils.userId=user.getUserId();
                         //登录成功和记住密码框为选中状态才保存用户信息
                         if(rem_pw.isChecked())
                         {

@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.administrator.taoyuan.R;
+import com.example.administrator.taoyuan.application.MyApplication;
 import com.example.administrator.taoyuan.pojo.ReListActivityBean;
 import com.example.administrator.taoyuan.utils.CommonAdapter;
 import com.example.administrator.taoyuan.utils.HttpUtils;
@@ -67,7 +68,7 @@ public class UnRemarkFragment extends BaseFragment {
 
     public void getUserList() {
         progressBar.setVisibility(View.VISIBLE);
-        RequestParams params = new RequestParams(HttpUtils.localhost + "/getallrepair?userId=" + HttpUtils.userId);
+        RequestParams params = new RequestParams(HttpUtils.localhost + "/getallrepair?userId=" + ((MyApplication)getActivity().getApplication()).getUser().getUserId());
         params.addBodyParameter("repairState","待评价");
         System.out.println(params);
         x.http().get(params, new Callback.CommonCallback<String>() {
