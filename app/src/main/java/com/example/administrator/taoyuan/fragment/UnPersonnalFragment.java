@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.administrator.taoyuan.R;
+import com.example.administrator.taoyuan.activity_home.Netutil;
 import com.example.administrator.taoyuan.activity_home.RefreshableView;
 import com.example.administrator.taoyuan.pojo.ReListActivityBean;
 import com.example.administrator.taoyuan.utils.CommonAdapter;
@@ -84,15 +85,14 @@ public class UnPersonnalFragment extends BaseFragment {
 
     public void getUserList() {
 //        progressBar.setVisibility(View.VISIBLE);
-        RequestParams params = new RequestParams(HttpUtils.localhost + "/getallrepair?userId=" + HttpUtils.userId);
-        params.addBodyParameter("repairState","未派员");
+        RequestParams params = new RequestParams(Netutil.url + "/getAllRepair?userId=" + HttpUtils.userId);
+        params.addBodyParameter("state","未派员");
         System.out.println(params);
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 System.out.println(result);
-                Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm")
-                        .create();
+                Gson gson = new Gson();
                 Type type = new TypeToken<List<ReListActivityBean.Repair>>(){}.getType();
                 List<ReListActivityBean.Repair> bean = gson.fromJson(result, type);
 

@@ -100,6 +100,7 @@
         <activity android:name=".activity_life.LifeToFriend" />
         <activity android:name=".activity_linli.UserInfo" />
         <activity android:name=".activity_linli.ModifyActivity" />
+        <activity android:name=".activity_home.JifenActivity"/>
         <activity
             android:name="com.mob.tools.MobUIShell"
             android:configChanges="keyboardHidden|orientation|screenSize"

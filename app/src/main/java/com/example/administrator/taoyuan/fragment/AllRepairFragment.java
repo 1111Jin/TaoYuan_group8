@@ -14,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.administrator.taoyuan.R;
+import com.example.administrator.taoyuan.activity_home.Netutil;
 import com.example.administrator.taoyuan.activity_home.RefreshableView;
 import com.example.administrator.taoyuan.activity_my.GetItemRepair;
 import com.example.administrator.taoyuan.application.MyApplication;
@@ -80,7 +81,8 @@ public class AllRepairFragment extends BaseFragment {
 
     public void getUserList() {
 
-        RequestParams params = new RequestParams(HttpUtils.localhost + "/getallrepair?userId=" + ((MyApplication)getActivity().getApplication()).getUser().getUserId());
+        RequestParams params = new RequestParams(Netutil.url + "/getAllRepair?userId=" + ((MyApplication)getActivity().getApplication()).getUser().getUserId());
+        params.addBodyParameter("state","全部");
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
@@ -89,8 +91,7 @@ public class AllRepairFragment extends BaseFragment {
 
 
                 }
-                Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm")
-                        .create();
+                Gson gson = new Gson();
                 Type type = new TypeToken<List<ReListActivityBean.Repair>>(){}.getType();
                 List<ReListActivityBean.Repair> bean = gson.fromJson(result, type);
 

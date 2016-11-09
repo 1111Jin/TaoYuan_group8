@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.administrator.taoyuan.R;
+import com.example.administrator.taoyuan.activity_home.Netutil;
 import com.example.administrator.taoyuan.activity_home.RefreshableView;
 import com.example.administrator.taoyuan.application.MyApplication;
 import com.example.administrator.taoyuan.pojo.ReListActivityBean;
@@ -98,15 +99,14 @@ public class PersonnnalFragment extends BaseFragment {
 
     public void getUserList() {
 
-        RequestParams params = new RequestParams(HttpUtils.localhost + "/getallrepair?userId=" + ((MyApplication)getActivity().getApplication()).getUser().getUserId());
-        params.addBodyParameter("repairState","已派员");
+        RequestParams params = new RequestParams(Netutil.url + "/getAllRepair?userId=" + ((MyApplication)getActivity().getApplication()).getUser().getUserId());
+        params.addBodyParameter("state","已派员");
         System.out.println(params);
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 System.out.println(result);
-                Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm")
-                        .create();
+                Gson gson = new Gson();
                 Type type = new TypeToken<List<ReListActivityBean.Repair>>(){}.getType();
                 List<ReListActivityBean.Repair> bean = gson.fromJson(result, type);
 
@@ -177,8 +177,8 @@ public class PersonnnalFragment extends BaseFragment {
         btn_sure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(),"yi bao xiu ",Toast.LENGTH_SHORT).show();
-                RequestParams re=new RequestParams();
+//                Toast.makeText(getActivity(),"yi bao xiu ",Toast.LENGTH_SHORT).show();
+                RequestParams re=new RequestParams(Netutil.url+"updateWeixiu");
                 re.addBodyParameter("repairId",String.valueOf(repair.repairId));
                 re.addBodyParameter("userId",String.valueOf(((MyApplication)getActivity().getApplication()).getUser().getUserId()));
                 x.http().get(re, new Callback.CommonCallback<String>() {

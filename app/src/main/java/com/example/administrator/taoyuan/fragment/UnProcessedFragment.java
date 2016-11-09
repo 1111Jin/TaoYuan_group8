@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.administrator.taoyuan.R;
+import com.example.administrator.taoyuan.activity_home.Netutil;
 import com.example.administrator.taoyuan.activity_home.RefreshableView;
 import com.example.administrator.taoyuan.application.MyApplication;
 import com.example.administrator.taoyuan.pojo.ReListActivityBean;
@@ -85,16 +86,15 @@ public class UnProcessedFragment extends BaseFragment {
     }
 
     public void getUserList() {
-        RequestParams params = new RequestParams(HttpUtils.localhost + "/getallrepair?userId=" + ((MyApplication)getActivity().getApplication()).getUser().getUserId());
-        params.addBodyParameter("repairState","未受理");
+        RequestParams params = new RequestParams(Netutil.url + "/getAllRepair?userId=" + ((MyApplication)getActivity().getApplication()).getUser().getUserId());
+        params.addBodyParameter("state","未受理");
         System.out.println(params);
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 System.out.println(result);
                 progressBar.setVisibility(View.GONE);
-                Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm")
-                        .create();
+                Gson gson = new Gson();
                 Type type = new TypeToken<List<ReListActivityBean.Repair>>(){}.getType();
                 List<ReListActivityBean.Repair> bean = gson.fromJson(result, type);
 
@@ -119,7 +119,6 @@ public class UnProcessedFragment extends BaseFragment {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Log.i("UnpersonnalFragment", "onError: " + ex.getMessage());
             }
 
             @Override
@@ -147,7 +146,7 @@ public class UnProcessedFragment extends BaseFragment {
         TextView tv_repair_content = ((TextView) viewHolder.getViewById(R.id.tv_repair_content));
 
         Log.i("UnpersonnalFragment", "initItemView: " + repair.repairType);
-        x.image().bind(iv_repair_img,HttpUtils.localhost+repair.repairImg);
+        //x.image().bind(iv_repair_img,HttpUtils.localhost+repair.repairImg);
         tv_repair_type.setText(repair.repairType);
         tv_repair_state.setText(repair.repairState);
         tv_repair_address.setText(repair.repairAddress);
