@@ -126,7 +126,7 @@ public class JifenActivity extends AppCompatActivity {
         }
     }
     public void  getJifenXiangqing(){
-        RequestParams requestParams=new RequestParams(Netutil.url+"getJifenXiangqing?userId="+(((MyApplication) getApplication()).getUser().getUserId()));
+        RequestParams requestParams=new RequestParams(Netutil.url+"getJifenXiangqing?userId="+((MyApplication)getApplication()).getUser().getUserId());
         x.http().get(requestParams, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
@@ -160,7 +160,7 @@ public class JifenActivity extends AppCompatActivity {
         TextView time;
     }
     public  void  getAlljifen(){
-        RequestParams requestParams=new RequestParams(Netutil.url+"getallJifen?userId="+(((MyApplication) getApplication()).getUser().getUserId()));
+        RequestParams requestParams=new RequestParams(Netutil.url+"getallJifen?userId="+((MyApplication)getApplication()).getUser().getUserId());
         x.http().get(requestParams, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {

@@ -13,9 +13,11 @@
             >
                 <ImageView
                     android:id="@+id/iv"
-                    android:layout_width="50dp"
-                    android:layout_height="45dp"
-                    android:background="@drawable/baoxiu_fanhui"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="12dp"
+                    android:background="@drawable/nav_back"
                     android:layout_alignParentLeft="true"/>
                 <TextView
                     android:layout_width="wrap_content"
@@ -49,5 +51,6 @@
             android:layout_marginBottom="@dimen/img_home_float_margin"
             android:layout_marginRight="@dimen/img_home_float_margin"
            android:src="@drawable/top"
+            android:visibility="gone"
             android:scaleType="fitXY"/>
 </RelativeLayout>

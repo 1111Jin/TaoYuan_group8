@@ -13,11 +13,11 @@
     android:background="@color/title">
     <ImageView
         android:id="@+id/tv4"
-        android:layout_width="50dp"
-        android:layout_height="40dp"
-        android:scaleType="fitXY"
-        android:layout_alignParentLeft="true"
-        android:background="@drawable/baoxiu_fanhui"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="12dp"
+        android:background="@drawable/nav_back"/>
     <TextView
         android:id="@+id/txtNowDate"
         android:layout_width="match_parent"

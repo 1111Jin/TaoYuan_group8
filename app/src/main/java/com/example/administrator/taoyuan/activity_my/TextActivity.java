@@ -140,7 +140,7 @@ public class TextActivity extends Activity {
 
 
     public void getMsg(){
-        RequestParams requestParams=new RequestParams(Netutil.url+"getMsg?userId="+(((MyApplication) getApplication()).getUser().getUserId()));
+        RequestParams requestParams=new RequestParams(Netutil.url+"getMsg?userId="+((MyApplication)getApplication()).getUser().getUserId());
         x.http().get(requestParams, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {

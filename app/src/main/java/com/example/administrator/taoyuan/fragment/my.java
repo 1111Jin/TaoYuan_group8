@@ -236,7 +236,7 @@ public class my extends Fragment {
 
 
     public void getMsg() {
-        RequestParams requestParams = new RequestParams(Netutil.url + "getMsg?userId=" + HttpUtils.userId);
+        RequestParams requestParams = new RequestParams(Netutil.url + "getMsg?userId=" +((MyApplication)getActivity().getApplication()).getUser().getUserId());
 //        requestParams.addBodyParameter("userId",H);
         x.http().get(requestParams, new Callback.CommonCallback<String>() {
             @Override
@@ -281,7 +281,7 @@ public class my extends Fragment {
 
     }
     public  void  getAlljifen() {
-        RequestParams requestParams = new RequestParams(Netutil.url + "getallJifen?userId=" + (((MyApplication) getActivity().getApplication()).getUser().getUserId()));
+        RequestParams requestParams = new RequestParams(Netutil.url + "getallJifen?userId=" +((MyApplication)getActivity().getApplication()).getUser().getUserId());
         x.http().get(requestParams, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {

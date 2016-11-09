@@ -13,9 +13,11 @@
     >
     <ImageView
         android:id="@+id/iv"
-        android:layout_width="50dp"
-        android:layout_height="45dp"
-        android:background="@drawable/baoxiu_fanhui"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="12dp"
+        android:background="@drawable/nav_back"
         android:layout_alignParentLeft="true"/>
     <TextView
         android:layout_width="wrap_content"
@@ -23,7 +25,7 @@
         android:layout_centerInParent="true"
         android:gravity="center"
         android:text="物业报修"
-        android:textSize="25sp"
+        android:textSize="24sp"
         android:textColor="@color/black"/>
     <TextView
         android:id="@+id/tv10"
